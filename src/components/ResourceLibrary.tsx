@@ -36,7 +36,44 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   // Categories extracted dynamically plus 'Todos'
-  const categories = ["Todos", "Bienestar Emocional", "Relaciones & Familia", "Consejería Bíblica", "Crianza Intencional"];
+  const categories = [
+    "Todos", 
+    "Renueva tu mente", 
+    "Más conexión", 
+    "Lidera con integridad", 
+    "Batalla interior"
+  ];
+
+  const librarySections = [
+    {
+      id: "renueva-mente",
+      tabName: "Renueva tu mente",
+      title: "1. Renueva tu mente. Transforma tu vida.",
+      subtitle: "Descubre las creencias que están dirigiendo tu vida y reemplázalas por la verdad de Cristo para experimentar una transformación duradera.",
+      categoryName: "Renueva tu mente. Transforma tu vida."
+    },
+    {
+      id: "mas-conexion",
+      tabName: "Más conexión",
+      title: "2. Más conexión, menos conflicto.",
+      subtitle: "Aprende a comprender, conectar y disfrutar tus relaciones personales desde una perspectiva bíblica y llena de esperanza.",
+      categoryName: "Más conexión, menos conflicto."
+    },
+    {
+      id: "lidera-integridad",
+      tabName: "Lidera con integridad",
+      title: "3. Lidera con integridad y propósito.",
+      subtitle: "Ordena tus prioridades, fortalece tu carácter y lidera con sabiduría bíblica.",
+      categoryName: "Lidera con integridad y propósito."
+    },
+    {
+      id: "esperanza-batalla",
+      tabName: "Batalla interior",
+      title: "4. Esperanza para la batalla interior.",
+      subtitle: "Descubre cómo salir de la ansiedad y depresion, enfrentar el pecado persistente y crecer en una relación más profunda con Cristo.",
+      categoryName: "Esperanza para la batalla interior."
+    }
+  ];
 
   // Handle outside activation from Diagnostic Center recommendations
   React.useEffect(() => {
@@ -49,9 +86,13 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
     }
   }, [selectedBookId, onClearSelectedBook]);
 
+  const activeSection = selectedCategory === "Todos" 
+    ? null 
+    : librarySections.find(s => s.tabName === selectedCategory);
+
   // Filtered eBooks
   const filteredBooks = ebooksData.filter(book => {
-    const matchesCategory = selectedCategory === "Todos" || book.category === selectedCategory;
+    const matchesCategory = selectedCategory === "Todos" || (activeSection && book.category === activeSection.categoryName);
     const matchesSearch = book.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           book.subtitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           book.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -147,123 +188,163 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
     );
   };
 
+  const renderBookItem = (book: EBook) => {
+    const hasLocalDownload = localStorage.getItem(`dl_${book.id}`);
+    return (
+      <motion.div
+        key={book.id}
+        layout
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="bg-brand-card border border-brand-border p-5 rounded-2xl flex flex-col justify-between group transition-all duration-300 hover:border-brand-accent/30 text-left"
+      >
+        <div className="space-y-5">
+          
+          {/* Book cover visual block */}
+          {renderBookCover(book, "card")}
+
+          {/* Metadata and texts */}
+          <div className="space-y-2">
+            <div className="flex justify-between items-center text-[10px] font-space text-brand-accent">
+              <span className="truncate max-w-[150px]">{book.category}</span>
+              {book.isPopular && (
+                <span className="flex items-center gap-1 bg-brand-accent/10 border border-brand-accent/20 text-[#E8C96A] px-2 py-0.5 rounded-full text-[9px] font-bold shrink-0">
+                  <TrendingUp className="w-2.5 h-2.5" /> {book.badge}
+                </span>
+              )}
+            </div>
+            <h3 className="text-lg font-serif font-semibold text-brand-text leading-snug group-hover:text-brand-accent transition-colors">
+              {book.title}
+            </h3>
+            <p className="text-brand-muted text-xs line-clamp-3 leading-relaxed">
+              {book.description}
+            </p>
+          </div>
+        </div>
+
+        {/* Card footer activation */}
+        <div className="pt-5 mt-4 border-t border-brand-border flex items-center justify-between gap-3">
+          <span className="text-[10px] font-space text-brand-muted">
+            {book.downloadCount + (hasLocalDownload ? 1 : 0)} descargas
+          </span>
+          
+          <button
+            onClick={() => handleOpenBook(book)}
+            className="flex items-center gap-2 bg-[#1C3A5E]/30 hover:bg-brand-accent hover:text-brand-bg text-brand-accent border border-brand-accent/25 hover:border-brand-accent font-space text-[10px] uppercase font-bold py-2 px-4 rounded-lg transition-all"
+          >
+            Estudiar <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+      </motion.div>
+    );
+  };
+
   return (
     <div id="recursos-seccion" className="py-20 bg-brand-bg scroll-mt-20">
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-          <div>
-            <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">BIBLIOTECA DE CRECIMIENTO</span>
-            <h2 className="text-4xl md:text-5xl font-serif font-light text-brand-text mt-3">
-              Recursos de <span className="text-brand-accent italic font-normal">Formación Bíblica</span>
-            </h2>
-            <p className="text-brand-muted text-sm mt-3 max-w-xl">
-              Descarga guías, cuadernillos prácticos y libros estructurados por Josue Cortés. 
-              Seleccionados inteligentemente bajo filtros temáticos indispensables.
-            </p>
-          </div>
-
-          {/* Search Inputs */}
-          <div className="relative w-full md:w-80 shrink-0">
-            <input
-              type="text"
-              placeholder="Buscar por palabra clave..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-brand-card text-brand-text pl-10 pr-4 py-3 rounded-xl border border-brand-border focus:border-brand-accent focus:outline-none font-sans text-sm transition-colors"
-            />
-            <Search className="w-4 h-4 text-brand-muted absolute left-3.5 top-3.5" />
-          </div>
+        <div className="text-left max-w-3xl mb-16">
+          <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">Ecosistema de Formación</span>
+          <h2 className="text-4xl md:text-5xl font-serif font-light text-brand-text mt-3">
+            Los 4 Pilares de <span className="text-brand-accent italic font-normal">Crecimiento & Restauración</span>
+          </h2>
+          <p className="text-brand-muted text-sm mt-3 max-w-2xl leading-relaxed">
+            Estructuras fundamentales y recursos pastorales diseñados para desatar nudos relacionales, 
+            renovar el entendimiento y guiarte a una vida de profunda paz espiritual y comunión real.
+          </p>
         </div>
 
-        {/* Filter Categories Pills */}
-        <div className="flex flex-wrap gap-2.5 mb-10 border-b border-brand-border pb-6">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-lg font-space text-[11px] uppercase tracking-wider transition-all duration-300 ${
-                selectedCategory === category
-                  ? "bg-brand-accent text-brand-bg font-bold border border-brand-accent"
-                  : "bg-brand-card/50 text-brand-muted border border-brand-border hover:text-brand-text hover:border-brand-accent/40"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
-        </div>
-
-        {/* Ebooks Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {filteredBooks.map((book) => {
-            const hasLocalDownload = localStorage.getItem(`dl_${book.id}`);
+        {/* Ebooks Content Block - 2x2 Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
+          {librarySections.map((section) => {
             return (
-              <motion.div
-                key={book.id}
-                layout
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="bg-brand-card border border-brand-border p-5 rounded-2xl flex flex-col justify-between group transition-all duration-300 hover:border-brand-accent/30"
+              <div 
+                key={section.id} 
+                className="bg-gradient-to-b from-[#111625]/90 to-[#0A0D1A]/95 border border-brand-border/60 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl shadow-brand-accent/[0.015] hover:border-brand-accent/30 transition-all duration-300 group"
               >
                 <div className="space-y-5">
-                  
-                  {/* Book cover visual block */}
-                  {renderBookCover(book, "card")}
-
-                  {/* Metadata and texts */}
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center text-[10px] font-space text-brand-accent">
-                      <span>{book.category}</span>
-                      {book.isPopular && (
-                        <span className="flex items-center gap-1 bg-brand-accent/10 border border-brand-accent/20 text-[#E8C96A] px-2 py-0.5 rounded-full text-[9px] font-bold">
-                          <TrendingUp className="w-2.5 h-2.5" /> {book.badge}
-                        </span>
-                      )}
-                    </div>
-                    <h3 className="text-lg font-serif font-semibold text-brand-text leading-snug group-hover:text-brand-accent transition-colors">
-                      {book.title}
+                  {/* Title / Header */}
+                  <div className="border-l-4 border-brand-accent pl-3 py-0.5 text-left">
+                    <h3 className="font-serif font-semibold text-brand-text text-lg md:text-xl leading-snug group-hover:text-brand-accent transition-colors">
+                      {section.title}
                     </h3>
-                    <p className="text-brand-muted text-xs line-clamp-3 leading-relaxed">
-                      {book.description}
-                    </p>
+                  </div>
+
+                  {/* Image container suitable for the 2x2 column size */}
+                  <div className="w-full h-52 md:h-60 rounded-2xl overflow-hidden border border-brand-accent/10 shadow-md relative group-hover:border-brand-accent/25 transition-all duration-300">
+                    {section.id === "renueva-mente" && (
+                      <img
+                        src="/src/assets/images/renueva_mente_cinematic_path_1781239114955.jpg"
+                        alt="Renueva tu mente camino de restauración"
+                        className="w-full h-full object-cover select-none group-hover:scale-[1.03] transition-transform duration-500"
+                        referrerPolicy="no-referrer"
+                      />
+                    )}
+                    {section.id === "mas-conexion" && (
+                      <img
+                        src="/src/assets/images/conexion_familias_adolescentes_1781240102157.jpg"
+                        alt="Más conexión, menos conflicto con familias y adolescentes"
+                        className="w-full h-full object-cover select-none group-hover:scale-[1.03] transition-transform duration-500"
+                        referrerPolicy="no-referrer"
+                      />
+                    )}
+                    {section.id === "lidera-integridad" && (
+                      <img
+                        src="/src/assets/images/lidera_integridad_cinematic_1781240989563.jpg"
+                        alt="Lidera con integridad, fortaleza y responsabilidad"
+                        className="w-full h-full object-cover select-none group-hover:scale-[1.03] transition-transform duration-500"
+                        referrerPolicy="no-referrer"
+                      />
+                    )}
+                    {section.id === "esperanza-batalla" && (
+                      <img
+                        src="/src/assets/images/batalla_interior_victoria_1781241462792.jpg"
+                        alt="Esperanza para la batalla interior"
+                        className="w-full h-full object-cover select-none group-hover:scale-[1.03] transition-transform duration-500"
+                        referrerPolicy="no-referrer"
+                      />
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+                  </div>
+
+                  {/* Description & Badge block */}
+                  <div className="space-y-4 text-left">
+                    <div className="inline-flex items-center gap-2 bg-[#1C3A5E]/20 border border-brand-accent/15 px-3 py-1 rounded-full">
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse" />
+                      <span className="font-space text-[9px] uppercase tracking-widest text-brand-accent font-bold">
+                        {section.id === "renueva-mente" && "Verdad & Identidad"}
+                        {section.id === "mas-conexion" && "Comprensión & Vínculo Especial"}
+                        {section.id === "lidera-integridad" && "Fortaleza & Carácter"}
+                        {section.id === "esperanza-batalla" && "Victoria & Paz Interior"}
+                      </span>
+                    </div>
+
+                    <blockquote className="border-l-2 border-brand-accent/30 pl-3 py-0.5">
+                      <p className="text-sm md:text-base font-serif text-brand-text leading-relaxed font-semibold italic">
+                        {section.id === "renueva-mente" && "“La verdad tiene el poder de cambiar la historia que te cuentas a ti mismo.”"}
+                        {section.id === "mas-conexion" && "“Comprender y conectar es el puente para apagar las llamas del conflicto continuo.”"}
+                        {section.id === "lidera-integridad" && "“Cuando un hombre encuentra su propósito en Dios, lidera con integridad y sabiduría.”"}
+                        {section.id === "esperanza-batalla" && "“Levántate y resplandece, porque ha venido tu luz, y la gloria de Jehová ha nacido sobre ti.”"}
+                      </p>
+                    </blockquote>
                   </div>
                 </div>
 
-                {/* Card footer activation */}
-                <div className="pt-5 mt-4 border-t border-brand-border flex items-center justify-between gap-3">
-                  <span className="text-[10px] font-space text-brand-muted">
-                    {book.downloadCount + (hasLocalDownload ? 1 : 0)} descargas
-                  </span>
-                  
-                  <button
-                    onClick={() => handleOpenBook(book)}
-                    className="flex items-center gap-2 bg-[#1C3A5E]/30 hover:bg-brand-accent hover:text-brand-bg text-brand-accent border border-brand-accent/25 hover:border-brand-accent font-space text-[10px] uppercase font-bold py-2 px-4 rounded-lg transition-all"
-                  >
-                    Estudiar <ChevronRight className="w-3.5 h-3.5" />
-                  </button>
+                <div className="mt-5 pt-4 border-t border-brand-border/40 text-left space-y-2">
+                  <p className="text-brand-muted text-xs font-sans leading-relaxed">
+                    {section.id === "renueva-mente" && "Descubre las mentiras y falsas creencias que han moldeado tus decisiones, y permite que la luz y verdad de Cristo reescriba tu propósito y renueve tu vida."}
+                    {section.id === "mas-conexion" && "Aprende a reconciliar diferencias y cultivar un perdón auténtico que profundice el amor paternal, familiar y conyugal desde un enfoque redentor y lleno de esperanza."}
+                    {section.id === "lidera-integridad" && "Ordena tus prioridades, fortalece tu carácter masculino o ministerial bajo principios inquebrantables, y asume la responsabilidad de guiar con amor y firmeza."}
+                    {section.id === "esperanza-batalla" && "Encuentra herramientas bíblicas y fortaleza espiritual para triunfar sobre la ansiedad, la depresión, romper ciclos destructivos y caminar en plena libertad."}
+                  </p>
                 </div>
-
-              </motion.div>
+              </div>
             );
           })}
         </div>
-
-        {/* Empty States on Filter */}
-        {filteredBooks.length === 0 && (
-          <div className="py-16 text-center border border-dashed border-brand-border rounded-2xl max-w-lg mx-auto">
-            <Layers className="w-10 h-10 text-brand-muted mx-auto mb-4" />
-            <h4 className="font-serif text-lg text-brand-text">Ningún material coincide con la búsqueda</h4>
-            <p className="text-brand-muted text-xs font-space mt-1">Intenta ajustando los filtros temáticos de tu biblioteca o reescribe tu palabra clave.</p>
-            <button 
-              onClick={() => { setSelectedCategory("Todos"); setSearchQuery(""); }}
-              className="mt-4 bg-brand-accent/10 hover:bg-brand-accent/20 border border-brand-accent/30 text-brand-accent font-space text-[10px] uppercase font-bold py-2 px-4 rounded-md transition-colors"
-            >
-              Resetear filtros
-            </button>
-          </div>
-        )}
 
       </div>
 

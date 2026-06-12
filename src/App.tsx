@@ -250,39 +250,34 @@ export default function App() {
             </button>
           </div>
 
-          {/* Quick Pillars Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-20">
-            
-            <div className="bg-brand-card/30 border border-brand-border/80 rounded-2xl p-6 text-left space-y-3 hover:translate-y-[-2px] transition-all duration-300">
-              <div className="w-10 h-10 rounded-xl bg-[#1C3A5E]/20 border border-brand-accent/20 flex items-center justify-center text-brand-accent">
-                <BookOpen className="w-5 h-5" />
+          {/* Devotional App Banner/Button */}
+          <div className="mt-8 flex justify-center px-4">
+            <a
+              href="https://levantateresplandece.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full max-w-lg bg-gradient-to-r from-brand-card via-[#0A0D1A] to-brand-card hover:via-[#11162C] border-2 border-brand-accent/40 hover:border-brand-accent/80 rounded-2xl p-5 hover:translate-y-[-1px] transition-all duration-300 shadow-xl shadow-brand-accent/5 flex flex-col sm:flex-row items-center justify-between gap-4 group cursor-pointer text-center sm:text-left"
+            >
+              <div className="space-y-1">
+                <div className="flex items-center justify-center sm:justify-start gap-2">
+                  <span className="inline-block w-2 h-2 rounded-full bg-brand-accent animate-pulse" />
+                  <span className="font-space text-[10px] uppercase tracking-widest text-brand-accent font-bold">
+                    Aplicación Devocional Exclusiva
+                  </span>
+                </div>
+                <h3 className="font-serif text-xl font-bold text-brand-text group-hover:text-brand-accent transition-colors">
+                  365 Días con Dios
+                </h3>
+                <p className="text-[11px] text-brand-muted font-sans font-normal max-w-sm leading-relaxed">
+                  Descubre diariamente un atributo de Dios y profundiza en tu verdadera identidad en Él.
+                </p>
               </div>
-              <h3 className="font-serif text-lg font-semibold text-brand-text">Materiales Descargables</h3>
-              <p className="text-brand-muted text-xs leading-relaxed">
-                Ebooks prácticos que abordan de raíz el manejo de la ansiedad, el establecimiento de fronteras afectivas y la paternidad enfocada.
-              </p>
-            </div>
-
-            <div className="bg-brand-card/30 border border-brand-border/80 rounded-2xl p-6 text-left space-y-3 hover:translate-y-[-2px] transition-all duration-300">
-              <div className="w-10 h-10 rounded-xl bg-[#1C3A5E]/20 border border-brand-accent/20 flex items-center justify-center text-brand-accent">
-                <Compass className="w-5 h-5" />
+              
+              <div className="bg-brand-accent/10 group-hover:bg-brand-accent/20 border border-brand-accent/20 text-brand-accent px-4 py-2.5 rounded-xl font-space text-[11px] uppercase font-bold tracking-wider transition-colors flex items-center gap-1.5 whitespace-nowrap">
+                Acceder a la App
+                <span className="text-xs transition-transform group-hover:translate-x-1">→</span>
               </div>
-              <h3 className="font-serif text-lg font-semibold text-brand-text">Pautas y Evaluación</h3>
-              <p className="text-brand-muted text-xs leading-relaxed">
-                Herramientas interactivas basadas en pautas de consejería bíblica para identificar asimetrías de tiempo, prioridades y tensiones.
-              </p>
-            </div>
-
-            <div className="bg-brand-card/30 border border-brand-border/80 rounded-2xl p-6 text-left space-y-3 hover:translate-y-[-2px] transition-all duration-300">
-              <div className="w-10 h-10 rounded-xl bg-[#1C3A5E]/20 border border-brand-accent/20 flex items-center justify-center text-brand-accent">
-                <MessageSquare className="w-5 h-5" />
-              </div>
-              <h3 className="font-serif text-lg font-semibold text-brand-text">Acompañamiento Calificado</h3>
-              <p className="text-brand-muted text-xs leading-relaxed">
-                Tutorías personalizadas, respuestas a inquietudes confesionales complejas y mentorías pastorales virtuales con absoluta confidencialidad.
-              </p>
-            </div>
-
+            </a>
           </div>
 
         </div>

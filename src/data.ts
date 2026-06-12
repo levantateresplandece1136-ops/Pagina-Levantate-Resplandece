@@ -2,33 +2,33 @@ import { EBook, Diagnostic } from "./types";
 
 export const ebooksData: EBook[] = [
   {
-    id: "anclas-del-alma",
-    title: "Anclas del Alma",
-    subtitle: "Manejo del estrés y la ansiedad a la luz de las Escrituras",
-    category: "Bienestar Emocional",
-    badge: "Más Solicitado",
-    pages: 148,
-    readTime: "3 horas",
-    description: "Una guía pastoral-psicológica con base bíblica para comprender la ansiedad y el estrés contemporáneos. Integra teología práctica y herramientas de autorregulación emocional para devolver el reposo interior.",
+    id: "mesa-de-la-escucha",
+    title: "Renueva tu Mente y Transforma tu Vida",
+    subtitle: "Descubre tus creencias profundas y renuévalas con la verdad de Cristo",
+    category: "Renueva tu mente. Transforma tu vida.",
+    badge: "Especializado",
+    pages: 160,
+    readTime: "4 horas",
+    description: "Una guía práctica y bíblica para desmantelar las fortalezas mentales y renovar tus pensamientos cotidianos bajo la luz de la verdad redentora de la Palabra de Dios.",
     tableOfContents: [
-      "Capítulo 1: El Ruido de la Mente en un Mundo Acelerado",
-      "Capítulo 2: Filípenses 4 y la Anatomía de la Preocupación",
-      "Capítulo 3: El Altar de la Rendición: Dejar ir el Control",
-      "Capítulo 4: Prácticas Diarias de Silencio, Oración y Cuidado Físico",
-      "Capítulo 5: Cuándo Buscar Ayuda Sola y Cuándo Caminar Acompañado"
+      "Capítulo 1: El Poder de los Pensamientos en el Diario Vivir",
+      "Capítulo 2: Desmantelando Fortalezas Mentales y Creencias Arraigadas",
+      "Capítulo 3: Romanos 12 y la Metamorfosis de la Mente",
+      "Capítulo 4: El Espejo de la Escritura: Tu Verdadera Identidad",
+      "Capítulo 5: Caminando en Libertad Cotidiana y Renovación Diaria"
     ],
     excerpt: {
-      title: "Capítulo 3: El Altar de la Rendición",
-      content: "La ansiedad suele alimentarse de la ilusión del control absoluto. Queremos blindar el futuro de nuestros hijos, asegurar nuestras finanzas y garantizar la aprobación de los demás. Sin embargo, la paz duradera no proviene de un control impecable, sino de una confianza total. Rendirse en el altar divino no es resignación estéril; es colocar activamente nuestras insostenibles cargas en las manos de Aquel que sostiene el universo entero, sabiendo que Su fidelidad precede nuestro desvelo."
+      title: "Capítulo 3: La Metamorfosis de la Mente",
+      content: "Nuestra mente no se renueva mediante la inercia del optimismo humano, sino a través de la inmersión activa en las verdades de la gracia de Dios. Cuando identificamos y confrontamos las mentiras que el dolor, el rechazo o el temor sembraron en nuestro corazón, y las sustituimos deliberadamente por la voz de nuestro Padre Celestial, iniciamos una transformación duradera e integral."
     },
-    downloadCount: 1420,
-    isPopular: true
+    downloadCount: 750,
+    isPopular: false
   },
   {
     id: "limites-redentores",
     title: "Límites Redentores",
     subtitle: "Establecer fronteras con amor, verdad y libertad espiritual",
-    category: "Relaciones & Familia",
+    category: "Más conexión, menos conflicto.",
     badge: "Guía Práctica",
     pages: 124,
     readTime: "2.5 horas",
@@ -47,33 +47,10 @@ export const ebooksData: EBook[] = [
     downloadCount: 980
   },
   {
-    id: "mesa-de-la-escucha",
-    title: "La Mesa de la Escucha",
-    subtitle: "Cómo ser un facilitador de restauración y consejería bíblica informal",
-    category: "Consejería Bíblica",
-    badge: "Especializado",
-    pages: 160,
-    readTime: "4 horas",
-    description: "Una herramienta imprescindible para mentores, líderes comunitarios y consejeros naturales en el hogar. Metodología pastoral directa para escuchar con gracia y guiar con verdad bíblica empática.",
-    tableOfContents: [
-      "Capítulo 1: La Escucha Activa como Acto de Amor Sacerdotals",
-      "Capítulo 2: Cómo Hacer Preguntas que Iluminen el Corazón",
-      "Capítulo 3: El Peligro del Consejo Exprés y Silbidos Religiosos",
-      "Capítulo 4: El Dolor de un Confidente: Confidencialidad y Ética",
-      "Capítulo 5: La Escritura Aplicada con Ternura: Cristo en la Historia del Otro"
-    ],
-    excerpt: {
-      title: "Capítulo 1: La Escucha Sacerdotal",
-      content: "La mayoría de las personas no vienen a nosotros buscando respuestas instantáneas envasadas al vacío en un versículo bíblico descontextualizado. Buscan un testigo seguro de su dolor. La escucha sacerdotal consiste en suspender nuestro afán de corregir inmediatamente, para primero comprender la profundidad de la herida relacional o la duda espiritual. Cuando alguien se siente escuchado a fondo, las defensas bajan y la palabra de la gracia encuentra terreno fértil para brotar."
-    },
-    downloadCount: 750,
-    isPopular: false
-  },
-  {
     id: "padres-de-luz",
     title: "Padres de Luz",
-    subtitle: "Crianza con enfoque intencional y preservación espiritual",
-    category: "Crianza Intencional",
+    subtitle: "Crianza con enfoque intencional y liderazgo de sabiduría bíblica",
+    category: "Lidera con integridad y propósito.",
     badge: "¡Nuevo!",
     pages: 110,
     readTime: "2 horas",
@@ -90,6 +67,29 @@ export const ebooksData: EBook[] = [
       content: "La tecnología no es un enemigo intrínseco, sino un potente amplificador de la inclinación del corazón. Si permitimos que las pantallas sean las únicas educadoras silenciosas de nuestros hijos en momentos de soledad, no deberíamos asombrarnos si su cosmovisión es forjada por tendencias efímeras antes que por verdades eternas. La crianza intencional requiere establecer 'santuarios libres de pantallas' en el hogar y reemplazar el scroll hipnótico por diálogos cálidos de sobremesa."
     },
     downloadCount: 1150,
+    isPopular: true
+  },
+  {
+    id: "anclas-del-alma",
+    title: "Anclas del Alma",
+    subtitle: "Manejo del estrés y la ansiedad a la luz de las Escrituras",
+    category: "Esperanza para la batalla interior.",
+    badge: "Más Solicitado",
+    pages: 148,
+    readTime: "3 horas",
+    description: "Una guía pastoral-psicológica con base bíblica para comprender la ansiedad y el estrés contemporáneos. Integra teología práctica y herramientas de autorregulación emocional para devolver el reposo interior.",
+    tableOfContents: [
+      "Capítulo 1: El Ruido de la Mente en un Mundo Acelerado",
+      "Capítulo 2: Filípenses 4 y la Anatomía de la Preocupación",
+      "Capítulo 3: El Altar de la Rendición: Dejar ir el Control",
+      "Capítulo 4: Prácticas Diarias de Silencio, Oración y Cuidado Físico",
+      "Capítulo 5: Cuándo Buscar Ayuda Sola y Cuándo Caminar Acompañado"
+    ],
+    excerpt: {
+      title: "Capítulo 3: El Altar de la Rendición",
+      content: "La ansiedad suele alimentarse de la ilusión del control absoluto. Queremos blindar el futuro de nuestros hijos, asegurar nuestras finanzas y garantizar la aprobación de los demás. Sin embargo, la paz duradera no proviene de un control impecable, sino de una confianza total. Rendirse en el altar divino no es resignación estéril; es colocar activamente nuestras insostenibles cargas en las manos de Aquel que sostiene el universo entero, sabiendo que Su fidelidad precede nuestro desvelo."
+    },
+    downloadCount: 1420,
     isPopular: true
   }
 ];
