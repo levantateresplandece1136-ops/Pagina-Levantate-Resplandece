@@ -23,6 +23,7 @@ import { ebooksData } from "./data";
 import ResourceLibrary from "./components/ResourceLibrary";
 import DiagnosticCenter from "./components/DiagnosticCenter";
 import PastoralContact from "./components/PastoralContact";
+const appLogo = "/src/assets/images/app_logo_1781233600045.jpg";
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -82,15 +83,20 @@ export default function App() {
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="flex items-center gap-3 group text-left cursor-pointer"
           >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#1C3A5E] to-brand-bg border border-brand-accent/30 flex items-center justify-center p-1.5 shadow-md shadow-brand-accent/5">
-              <span className="font-serif font-semibold text-brand-accent text-lg tracking-widest leading-none">LR</span>
+            <div className="w-10 h-10 rounded-full overflow-hidden border border-brand-accent/40 shadow-md shadow-brand-accent/5 bg-white flex items-center justify-center">
+              <img 
+                src={appLogo} 
+                alt="Logo Levántate Resplandece" 
+                className="w-full h-full object-cover scale-105"
+                referrerPolicy="no-referrer"
+              />
             </div>
             <div>
               <span className="block font-serif font-semibold text-base tracking-wide text-brand-text group-hover:text-brand-accent transition-colors">
                 Levántate Resplandece
               </span>
               <span className="block font-space text-[9px] uppercase tracking-wider text-brand-accent">
-                Pastor Josue Cortés
+                Josue Cortés
               </span>
             </div>
           </button>
@@ -125,12 +131,12 @@ export default function App() {
 
           {/* Contact Button Desktop */}
           <div className="hidden md:block">
-            <button
-              onClick={() => scrollToAnchor("contacto-seccion")}
-              className="bg-gradient-to-r from-brand-card to-brand-border hover:from-brand-accent hover:to-brand-hover text-brand-accent hover:text-brand-bg px-5 py-2.5 rounded-lg border border-brand-accent/30 hover:border-brand-hover font-space text-[10px] uppercase font-bold tracking-wider transition-all duration-300 shadow-md shadow-brand-accent/5 cursor-pointer"
+            <a
+              href="mailto:levantateresplandecepagina@gmail.com"
+              className="inline-block bg-gradient-to-r from-brand-card to-brand-border hover:from-brand-accent hover:to-brand-hover text-brand-accent hover:text-brand-bg px-5 py-2.5 rounded-lg border border-brand-accent/30 hover:border-brand-hover font-space text-[10px] uppercase font-bold tracking-wider transition-all duration-300 shadow-md shadow-brand-accent/5 cursor-pointer text-center"
             >
-              Orientación Gratis
-            </button>
+              Contáctate
+            </a>
           </div>
 
           {/* Hamburger Mobile */}
@@ -170,7 +176,7 @@ export default function App() {
                 onClick={() => scrollToAnchor("sobre-seccion")}
                 className="text-brand-muted hover:text-brand-accent py-2"
               >
-                Sobre el Pastor Josue
+                Sobre Josue
               </button>
               <button 
                 onClick={() => scrollToAnchor("contacto-seccion")}
@@ -179,12 +185,12 @@ export default function App() {
                 Consultas & Preguntas
               </button>
               
-              <button
-                onClick={() => scrollToAnchor("contacto-seccion")}
-                className="w-full bg-brand-accent text-brand-bg font-bold py-3.5 rounded-xl text-xs uppercase tracking-widest mt-4"
+              <a
+                href="mailto:levantateresplandecepagina@gmail.com"
+                className="w-full bg-brand-accent text-brand-bg font-bold py-3.5 rounded-xl text-xs uppercase tracking-widest mt-4 text-center block"
               >
-                Solicitar Cita de Orientación
-              </button>
+                Contáctate
+              </a>
             </div>
           </motion.div>
         )}
@@ -223,7 +229,7 @@ export default function App() {
             </h1>
             
             <p className="text-brand-muted text-base md:text-lg max-w-2xl mx-auto font-sans leading-relaxed">
-              Te damos la bienvenida al ecosistema digital de recursos y autoevaluaciones del <b>Pastor Josue Cortés</b>. 
+              Te damos la bienvenida al ecosistema digital de recursos y autoevaluaciones de <b>Josue Cortés</b>. 
               Desarrollamos herramientas de consejería bíblica y crecimiento personal orientadas a la reconciliación y restauración de vidas.
             </p>
           </div>
@@ -409,8 +415,13 @@ export default function App() {
           
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center justify-center md:justify-start gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-brand-accent/15 flex items-center justify-center text-brand-accent border border-brand-accent/20">
-                <span className="font-serif font-bold text-xs tracking-wider">LR</span>
+              <div className="w-8 h-8 rounded-full overflow-hidden border border-brand-accent/30 bg-white flex items-center justify-center">
+                <img 
+                  src={appLogo} 
+                  alt="Logo Levántate Resplandece" 
+                  className="w-full h-full object-cover scale-105"
+                  referrerPolicy="no-referrer"
+                />
               </div>
               <span className="font-serif font-medium text-base text-brand-text">Levántate Resplandece</span>
             </div>
@@ -436,7 +447,7 @@ export default function App() {
               </li>
               <li>
                 <button onClick={() => scrollToAnchor("sobre-seccion")} className="hover:text-brand-accent transition-colors">
-                  Sobre Pastor Josue Cortés
+                  Sobre Josue Cortés
                 </button>
               </li>
               <li>

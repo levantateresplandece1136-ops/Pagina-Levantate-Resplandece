@@ -159,7 +159,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
               Recursos de <span className="text-brand-accent italic font-normal">Formación Bíblica</span>
             </h2>
             <p className="text-brand-muted text-sm mt-3 max-w-xl">
-              Descarga guías, cuadernillos prácticos y libros estructurados por el pastor Josue Cortés. 
+              Descarga guías, cuadernillos prácticos y libros estructurados por Josue Cortés. 
               Seleccionados inteligentemente bajo filtros temáticos indispensables.
             </p>
           </div>
@@ -388,7 +388,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                               onChange={(e) => setOptInNews(e.target.checked)}
                               className="rounded border-brand-border bg-brand-card text-brand-accent focus:ring-brand-accent w-3.5 h-3.5"
                             />
-                            <span className="text-[10px] text-brand-muted font-sans leading-none">Deseo recibir reflexiones semanales del Pastor Josue Cortés.</span>
+                            <span className="text-[10px] text-brand-muted font-sans leading-none">Deseo recibir reflexiones semanales de Josue Cortés.</span>
                           </label>
                         </div>
 
