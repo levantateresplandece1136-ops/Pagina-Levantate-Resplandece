@@ -1,0 +1,6 @@
+{
+  "name": "Levántate Resplandece",
+  "description": "Ecosistema digital de recursos y herramientas de transformación personal de Josue Cortés.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

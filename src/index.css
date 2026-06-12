@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-space: "Space Grotesk", sans-serif;
+
+  --color-brand-bg: #0D0F1A;          /* Fondo principal: azul noche profundo */
+  --color-brand-card: #13172A;        /* Superficies de tarjetas */
+  --color-brand-border: #1E2440;      /* Borde sutil */
+  --color-brand-accent: #C9A84C;      /* Acento dorado principal, oro cálido */
+  --color-brand-hover: #E8C96A;       /* Acento dorado brillante */
+  --color-brand-text: #F0EDE6;        /* Texto principal */
+  --color-brand-muted: #8B8FA8;       /* Texto secundario/muted */
+  --color-brand-radial: #1C3A5E;      /* Acento complementario tenue */
+  --color-brand-alt: #0F1220;         /* Fondo de secciones alternas */
+}
+
+/* Base custom styles to reinforce body background and defaults */
+body {
+  background-color: #0D0F1A;
+  color: #F0EDE6;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar for premium feel */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0D0F1A;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E2440;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C9A84C;
+}
+
