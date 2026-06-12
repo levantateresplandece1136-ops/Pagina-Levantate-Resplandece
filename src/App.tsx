@@ -23,7 +23,7 @@ import { ebooksData } from "./data";
 import ResourceLibrary from "./components/ResourceLibrary";
 import DiagnosticCenter from "./components/DiagnosticCenter";
 import PastoralContact from "./components/PastoralContact";
-const appLogo = "/src/assets/images/app_logo_1781233600045.jpg";
+import appLogo from "./assets/images/app_logo_1781233600045.jpg";
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);

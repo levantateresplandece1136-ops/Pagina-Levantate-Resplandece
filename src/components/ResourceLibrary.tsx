@@ -17,6 +17,10 @@ import {
 } from "lucide-react";
 import { ebooksData } from "../data";
 import { EBook } from "../types";
+import renuevaMenteImage from "../assets/images/renueva_mente_cinematic_path_1781239114955.jpg";
+import conexionFamiliasImage from "../assets/images/conexion_familias_adolescentes_1781240102157.jpg";
+import lideraIntegridadImage from "../assets/images/lidera_integridad_cinematic_1781240989563.jpg";
+import batallaVictoriaImage from "../assets/images/batalla_interior_victoria_1781241462792.jpg";
 
 interface ResourceLibraryProps {
   selectedBookId: string | null;
@@ -277,7 +281,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                   <div className="w-full h-52 md:h-60 rounded-2xl overflow-hidden border border-brand-accent/10 shadow-md relative group-hover:border-brand-accent/25 transition-all duration-300">
                     {section.id === "renueva-mente" && (
                       <img
-                        src="/src/assets/images/renueva_mente_cinematic_path_1781239114955.jpg"
+                        src={renuevaMenteImage}
                         alt="Renueva tu mente camino de restauración"
                         className="w-full h-full object-cover select-none group-hover:scale-[1.03] transition-transform duration-500"
                         referrerPolicy="no-referrer"
@@ -285,7 +289,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                     )}
                     {section.id === "mas-conexion" && (
                       <img
-                        src="/src/assets/images/conexion_familias_adolescentes_1781240102157.jpg"
+                        src={conexionFamiliasImage}
                         alt="Más conexión, menos conflicto con familias y adolescentes"
                         className="w-full h-full object-cover select-none group-hover:scale-[1.03] transition-transform duration-500"
                         referrerPolicy="no-referrer"
@@ -293,7 +297,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                     )}
                     {section.id === "lidera-integridad" && (
                       <img
-                        src="/src/assets/images/lidera_integridad_cinematic_1781240989563.jpg"
+                        src={lideraIntegridadImage}
                         alt="Lidera con integridad, fortaleza y responsabilidad"
                         className="w-full h-full object-cover select-none group-hover:scale-[1.03] transition-transform duration-500"
                         referrerPolicy="no-referrer"
@@ -301,7 +305,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                     )}
                     {section.id === "esperanza-batalla" && (
                       <img
-                        src="/src/assets/images/batalla_interior_victoria_1781241462792.jpg"
+                        src={batallaVictoriaImage}
                         alt="Esperanza para la batalla interior"
                         className="w-full h-full object-cover select-none group-hover:scale-[1.03] transition-transform duration-500"
                         referrerPolicy="no-referrer"
