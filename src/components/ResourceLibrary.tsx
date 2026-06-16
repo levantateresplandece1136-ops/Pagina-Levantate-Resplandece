@@ -337,13 +337,26 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                   </div>
                 </div>
 
-                <div className="mt-5 pt-4 border-t border-brand-border/40 text-left space-y-2">
+                <div className="mt-5 pt-4 border-t border-brand-border/40 text-left space-y-3">
                   <p className="text-brand-muted text-xs font-sans leading-relaxed">
                     {section.id === "renueva-mente" && "Descubre las mentiras y falsas creencias que han moldeado tus decisiones, y permite que la luz y verdad de Cristo reescriba tu propósito y renueve tu vida."}
                     {section.id === "mas-conexion" && "Aprende a reconciliar diferencias y cultivar un perdón auténtico que profundice el amor paternal, familiar y conyugal desde un enfoque redentor y lleno de esperanza."}
                     {section.id === "lidera-integridad" && "Ordena tus prioridades, fortalece tu carácter masculino o ministerial bajo principios inquebrantables, y asume la responsabilidad de guiar con amor y firmeza."}
                     {section.id === "esperanza-batalla" && "Encuentra herramientas bíblicas y fortaleza espiritual para triunfar sobre la ansiedad, la depresión, romper ciclos destructivos y caminar en plena libertad."}
                   </p>
+                  {section.id === "mas-conexion" && (
+                    <div className="pt-2">
+                      <a 
+                        href="https://test-matrimonios.vercel.app/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-brand-accent text-white hover:bg-brand-hover text-xs font-space font-bold py-2.5 px-4 rounded-xl transition-all shadow-md shadow-brand-accent/10 hover:shadow-brand-accent/20 cursor-pointer"
+                      >
+                        Realizar Diagnóstico Matrimonial 
+                        <ChevronRight className="w-4 h-4" />
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             );
