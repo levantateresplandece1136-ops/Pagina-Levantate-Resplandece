@@ -344,6 +344,19 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                     {section.id === "lidera-integridad" && "Ordena tus prioridades, fortalece tu carácter masculino o ministerial bajo principios inquebrantables, y asume la responsabilidad de guiar con amor y firmeza."}
                     {section.id === "esperanza-batalla" && "Encuentra herramientas bíblicas y fortaleza espiritual para triunfar sobre la ansiedad, la depresión, romper ciclos destructivos y caminar en plena libertad."}
                   </p>
+                  {section.id === "renueva-mente" && (
+                    <div className="pt-2">
+                      <a 
+                        href="https://qu-me-detiene.vercel.app/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-brand-accent text-white hover:bg-brand-hover text-xs font-space font-bold py-2.5 px-4 rounded-xl transition-all shadow-md shadow-brand-accent/10 hover:shadow-brand-accent/20 cursor-pointer"
+                      >
+                        Realizar Test "¿Qué Me Detiene?" 
+                        <ChevronRight className="w-4 h-4" />
+                      </a>
+                    </div>
+                  )}
                   {section.id === "mas-conexion" && (
                     <div className="pt-2">
                       <a 
