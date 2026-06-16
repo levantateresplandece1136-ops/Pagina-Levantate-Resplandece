@@ -6,21 +6,21 @@
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
   --font-space: "Space Grotesk", sans-serif;
 
-  --color-brand-bg: #000000;          /* Fondo principal: Negro Real */
-  --color-brand-card: #0A0C14;        /* Superficies de tarjetas */
-  --color-brand-border: #181C2E;      /* Borde sutil, alta definición */
-  --color-brand-accent: #C9A84C;      /* Acento dorado principal, oro cálido */
-  --color-brand-hover: #E8C96A;       /* Acento dorado brillante */
-  --color-brand-text: #F0EDE6;        /* Texto principal */
-  --color-brand-muted: #8E92AC;       /* Texto secundario/muted */
-  --color-brand-radial: #13243A;      /* Acento complementario tenue */
-  --color-brand-alt: #05060A;         /* Fondo de secciones alternas */
+  --color-brand-bg: #FFFFFF;          /* Fondo principal: Blanco */
+  --color-brand-card: #F9FAFB;        /* Superficies de tarjetas (Slate 50) */
+  --color-brand-border: #E5E7EB;      /* Borde sutil, alta definición (Slate 200) */
+  --color-brand-accent: #EA580C;      /* Acento principal: Naranja Vibrante */
+  --color-brand-hover: #C2410C;       /* Acento hover: Naranja Oscuro */
+  --color-brand-text: #111827;        /* Texto principal: Charcoal Profundo (Slate 900) */
+  --color-brand-muted: #4B5563;       /* Texto secundario: Slate Muted (Slate 600) */
+  --color-brand-radial: #FFF7ED;      /* Fondo complementario o resplandor tenue (Orange 50) */
+  --color-brand-alt: #F3F4F6;         /* Fondo de secciones alternas (Slate 100) */
 }
 
 /* Base custom styles to reinforce body background and defaults */
 body {
-  background-color: #000000;
-  color: #F0EDE6;
+  background-color: #FFFFFF;
+  color: #111827;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -31,13 +31,13 @@ body {
   width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #000000;
+  background: #FFFFFF;
 }
 ::-webkit-scrollbar-thumb {
-  background: #181C2E;
+  background: #E5E7EB;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #C9A84C;
+  background: #EA580C;
 }
 

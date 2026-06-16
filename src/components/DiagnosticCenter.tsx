@@ -188,7 +188,7 @@ export default function DiagnosticCenter({ onRecommendBook }: DiagnosticCenterPr
     return (
       <svg width="100%" height="100%" viewBox={`0 0 ${width} ${height}`} className="mx-auto max-w-[280px]">
         {/* Background Dark Circle */}
-        <circle cx={cx} cy={cy} r={radius} fill="#13172A" stroke="#1E2440" strokeWidth="1" />
+        <circle cx={cx} cy={cy} r={radius} fill="var(--color-brand-card)" stroke="var(--color-brand-border)" strokeWidth="1" />
         
         {/* Ring Grids */}
         {rings.map((ring, idx) => {
@@ -200,7 +200,7 @@ export default function DiagnosticCenter({ onRecommendBook }: DiagnosticCenterPr
               cy={cy} 
               r={r} 
               fill="none" 
-              stroke="#1E2440" 
+              stroke="var(--color-brand-border)" 
               strokeDasharray={idx < 2 ? "3,3" : "none"} 
               strokeWidth="0.8" 
             />
@@ -256,7 +256,7 @@ export default function DiagnosticCenter({ onRecommendBook }: DiagnosticCenterPr
                     y1={cy} 
                     x2={x} 
                     y2={y} 
-                    stroke="#1E2440" 
+                    stroke="var(--color-brand-border)" 
                     strokeWidth="1.5" 
                   />
                 );
@@ -265,8 +265,8 @@ export default function DiagnosticCenter({ onRecommendBook }: DiagnosticCenterPr
               {/* Polygon area */}
               <polygon 
                 points={polygonPoints} 
-                fill="rgba(201, 168, 76, 0.15)" 
-                stroke="#C9A84C" 
+                fill="rgba(234, 88, 12, 0.15)" 
+                stroke="var(--color-brand-accent)" 
                 strokeWidth="2.5" 
                 className="transition-all duration-300"
               />
@@ -284,15 +284,15 @@ export default function DiagnosticCenter({ onRecommendBook }: DiagnosticCenterPr
                       cx={x} 
                       cy={y} 
                       r="4.5" 
-                      fill="#E8C96A" 
-                      stroke="#0D0F1A" 
+                      fill="var(--color-brand-accent)" 
+                      stroke="var(--color-brand-bg)" 
                       strokeWidth="1.5" 
                     />
                     <text 
                       x={x} 
                       y={y - 10} 
                       textAnchor="middle" 
-                      className="fill-brand-hover text-[9px] font-space font-bold"
+                      className="fill-brand-text text-[10px] font-space font-bold"
                     >
                       {score}
                     </text>
@@ -371,7 +371,7 @@ export default function DiagnosticCenter({ onRecommendBook }: DiagnosticCenterPr
                 {!testResult && !isAnalyzing && (
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     <div className="lg:col-span-4 space-y-5">
-                      <span className="inline-block bg-[#1C3A5E]/30 text-brand-accent border border-brand-border text-xs px-3 py-1 rounded-full font-space">
+                      <span className="inline-block bg-brand-accent/10 text-brand-accent border border-brand-border text-xs px-3 py-1 rounded-full font-space">
                         {testInfo.badge}
                       </span>
                       <h3 className="text-3xl font-serif text-brand-text leading-tight">{testInfo.title}</h3>
@@ -384,7 +384,7 @@ export default function DiagnosticCenter({ onRecommendBook }: DiagnosticCenterPr
                         <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-brand-accent rounded-full"/> Profundidad Espiritual Personal</li>
                         <li className="flex items-center gap-2"><div className="w-1.5 h-1.5 bg-brand-accent rounded-full"/> Resiliencia de Identidad</li>
                       </ul>
-                      <div className="text-xs text-brand-accent bg-[#1C3A5E]/20 p-3 rounded-xl border border-brand-accent/20 flex items-center gap-2">
+                      <div className="text-xs text-brand-accent bg-brand-accent/10 p-3 rounded-xl border border-brand-accent/20 flex items-center gap-2">
                         <FileCheck2 className="w-4 h-4 shrink-0" />
                         <span>Estimado: {testInfo.duration} • Completamente gratuíto</span>
                       </div>
@@ -524,7 +524,7 @@ export default function DiagnosticCenter({ onRecommendBook }: DiagnosticCenterPr
                           <h4 className="font-serif text-xl font-bold text-brand-text">Consejo Pastoral & Bíblico de Josue:</h4>
                         </div>
                         
-                        <p className="text-brand-text font-serif italic text-base leading-relaxed bg-[#1C3A5E]/15 p-4 rounded-xl border-l-[3px] border-brand-accent">
+                        <p className="text-brand-text font-serif italic text-base leading-relaxed bg-brand-accent/5 p-4 rounded-xl border-l-[3px] border-brand-accent">
                           &ldquo;{testResult.interpretation.pastoralCounsel}&rdquo;
                         </p>
 
@@ -548,7 +548,7 @@ export default function DiagnosticCenter({ onRecommendBook }: DiagnosticCenterPr
                       const book = ebooksData.find(b => b.id === testResult.interpretation.recommendedBookId);
                       if (!book) return null;
                       return (
-                        <div className="bg-[#1C3A5E]/20 border border-brand-accent/20 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div className="bg-brand-accent/5 border border-brand-accent/20 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
                           <div className="space-y-2 md:max-w-xl text-center md:text-left">
                             <span className="font-space text-[10px] text-brand-accent tracking-widest uppercase">RECOMENDACIÓN COMPLEMENTARIA</span>
                             <h4 className="text-xl md:text-2xl font-serif text-brand-text">
@@ -626,7 +626,7 @@ export default function DiagnosticCenter({ onRecommendBook }: DiagnosticCenterPr
                             <div key={dim.key} className="space-y-1.5">
                               <div className="flex justify-between items-center text-xs">
                                 <span className="font-space font-bold uppercase text-brand-text">{dim.label}</span>
-                                <span className="font-space font-bold text-brand-accent bg-[#1C3A5E]/40 border border-brand-accent/25 px-2 py-0.5 rounded-md text-[11px]">
+                                <span className="font-space font-bold text-brand-accent bg-brand-accent/10 border border-brand-accent/25 px-2 py-0.5 rounded-md text-[11px]">
                                   {val} / 10
                                 </span>
                               </div>
@@ -715,7 +715,7 @@ export default function DiagnosticCenter({ onRecommendBook }: DiagnosticCenterPr
 
                           <div className="space-y-4">
                             <span className="font-space text-[10px] text-brand-accent uppercase tracking-wider block">CONSEJERÍA AL CORAZÓN</span>
-                            <p className="text-brand-text font-serif italic text-base leading-relaxed bg-[#1C3A5E]/15 p-4 rounded-xl border-l-[3px] border-brand-accent">
+                            <p className="text-brand-text font-serif italic text-base leading-relaxed bg-brand-accent/5 p-4 rounded-xl border-l-[3px] border-brand-accent">
                               &ldquo;{ruedaResult.guidance}&rdquo;
                             </p>
                           </div>
@@ -735,7 +735,7 @@ export default function DiagnosticCenter({ onRecommendBook }: DiagnosticCenterPr
                           const book = ebooksData.find(b => b.id === ruedaResult.bookId);
                           if (!book) return null;
                           return (
-                            <div className="bg-[#1C3A5E]/20 border border-brand-accent/20 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 mt-2">
+                            <div className="bg-brand-accent/5 border border-brand-accent/20 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 mt-2">
                               <div className="text-center sm:text-left">
                                 <span className="font-space text-[9px] text-brand-accent tracking-widest uppercase">EBOOK ALINEADO RECOMENDADO</span>
                                 <h5 className="font-serif text-sm font-bold text-brand-text mt-0.5">{book.title} (PDF)</h5>

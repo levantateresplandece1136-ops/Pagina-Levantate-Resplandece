@@ -199,8 +199,8 @@ export default function App() {
       {/* EPIC HERO BANNER */}
       <section className="relative pt-16 pb-24 md:py-32 overflow-hidden bg-brand-bg">
         {/* Decorative Vector Radial Glows */}
-        <div className="absolute top-[10%] right-[-10%] w-[500px] h-[500px] bg-brand-radial/15 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-[5%] left-[-10%] w-[450px] h-[450px] bg-[#1C3A5E]/10 rounded-full blur-[120px] pointer-events-none" />
+        <div className="absolute top-[10%] right-[-10%] w-[500px] h-[500px] bg-brand-radial rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-[5%] left-[-10%] w-[450px] h-[450px] bg-brand-accent/5 rounded-full blur-[120px] pointer-events-none" />
 
         <div className="max-w-6xl mx-auto px-6 relative z-10 text-center">
           
@@ -210,7 +210,7 @@ export default function App() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.8 }}
-              className="px-4 py-1.5 rounded-full bg-[#1C3A5E]/20 border border-brand-accent/20 text-brand-accent font-space text-[10px] tracking-[0.25em] uppercase mb-4"
+              className="px-4 py-1.5 rounded-full bg-brand-accent/10 border border-brand-accent/30 text-brand-accent font-space text-[10px] tracking-[0.25em] uppercase mb-4"
             >
               Isaías 60:1
             </motion.div>
@@ -256,7 +256,7 @@ export default function App() {
               href="https://levantateresplandece.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full max-w-lg bg-gradient-to-r from-brand-card via-[#0A0D1A] to-brand-card hover:via-[#11162C] border-2 border-brand-accent/40 hover:border-brand-accent/80 rounded-2xl p-5 hover:translate-y-[-1px] transition-all duration-300 shadow-xl shadow-brand-accent/5 flex flex-col sm:flex-row items-center justify-between gap-4 group cursor-pointer text-center sm:text-left"
+              className="w-full max-w-lg bg-gradient-to-r from-brand-card via-brand-alt to-brand-card hover:from-white hover:to-white border-2 border-brand-accent/40 hover:border-brand-accent/80 rounded-2xl p-5 hover:translate-y-[-1px] transition-all duration-300 shadow-xl shadow-brand-accent/[0.03] flex flex-col sm:flex-row items-center justify-between gap-4 group cursor-pointer text-center sm:text-left"
             >
               <div className="space-y-1">
                 <div className="flex items-center justify-center sm:justify-start gap-2">
@@ -310,7 +310,7 @@ export default function App() {
                 <div className="absolute top-[-30px] right-[-30px] w-48 h-48 bg-brand-accent/5 rounded-full blur-2xl" />
                 
                 {/* Profile Avatar / Credentials Logo */}
-                <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-[#1C3A5E] to-brand-accent/40 border border-brand-accent flex items-center justify-center text-brand-accent">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-brand-accent/20 to-brand-accent/10 border border-brand-accent flex items-center justify-center text-brand-accent">
                   <UserCheck className="w-10 h-10" />
                 </div>
 

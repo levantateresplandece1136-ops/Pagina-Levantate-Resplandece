@@ -213,7 +213,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
             <div className="flex justify-between items-center text-[10px] font-space text-brand-accent">
               <span className="truncate max-w-[150px]">{book.category}</span>
               {book.isPopular && (
-                <span className="flex items-center gap-1 bg-brand-accent/10 border border-brand-accent/20 text-[#E8C96A] px-2 py-0.5 rounded-full text-[9px] font-bold shrink-0">
+                <span className="flex items-center gap-1 bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-2 py-0.5 rounded-full text-[9px] font-bold shrink-0">
                   <TrendingUp className="w-2.5 h-2.5" /> {book.badge}
                 </span>
               )}
@@ -235,7 +235,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
           
           <button
             onClick={() => handleOpenBook(book)}
-            className="flex items-center gap-2 bg-[#1C3A5E]/30 hover:bg-brand-accent hover:text-brand-bg text-brand-accent border border-brand-accent/25 hover:border-brand-accent font-space text-[10px] uppercase font-bold py-2 px-4 rounded-lg transition-all"
+            className="flex items-center gap-2 bg-brand-accent/10 hover:bg-brand-accent hover:text-brand-bg text-brand-accent border border-brand-accent/20 hover:border-brand-accent font-space text-[10px] uppercase font-bold py-2 px-4 rounded-lg transition-all"
           >
             Estudiar <ChevronRight className="w-3.5 h-3.5" />
           </button>
@@ -267,7 +267,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
             return (
               <div 
                 key={section.id} 
-                className="bg-gradient-to-b from-[#111625]/90 to-[#0A0D1A]/95 border border-brand-border/60 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl shadow-brand-accent/[0.015] hover:border-brand-accent/30 transition-all duration-300 group"
+                className="bg-gradient-to-b from-brand-card to-brand-alt border border-brand-border/80 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-xl shadow-brand-accent/[0.015] hover:border-brand-accent/30 transition-all duration-300 group"
               >
                 <div className="space-y-5">
                   {/* Title / Header */}
@@ -316,7 +316,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
 
                   {/* Description & Badge block */}
                   <div className="space-y-4 text-left">
-                    <div className="inline-flex items-center gap-2 bg-[#1C3A5E]/20 border border-brand-accent/15 px-3 py-1 rounded-full">
+                    <div className="inline-flex items-center gap-2 bg-brand-accent/10 border border-brand-accent/20 px-3 py-1 rounded-full">
                       <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse" />
                       <span className="font-space text-[9px] uppercase tracking-widest text-brand-accent font-bold">
                         {section.id === "renueva-mente" && "Verdad & Identidad"}
@@ -490,7 +490,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                       <motion.div
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="bg-[#1C3A5E]/20 border border-brand-accent/30 p-5 rounded-2xl flex flex-col items-center justify-center text-center space-y-4"
+                        className="bg-brand-accent/5 border border-brand-accent/20 p-5 rounded-2xl flex flex-col items-center justify-center text-center space-y-4"
                       >
                         <div className="w-10 h-10 rounded-full bg-brand-accent/15 flex items-center justify-center text-brand-accent border border-brand-accent/20">
                           <CheckCircle className="w-5 h-5" />
