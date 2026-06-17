@@ -23,6 +23,7 @@ import { ebooksData } from "./data";
 import ResourceLibrary from "./components/ResourceLibrary";
 import PastoralContact from "./components/PastoralContact";
 import appLogo from "./assets/images/app_logo_1781233600045.jpg";
+import heroClimbing from "./assets/images/levantate_resplandece_hero_climbing_1781676720148.jpg";
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -194,7 +195,7 @@ export default function App() {
         {/* Background Image of climbing mountain hand help */}
         <div className="absolute inset-0">
           <img
-            src="/src/assets/images/levantate_resplandece_hero_climbing_1781676720148.jpg"
+            src={heroClimbing}
             alt="Levántate Resplandece - Un llamado para volver a Dios"
             className="w-full h-full object-cover object-[center_35%]"
             referrerPolicy="no-referrer"
