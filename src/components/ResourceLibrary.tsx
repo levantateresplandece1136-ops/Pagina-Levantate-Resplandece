@@ -370,6 +370,32 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                       </a>
                     </div>
                   )}
+                  {section.id === "lidera-integridad" && (
+                    <div className="pt-2">
+                      <a 
+                        href="https://renovados-rompiendo-las-creencias-l.vercel.app/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-brand-accent text-white hover:bg-brand-hover text-xs font-space font-bold py-2.5 px-4 rounded-xl transition-all shadow-md shadow-brand-accent/10 hover:shadow-brand-accent/20 cursor-pointer"
+                      >
+                        Realizar Test "Rompiendo Creencias Limitantes" 
+                        <ChevronRight className="w-4 h-4" />
+                      </a>
+                    </div>
+                  )}
+                  {section.id === "esperanza-batalla" && (
+                    <div className="pt-2">
+                      <a 
+                        href="https://vence-la-ansiedad.vercel.app/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="inline-flex w-full sm:w-auto items-center justify-center gap-2 bg-brand-accent text-white hover:bg-brand-hover text-xs font-space font-bold py-2.5 px-4 rounded-xl transition-all shadow-md shadow-brand-accent/10 hover:shadow-brand-accent/20 cursor-pointer"
+                      >
+                        Realizar Test "Vence la Ansiedad" 
+                        <ChevronRight className="w-4 h-4" />
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
             );

@@ -21,7 +21,6 @@ import {
 } from "lucide-react";
 import { ebooksData } from "./data";
 import ResourceLibrary from "./components/ResourceLibrary";
-import DiagnosticCenter from "./components/DiagnosticCenter";
 import PastoralContact from "./components/PastoralContact";
 import appLogo from "./assets/images/app_logo_1781233600045.jpg";
 
@@ -110,12 +109,6 @@ export default function App() {
               Biblioteca
             </button>
             <button 
-              onClick={() => scrollToAnchor("diagnosticos-seccion")}
-              className="text-brand-muted hover:text-brand-accent transition-colors"
-            >
-              Autodiagnósticos
-            </button>
-            <button 
               onClick={() => scrollToAnchor("sobre-seccion")}
               className="text-brand-muted hover:text-brand-accent transition-colors"
             >
@@ -165,12 +158,6 @@ export default function App() {
                 className="text-brand-muted hover:text-brand-accent py-2"
               >
                 Biblioteca de Recursos
-              </button>
-              <button 
-                onClick={() => scrollToAnchor("diagnosticos-seccion")}
-                className="text-brand-muted hover:text-brand-accent py-2"
-              >
-                Diagnósticos Interactivos
               </button>
               <button 
                 onClick={() => scrollToAnchor("sobre-seccion")}
@@ -238,15 +225,9 @@ export default function App() {
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4.5 mt-10">
             <button
               onClick={() => scrollToAnchor("recursos-seccion")}
-              className="w-full sm:w-auto bg-brand-accent hover:bg-brand-hover text-brand-bg font-space text-xs font-bold uppercase tracking-wider py-4 px-8 rounded-xl transition-all shadow-xl shadow-brand-accent/5 cursor-pointer text-center"
+              className="w-full sm:w-auto bg-brand-accent hover:bg-brand-hover text-brand-bg font-space text-xs font-bold uppercase tracking-wider py-4 px-10 rounded-xl transition-all shadow-xl shadow-brand-accent/5 cursor-pointer text-center font-medium"
             >
               Explorar Biblioteca Gratuita
-            </button>
-            <button
-              onClick={() => scrollToAnchor("diagnosticos-seccion")}
-              className="w-full sm:w-auto bg-brand-card hover:bg-brand-border border border-brand-border text-brand-text font-space text-xs hover:text-brand-accent py-4 px-8 rounded-xl transition-all cursor-pointer text-center"
-            >
-              Iniciar Autodiagnóstico
             </button>
           </div>
 
@@ -288,9 +269,6 @@ export default function App() {
         selectedBookId={recommendedBookId} 
         onClearSelectedBook={() => setRecommendedBookId(null)} 
       />
-
-      {/* DYNAMIC DIAGNOSTIC CENTER */}
-      <DiagnosticCenter onRecommendBook={handleRecommendBook} />
 
       {/* BIOGRAPHY / ABOUT THE PASTOR JOSUE */}
       <section id="sobre-seccion" className="py-24 bg-brand-bg border-t border-brand-border scroll-mt-20">
@@ -433,11 +411,6 @@ export default function App() {
               <li>
                 <button onClick={() => scrollToAnchor("recursos-seccion")} className="hover:text-brand-accent transition-colors">
                   Biblioteca de Ebooks
-                </button>
-              </li>
-              <li>
-                <button onClick={() => scrollToAnchor("diagnosticos-seccion")} className="hover:text-brand-accent transition-colors">
-                  Autodiagnósticos de Salud
                 </button>
               </li>
               <li>
