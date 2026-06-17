@@ -53,10 +53,28 @@ export default function PastoralContact() {
     if (!fullName || !email || !message) return;
 
     setIsSubmitting(true);
+
+    const subject = `[Contacto Levántate Resplandece] ${counselingArea} - ${fullName}`;
+    const body = `Hola, Josue Cortés y equipo de Levántate Resplandece.\n\nHe enviado un mensaje de contacto a través del formulario de la página web:\n\n` +
+      `--------------------------------------\n` +
+      `👤 Nombre Completo: ${fullName}\n` +
+      `✉️ Correo de Contacto: ${email}\n` +
+      `📅 Rango de Edad: ${ageGroup}\n` +
+      `💡 Motivo de Contacto / Área: ${counselingArea}\n` +
+      `⚠️ Urgencia Sugerida: ${urgency}\n` +
+      `--------------------------------------\n\n` +
+      `📝 Mensaje / Descripción:\n${message}\n\n` +
+      `Quedo a la espera de sus comentarios. ¡Muchas gracias!`;
+
+    const mailtoUrl = `mailto:levantateresplandecepagina@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
     setTimeout(() => {
       setIsSubmitting(false);
       setFormSubmitted(true);
-    }, 1500);
+      
+      // Trigger mailto redirection to open the native email client configured with the official email
+      window.location.href = mailtoUrl;
+    }, 1200);
   };
 
   const handleResetForm = () => {
@@ -72,13 +90,12 @@ export default function PastoralContact() {
         
         {/* Intro */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">MENTORÍA & ORIENTACIÓN</span>
+          <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">CONTACTO DIRECTO</span>
           <h2 className="text-4xl md:text-5xl font-serif font-light text-brand-text mt-3">
-            Caminar en <span className="text-brand-accent italic font-normal">Comunidad</span>
+            Ponte en <span className="text-brand-accent italic font-normal">Contacto</span>
           </h2>
           <p className="text-brand-muted text-sm mt-4">
-            La transformación personal raramente ocurre en el aislamiento. Encuentra respuestas a tus dudas pastorales 
-            o solicita una cita de orientación personalizada de 30 minutos sin coste alguno.
+            Si deseas hacernos llegar una consulta pastoral, sugerencia, o agendar un tiempo de acompañamiento personalizado, escríbeme con total libertad.
           </p>
         </div>
 
@@ -150,8 +167,8 @@ export default function PastoralContact() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 
                 <div className="space-y-1">
-                  <h3 className="font-serif text-2xl text-brand-text">Solicitud de Orientación</h3>
-                  <p className="text-xs text-brand-muted font-space">Agenda una llamada de orientación pastoral privada de 30 minutos.</p>
+                  <h3 className="font-serif text-2xl text-brand-text">Enviar Mensaje</h3>
+                  <p className="text-xs text-brand-muted font-space">Ponte en contacto o solicita una consulta pastoral de acompañamiento.</p>
                 </div>
 
                 <div className="space-y-4">
@@ -205,17 +222,17 @@ export default function PastoralContact() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-space text-brand-accent uppercase block">Área de Apoyo</label>
+                      <label className="text-[10px] font-space text-brand-accent uppercase block">Motivo de Contacto</label>
                       <select
                         value={counselingArea}
                         onChange={(e) => setCounselingArea(e.target.value)}
                         className="w-full bg-brand-bg text-brand-text px-3.5 py-3.5 rounded-xl border border-brand-border focus:border-brand-accent focus:outline-none text-xs transition-colors"
                       >
-                        <option value="Personal">Crecimiento Personal</option>
+                        <option value="Personal">Consulta General</option>
                         <option value="Emocional">Estrés o Ansiedad</option>
                         <option value="Matrimonial">Límites / Matrimonio</option>
                         <option value="Paternidad">Crianza Familiar</option>
-                        <option value="Ministerio">Mentoring Ministerial</option>
+                        <option value="Ministerio">Mentoring o Ministerio</option>
                       </select>
                     </div>
 
@@ -235,13 +252,13 @@ export default function PastoralContact() {
 
                   {/* Context Textarea */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-space text-brand-accent uppercase block">Describe tu necesidad brevemente</label>
+                    <label className="text-[10px] font-space text-brand-accent uppercase block">Describe tu mensaje brevemente</label>
                     <textarea
                       required
                       rows={4}
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      placeholder="Comparte con confianza qué área te gustaría enfocar en la consulta. Toda palabra vertida aquí está protegida bajo reserva total."
+                      placeholder="Comparte tu mensaje o consulta. Responderemos con absoluta reserva y confidencialidad."
                       className="w-full bg-brand-bg text-brand-text px-3.5 py-2.5 rounded-xl border border-brand-border focus:border-brand-accent focus:outline-none text-xs text-brand-text transition-colors resize-none leading-relaxed"
                     />
                   </div>
@@ -253,14 +270,14 @@ export default function PastoralContact() {
                     disabled={isSubmitting}
                     className="w-full bg-brand-accent hover:bg-brand-hover text-brand-bg font-space text-xs font-bold uppercase tracking-wider py-3.5 rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                   >
-                    {isSubmitting ? "Tramitando tu espacio..." : "Enviar Solicitud Confidencial"}
+                    {isSubmitting ? "Enviando mensaje..." : "Enviar Mensaje de Contacto"}
                     <Send className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
                 <div className="flex justify-center items-center gap-1 text-[10px] text-brand-muted font-space mt-2">
                   <Calendar className="w-3.5 h-3.5 text-brand-accent" />
-                  <span>Citas agendadas vía Zoom o Microsoft Teams.</span>
+                  <span>Leemos y respondemos todos los mensajes con absoluta reserva.</span>
                 </div>
 
               </form>
@@ -275,9 +292,9 @@ export default function PastoralContact() {
                 </div>
                 
                 <div className="space-y-2">
-                  <h4 className="font-serif text-2xl text-brand-text">¡Solicitud Procesada!</h4>
+                  <h4 className="font-serif text-2xl text-brand-text">¡Mensaje Recibido!</h4>
                   <p className="text-sm text-brand-muted pl-4 pr-4 leading-relaxed font-sans max-w-sm">
-                    Estimado/a <b>{fullName}</b>, tu propuesta de orientación pastoral respecto a <b>{counselingArea}</b> ha sido despachada con absoluta reserva de confesión.
+                    Estimado/a <b>{fullName}</b>, tu mensaje de contacto respecto a <b>{counselingArea}</b> ha sido recibido con total reserva.
                   </p>
                 </div>
 
@@ -286,7 +303,7 @@ export default function PastoralContact() {
                     <Info className="w-3.5 h-3.5" /> Próximo paso:
                   </div>
                   <p>
-                    Revisa tu casilla <b>{email}</b> en un lapso no mayor a 24-48 horas hábiles. Nuestro asistente administrativo te enviará los tres horarios de disponibilidad disponibles para tu videollamada.
+                    Revisaremos tu mensaje y nos comunicaremos contigo a tu correo de contacto <b>{email}</b> en un lapso no mayor a 24-48 horas hábiles.
                   </p>
                 </div>
 

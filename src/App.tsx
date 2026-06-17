@@ -118,18 +118,18 @@ export default function App() {
               onClick={() => scrollToAnchor("contacto-seccion")}
               className="text-brand-muted hover:text-brand-accent transition-colors"
             >
-              Citas & FAQ
+              Contacto
             </button>
           </nav>
 
           {/* Contact Button Desktop */}
           <div className="hidden md:block">
-            <a
-              href="mailto:levantateresplandecepagina@gmail.com"
+            <button
+              onClick={() => scrollToAnchor("contacto-seccion")}
               className="inline-block bg-gradient-to-r from-brand-card to-brand-border hover:from-brand-accent hover:to-brand-hover text-brand-accent hover:text-brand-bg px-5 py-2.5 rounded-lg border border-brand-accent/30 hover:border-brand-hover font-space text-[10px] uppercase font-bold tracking-wider transition-all duration-300 shadow-md shadow-brand-accent/5 cursor-pointer text-center"
             >
-              Contáctate
-            </a>
+              Contáctame
+            </button>
           </div>
 
           {/* Hamburger Mobile */}
@@ -166,25 +166,70 @@ export default function App() {
                 Sobre Josue
               </button>
               <button 
-                onClick={() => scrollToAnchor("contacto-seccion")}
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  scrollToAnchor("contacto-seccion");
+                }}
                 className="text-brand-muted hover:text-brand-accent py-2"
               >
-                Consultas & Preguntas
+                Contacto
               </button>
               
-              <a
-                href="mailto:levantateresplandecepagina@gmail.com"
-                className="w-full bg-brand-accent text-brand-bg font-bold py-3.5 rounded-xl text-xs uppercase tracking-widest mt-4 text-center block"
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  scrollToAnchor("contacto-seccion");
+                }}
+                className="w-full bg-brand-accent text-brand-bg font-bold py-3.5 rounded-xl text-xs uppercase tracking-widest mt-4 text-center block cursor-pointer"
               >
-                Contáctate
-              </a>
+                Contáctame
+              </button>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* EPIC HERO BANNER */}
-      <section className="relative pt-16 pb-24 md:py-32 overflow-hidden bg-brand-bg">
+      {/* EPIC HERO MOUNTAIN COVER BANNER */}
+      <section className="relative w-full h-[60vh] md:h-[75vh] lg:h-[82vh] bg-brand-alt overflow-hidden flex flex-col justify-end">
+        {/* Background Image of climbing mountain hand help */}
+        <div className="absolute inset-0">
+          <img
+            src="/src/assets/images/levantate_resplandece_hero_climbing_1781676720148.jpg"
+            alt="Levántate Resplandece - Un llamado para volver a Dios"
+            className="w-full h-full object-cover object-[center_35%]"
+            referrerPolicy="no-referrer"
+          />
+          {/* Subtle gradient to darken top a tiny bit so navbar feels premium */}
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/25 to-transparent pointer-events-none" />
+        </div>
+
+        {/* Translucent overlay container on bottom half like the user's reference screenshot */}
+        <div className="relative w-full z-10 bg-[#1e1e1e]/60 backdrop-blur-[1.5px] border-t border-white/15 py-10 md:py-14 text-center text-white px-6">
+          <div className="max-w-4xl mx-auto space-y-2 md:space-y-3">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-sans tracking-tight text-white font-normal leading-none"
+              style={{ fontFamily: '"Inter", system-ui, -apple-system, sans-serif' }}
+            >
+              Levántate Resplandece
+            </motion.h1>
+            
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-base sm:text-lg md:text-xl lg:text-2xl font-light text-white/90 tracking-wide font-sans mt-1"
+            >
+              Un llamado para volver a Dios
+            </motion.p>
+          </div>
+        </div>
+      </section>
+
+      {/* REVELATORY SCRIPTURE & WELCOME HUB */}
+      <section className="relative py-16 md:py-24 overflow-hidden bg-brand-bg border-b border-brand-border/60">
         {/* Decorative Vector Radial Glows */}
         <div className="absolute top-[10%] right-[-10%] w-[500px] h-[500px] bg-brand-radial rounded-full blur-[140px] pointer-events-none" />
         <div className="absolute bottom-[5%] left-[-10%] w-[450px] h-[450px] bg-brand-accent/5 rounded-full blur-[120px] pointer-events-none" />
@@ -192,7 +237,7 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-6 relative z-10 text-center">
           
           {/* Scripture Passage Quote */}
-          <div className="mb-8 inline-flex flex-col items-center">
+          <div className="mb-10 inline-flex flex-col items-center">
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -210,10 +255,10 @@ export default function App() {
 
           {/* Main Hero Hook */}
           <div className="max-w-4xl mx-auto space-y-6 mt-4">
-            <h1 className="text-4xl sm:text-6xl md:text-7xl font-serif font-light text-brand-text leading-[1.08] tracking-tight">
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-serif font-light text-brand-text leading-[1.08] tracking-tight">
               Conocimiento que <span className="text-brand-accent italic font-normal">transforma</span>.<br />
               Recursos que <span className="text-brand-accent italic font-normal">acompañan</span>.
-            </h1>
+            </h2>
             
             <p className="text-brand-muted text-base md:text-lg max-w-2xl mx-auto font-sans leading-relaxed">
               Te damos la bienvenida al ecosistema digital de recursos y autoevaluaciones de <b>Josue Cortés</b>. 
@@ -232,7 +277,7 @@ export default function App() {
           </div>
 
           {/* Devotional App Banner/Button */}
-          <div className="mt-8 flex justify-center px-4">
+          <div className="mt-12 flex justify-center px-4">
             <a
               href="https://levantateresplandece.com/"
               target="_blank"
@@ -420,7 +465,7 @@ export default function App() {
               </li>
               <li>
                 <button onClick={() => scrollToAnchor("contacto-seccion")} className="hover:text-brand-accent transition-colors">
-                  Consultas de Consejería
+                  Contacto Directo
                 </button>
               </li>
             </ul>
