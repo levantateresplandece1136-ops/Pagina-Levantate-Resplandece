@@ -25,7 +25,6 @@ import PastoralContact from "./components/PastoralContact";
 import SocialCommunity from "./components/SocialCommunity";
 import appLogo from "./assets/images/app_logo_1781233600045.jpg";
 import heroClimbing from "./assets/images/levantate_resplandece_hero_climbing_1781676720148.jpg";
-import josuePhoto from "./assets/images/josue_cortes_1781932065559.jpg";
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -330,113 +329,76 @@ export default function App() {
         onClearSelectedBook={() => setRecommendedBookId(null)} 
       />
 
-      {/* BIOGRAPHY / ABOUT THE PASTOR JOSUE */}
+      {/* BIOGRAPHY / ABOUT THE AUTOR JOSUE */}
       <section id="sobre-seccion" className="py-24 bg-brand-bg border-t border-brand-border scroll-mt-20">
-        <div className="max-w-6xl mx-auto px-6">
+        <div className="max-w-3xl mx-auto px-6 space-y-8">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            
-            {/* Left Side: Editorial Styled Profile Cover */}
-            <div className="lg:col-span-5 relative">
-              <div className="absolute inset-x-0 bottom-0 top-1/3 bg-gradient-to-t from-brand-bg to-transparent z-10" />
-              
-              {/* Gold decorative corner brackets */}
-              <div className="absolute top-[-10px] left-[-10px] w-20 h-20 border-t-2 border-l-2 border-brand-accent pointer-events-none" />
-              <div className="absolute bottom-[-10px] right-[-10px] w-20 h-20 border-b-2 border-r-2 border-brand-accent pointer-events-none" />
+          <div className="text-center space-y-3">
+            <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">CONOCE AL AUTOR</span>
+            <h2 className="text-4.5xl font-serif font-light text-brand-text leading-tight">
+              Un testimonio de <span className="text-brand-accent italic font-normal">gracia</span> y <span className="text-brand-accent italic font-normal">restauración</span>
+            </h2>
+          </div>
+          
+          <div className="space-y-4 text-xs md:text-sm text-brand-muted leading-relaxed font-sans">
+            <p>
+              Mi nombre es Josué Cortés. Durante más de veinte años he servido en el ministerio, tanto de tiempo completo como de manera voluntaria, acompañando, enseñando y formando a otros en su caminar con Dios.
+            </p>
+            <p>
+              Sin embargo, mi historia no está marcada únicamente por los años de experiencia, sino por la gracia de Dios en medio del fracaso. Hubo una temporada en la que atravesé una de las crisis más profundas de mi vida. Mi ministerio se detuvo, mi matrimonio estuvo cerca de quebrantarse, enfrenté dificultades familiares y económicas, perdí fuentes de ingreso y tuve que comenzar nuevamente desde cero.
+            </p>
+            <p>
+              En medio de ese proceso busqué ayuda. Yo mismo pasé por consejería y descubrí algo que transformó mi perspectiva: muchas personas están sufriendo en silencio, intentando salir adelante solas, buscando respuestas en internet sin saber distinguir entre aquello que edifica y aquello que confunde. Comprendí entonces la enorme necesidad de hombres y mujeres que acompañen con verdad, gracia y fidelidad a las Escrituras.
+            </p>
+            <p>
+              Hoy sirvo desde ese lugar de humildad. No hablo desde la perfección, sino desde las cicatrices. He fallado lo suficiente para entender cómo se cae una persona, pero también he visto la fidelidad de Dios para restaurar, sostener y dar nuevos comienzos.
+            </p>
+            <p>
+              Mi pasión es preparar a otros para vivir para la gloria de Dios. A través de la consejería bíblica, la mentoría, la capacitación y la creación de recursos digitales, acompaño especialmente a líderes, pastores, padres, hombres y mujeres que necesitan levantarse nuevamente y descubrir que aún hay esperanza.
+            </p>
+            <p>
+              Creo firmemente que la Biblia es suficiente, que las personas son profundamente valiosas y que la verdadera plenitud depende del concepto que tenemos acerca de quién es Dios y quiénes somos delante de Él.
+            </p>
+            <p>
+              Junto a mi esposa y mi hijas, quienes han sido parte esencial de esta historia de restauración, sigo construyendo una comunidad donde nadie tenga que caminar solo. Mi anhelo es ayudar a muchos a volver a Dios, levantarse de nuevo y vivir con propósito.
+            </p>
+          </div>
 
-              <div className="bg-brand-card border border-brand-border rounded-2xl p-8 space-y-6 relative overflow-hidden">
-                <div className="absolute top-[-30px] right-[-30px] w-48 h-48 bg-brand-accent/5 rounded-full blur-2xl" />
-                
-                {/* Profile Image of Josue */}
-                <div className="w-28 h-28 rounded-full overflow-hidden border border-brand-accent/30 shadow-lg shadow-brand-accent/[0.02]">
-                  <img 
-                    src={josuePhoto} 
-                    alt="Josué Cortés" 
-                    className="w-full h-full object-cover object-[center_20%]"
-                    referrerPolicy="no-referrer"
+          {/* Quotes Testimonials Slider */}
+          <div className="bg-brand-card border border-brand-border p-6 rounded-2xl space-y-4 relative overflow-hidden">
+            <div className="flex justify-between items-center border-b border-brand-border/40 pb-3">
+              <span className="font-space text-[10px] text-brand-accent font-bold uppercase tracking-wider">Testimonios de Restauración</span>
+              <div className="flex items-center gap-0.5">
+                {[...Array(testimonials[activeTestimonial].stars)].map((_, i) => (
+                  <Star key={i} className="w-3.5 h-3.5 fill-[#E8C96A] text-[#E8C96A]" />
+                ))}
+              </div>
+            </div>
+
+            <p className="text-brand-text font-serif italic text-sm leading-relaxed">
+              &ldquo;{testimonials[activeTestimonial].quote}&rdquo;
+            </p>
+
+            <div className="flex justify-between items-center pt-1">
+              <div>
+                <span className="block font-space text-[10px] text-brand-text font-bold uppercase">{testimonials[activeTestimonial].name}</span>
+                <span className="block text-[9px] text-brand-muted font-sans font-medium">{testimonials[activeTestimonial].tagline} • {testimonials[activeTestimonial].age}</span>
+              </div>
+
+              {/* Carousel Page dots */}
+              <div className="flex gap-2">
+                {testimonials.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveTestimonial(idx)}
+                    className={`w-2.5 h-2.5 rounded-full cursor-pointer transition-colors ${
+                      activeTestimonial === idx ? "bg-brand-accent" : "bg-brand-border hover:bg-brand-muted"
+                    }`}
+                    title={`Ir al testimonio ${idx + 1}`}
                   />
-                </div>
-
-                <div className="space-y-1">
-                  <h4 className="font-serif text-2xl font-bold text-brand-text">Josue Cortés</h4>
-                </div>
-
-                <p className="text-brand-muted font-serif italic text-xs leading-relaxed pt-3 border-t border-brand-border/40">
-                  &ldquo;Acompaño a matrimonios y líderes en etapas de transición a desatar nudos relacionales mediante la teología de la gracia y pautas de salud mental ordenada.&rdquo;
-                </p>
+                ))}
               </div>
             </div>
-
-            {/* Right Side: Philosophy Text representation */}
-            <div className="lg:col-span-7 space-y-6">
-              <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">CONOCE AL AUTOR</span>
-              <h2 className="text-4xl font-serif font-light text-brand-text leading-tight sm:text-4.5xl">
-                Un testimonio de <span className="text-brand-accent italic font-normal">gracia</span> y <span className="text-brand-accent italic font-normal">restauración</span>
-              </h2>
-              
-              <div className="space-y-4 text-xs md:text-sm text-brand-muted leading-relaxed font-sans">
-                <p>
-                  Mi nombre es Josué Cortés. Durante más de veinte años he servido en el ministerio, tanto de tiempo completo como de manera voluntaria, acompañando, enseñando y formando a otros en su caminar con Dios.
-                </p>
-                <p>
-                  Sin embargo, mi historia no está marcada únicamente por los años de experiencia, sino por la gracia de Dios en medio del fracaso. Hubo una temporada en la que atravesé una de las crisis más profundas de mi vida. Mi ministerio se detuvo, mi matrimonio estuvo cerca de quebrantarse, enfrenté dificultades familiares y económicas, perdí fuentes de ingreso y tuve que comenzar nuevamente desde cero.
-                </p>
-                <p>
-                  En medio de ese proceso busqué ayuda. Yo mismo pasé por consejería y descubrí algo que transformó mi perspectiva: muchas personas están sufriendo en silencio, intentando salir adelante solas, buscando respuestas en internet sin saber distinguir entre aquello que edifica y aquello que confunde. Comprendí entonces la enorme necesidad de hombres y mujeres que acompañen con verdad, gracia y fidelidad a las Escrituras.
-                </p>
-                <p>
-                  Hoy sirvo desde ese lugar de humildad. No hablo desde la perfección, sino desde las cicatrices. He fallado lo suficiente para entender cómo se cae una persona, pero también he visto la fidelidad de Dios para restaurar, sostener y dar nuevos comienzos.
-                </p>
-                <p>
-                  Mi pasión es preparar a otros para vivir para la gloria de Dios. A través de la consejería bíblica, la mentoría, la capacitación y la creación de recursos digitales, acompaño especialmente a líderes, pastores, padres, hombres y mujeres que necesitan levantarse nuevamente y descubrir que aún hay esperanza.
-                </p>
-                <p>
-                  Creo firmemente que la Biblia es suficiente, que las personas son profundamente valiosas y que la verdadera plenitud depende del concepto que tenemos acerca de quién es Dios y quiénes somos delante de Él.
-                </p>
-                <p>
-                  Junto a mi esposa y mis hijas, quienes han sido parte esencial de esta historia de restauración, sigo construyendo una comunidad donde nadie tenga que caminar solo. Mi anhelo es ayudar a muchos a volver a Dios, levantarse de nuevo y vivir con propósito.
-                </p>
-              </div>
-
-              {/* Quotes Testimonials Slider */}
-              <div className="bg-brand-card border border-brand-border p-6 rounded-2xl space-y-4 relative overflow-hidden">
-                <div className="flex justify-between items-center border-b border-brand-border/40 pb-3">
-                  <span className="font-space text-[10px] text-brand-accent font-bold uppercase tracking-wider">Testimonios de Restauración</span>
-                  <div className="flex items-center gap-0.5">
-                    {[...Array(testimonials[activeTestimonial].stars)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-[#E8C96A] text-[#E8C96A]" />
-                    ))}
-                  </div>
-                </div>
-
-                <p className="text-brand-text font-serif italic text-sm leading-relaxed">
-                  &ldquo;{testimonials[activeTestimonial].quote}&rdquo;
-                </p>
-
-                <div className="flex justify-between items-center pt-1">
-                  <div>
-                    <span className="block font-space text-[10px] text-brand-text font-bold uppercase">{testimonials[activeTestimonial].name}</span>
-                    <span className="block text-[9px] text-brand-muted font-sans font-medium">{testimonials[activeTestimonial].tagline} • {testimonials[activeTestimonial].age}</span>
-                  </div>
-
-                  {/* Carousel Page dots */}
-                  <div className="flex gap-2">
-                    {testimonials.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => setActiveTestimonial(idx)}
-                        className={`w-2.5 h-2.5 rounded-full cursor-pointer transition-colors ${
-                          activeTestimonial === idx ? "bg-brand-accent" : "bg-brand-border hover:bg-brand-muted"
-                        }`}
-                        title={`Ir al testimonio ${idx + 1}`}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-            </div>
-
           </div>
 
         </div>
