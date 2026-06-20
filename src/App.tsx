@@ -22,8 +22,10 @@ import {
 import { ebooksData } from "./data";
 import ResourceLibrary from "./components/ResourceLibrary";
 import PastoralContact from "./components/PastoralContact";
+import SocialCommunity from "./components/SocialCommunity";
 import appLogo from "./assets/images/app_logo_1781233600045.jpg";
 import heroClimbing from "./assets/images/levantate_resplandece_hero_climbing_1781676720148.jpg";
+import josuePhoto from "./assets/images/josue_cortes_1781932065559.jpg";
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -255,16 +257,28 @@ export default function App() {
           </div>
 
           {/* Main Hero Hook */}
-          <div className="max-w-4xl mx-auto space-y-6 mt-4">
-            <h2 className="text-3xl sm:text-5xl md:text-6xl font-serif font-light text-brand-text leading-[1.08] tracking-tight">
-              Conocimiento que <span className="text-brand-accent italic font-normal">transforma</span>.<br />
-              Recursos que <span className="text-brand-accent italic font-normal">acompañan</span>.
-            </h2>
-            
-            <p className="text-brand-muted text-base md:text-lg max-w-2xl mx-auto font-sans leading-relaxed">
-              Te damos la bienvenida al ecosistema digital de recursos y autoevaluaciones de <b>Josue Cortés</b>. 
-              Desarrollamos herramientas de consejería bíblica y crecimiento personal orientadas a la reconciliación y restauración de vidas.
+          <div className="max-w-3xl mx-auto space-y-6 mt-6">
+            <p className="text-brand-accent font-serif font-light text-xl md:text-2xl leading-relaxed italic text-center">
+              &ldquo;Si algo he aprendido, es que la vida puede cambiar de un momento a otro.&rdquo;
             </p>
+            
+            <div className="space-y-4 text-brand-muted text-xs sm:text-sm md:text-base leading-relaxed font-sans max-w-2xl mx-auto text-center mt-6">
+              <p>
+                He visto sueños romperse, ministerios detenerse, matrimonios tambalearse y cuentas bancarias vaciarse. También sé lo que significa sentir que debes empezar de nuevo sin saber por dónde comenzar.
+              </p>
+              
+              <p className="text-brand-text font-serif text-lg md:text-xl font-light italic my-6 text-brand-accent">
+                Pero también he visto algo más grande: la fidelidad de Dios.
+              </p>
+              
+              <p>
+                Por eso hago lo que hago. Porque alguien caminó conmigo cuando más lo necesité, y ahora quiero caminar junto a otros. Quiero recordarte que tu historia no terminó en tu peor capítulo. Que el fracaso no define tu identidad. Que aún hay esperanza, dirección y propósito.
+              </p>
+              
+              <p className="text-brand-text font-serif font-light text-base md:text-lg italic pt-4 leading-relaxed max-w-xl mx-auto">
+                Mi deseo es acompañarte a volver a Dios, ordenar tu vida y descubrir que, incluso después de las ruinas, Él sigue haciendo nuevas todas las cosas.
+              </p>
+            </div>
           </div>
 
           {/* CTA Action Splitters */}
@@ -333,51 +347,54 @@ export default function App() {
               <div className="bg-brand-card border border-brand-border rounded-2xl p-8 space-y-6 relative overflow-hidden">
                 <div className="absolute top-[-30px] right-[-30px] w-48 h-48 bg-brand-accent/5 rounded-full blur-2xl" />
                 
-                {/* Profile Avatar / Credentials Logo */}
-                <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-brand-accent/20 to-brand-accent/10 border border-brand-accent flex items-center justify-center text-brand-accent">
-                  <UserCheck className="w-10 h-10" />
+                {/* Profile Image of Josue */}
+                <div className="w-28 h-28 rounded-full overflow-hidden border border-brand-accent/30 shadow-lg shadow-brand-accent/[0.02]">
+                  <img 
+                    src={josuePhoto} 
+                    alt="Josué Cortés" 
+                    className="w-full h-full object-cover object-[center_20%]"
+                    referrerPolicy="no-referrer"
+                  />
                 </div>
 
                 <div className="space-y-1">
                   <h4 className="font-serif text-2xl font-bold text-brand-text">Josue Cortés</h4>
-                  <p className="text-xs font-space text-brand-accent uppercase tracking-wider">Pastor & Consejero Bíblico</p>
                 </div>
 
-                <p className="text-brand-muted font-serif italic text-xs leading-relaxed">
+                <p className="text-brand-muted font-serif italic text-xs leading-relaxed pt-3 border-t border-brand-border/40">
                   &ldquo;Acompaño a matrimonios y líderes en etapas de transición a desatar nudos relacionales mediante la teología de la gracia y pautas de salud mental ordenada.&rdquo;
                 </p>
-
-                <div className="space-y-2.5 pt-4 border-t border-brand-border text-[11px] font-space text-brand-muted">
-                  <div className="flex items-center gap-2">
-                    <Award className="w-4 h-4 text-brand-accent shrink-0" />
-                    <span>Teólogo & Licenciado en Consejería Bíblica</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-brand-accent shrink-0" />
-                    <span>Miembro activo de redes de mentoría pastoral</span>
-                  </div>
-                </div>
               </div>
             </div>
 
             {/* Right Side: Philosophy Text representation */}
             <div className="lg:col-span-7 space-y-6">
               <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">CONOCE AL AUTOR</span>
-              <h2 className="text-4.5xl font-serif font-light text-brand-text leading-tight">
-                El Pastor que <span className="text-brand-accent italic font-normal">Escucha</span> antes de <span className="text-brand-accent italic font-normal">Aconsejar</span>
+              <h2 className="text-4xl font-serif font-light text-brand-text leading-tight sm:text-4.5xl">
+                Un testimonio de <span className="text-brand-accent italic font-normal">gracia</span> y <span className="text-brand-accent italic font-normal">restauración</span>
               </h2>
               
               <div className="space-y-4 text-xs md:text-sm text-brand-muted leading-relaxed font-sans">
                 <p>
-                  Josue Cortés cuenta con más de dos décadas de dedicación al estudio filológico de las Escrituras, 
-                  la pastoral familiar activa y la estructuración de talleres presenciales para líderes comunitarios. 
-                  Su enfoque surge de una profunda convicción: la consejería bíblica debe carecer de legalismo restrictivo 
-                  para en su lugar, abrazar una verdad restauradora y compasiva.
+                  Mi nombre es Josué Cortés. Durante más de veinte años he servido en el ministerio, tanto de tiempo completo como de manera voluntaria, acompañando, enseñando y formando a otros en su caminar con Dios.
                 </p>
                 <p>
-                  A través de su ecosistema <strong>Levántate Resplandece</strong>, Josue canaliza contenido escrito estructurado, 
-                  autoevaluaciones adaptadas de diagnósticos clínicos-pastorales, y asesoría cercana para adultos hispanos en 
-                  etapas críticas de fatiga vocacional o desgaste relacional en el hogar.
+                  Sin embargo, mi historia no está marcada únicamente por los años de experiencia, sino por la gracia de Dios en medio del fracaso. Hubo una temporada en la que atravesé una de las crisis más profundas de mi vida. Mi ministerio se detuvo, mi matrimonio estuvo cerca de quebrantarse, enfrenté dificultades familiares y económicas, perdí fuentes de ingreso y tuve que comenzar nuevamente desde cero.
+                </p>
+                <p>
+                  En medio de ese proceso busqué ayuda. Yo mismo pasé por consejería y descubrí algo que transformó mi perspectiva: muchas personas están sufriendo en silencio, intentando salir adelante solas, buscando respuestas en internet sin saber distinguir entre aquello que edifica y aquello que confunde. Comprendí entonces la enorme necesidad de hombres y mujeres que acompañen con verdad, gracia y fidelidad a las Escrituras.
+                </p>
+                <p>
+                  Hoy sirvo desde ese lugar de humildad. No hablo desde la perfección, sino desde las cicatrices. He fallado lo suficiente para entender cómo se cae una persona, pero también he visto la fidelidad de Dios para restaurar, sostener y dar nuevos comienzos.
+                </p>
+                <p>
+                  Mi pasión es preparar a otros para vivir para la gloria de Dios. A través de la consejería bíblica, la mentoría, la capacitación y la creación de recursos digitales, acompaño especialmente a líderes, pastores, padres, hombres y mujeres que necesitan levantarse nuevamente y descubrir que aún hay esperanza.
+                </p>
+                <p>
+                  Creo firmemente que la Biblia es suficiente, que las personas son profundamente valiosas y que la verdadera plenitud depende del concepto que tenemos acerca de quién es Dios y quiénes somos delante de Él.
+                </p>
+                <p>
+                  Junto a mi esposa y mis hijas, quienes han sido parte esencial de esta historia de restauración, sigo construyendo una comunidad donde nadie tenga que caminar solo. Mi anhelo es ayudar a muchos a volver a Dios, levantarse de nuevo y vivir con propósito.
                 </p>
               </div>
 
@@ -424,6 +441,9 @@ export default function App() {
 
         </div>
       </section>
+
+      {/* SOCIAL MEDIA & PODCAST COMMUNITY */}
+      <SocialCommunity />
 
       {/* PASTORAL CONTACT & DIAGNOSTICS FAQS */}
       <PastoralContact />
@@ -479,7 +499,7 @@ export default function App() {
               Nuestra labor se enmarca estrictamente en la pastoral bíblica, el mentoring relacional y la reconciliación familiar.
             </p>
             <div className="pt-2 text-[10px] text-brand-accent font-space">
-              contacto@levantateresplandece.org
+              levantateresplandecepagina@gmail.com
             </div>
           </div>
 
