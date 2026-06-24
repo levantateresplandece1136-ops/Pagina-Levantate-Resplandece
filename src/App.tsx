@@ -29,31 +29,65 @@ import heroClimbing from "./assets/images/levantate_resplandece_hero_climbing_17
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [recommendedBookId, setRecommendedBookId] = useState<string | null>(null);
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
 
-  const testimonials = [
-    {
-      name: "Carlos & Elena Mendoza",
-      age: "42 años",
-      tagline: "Matrimonio Restaurado",
-      quote: "Estábamos atrapados en un ciclo de reclamos y desconexión silenciosa. Los ejercicios de 'Límites Redentores' nos enseñaron a comunicarnos con una verdad desprovista de ira. La pauta pastoral del pastor Josue fue un oasis en nuestra crisis.",
-      stars: 5
-    },
-    {
-      name: "Dra. Sofía Rivas",
-      age: "38 años",
-      tagline: "Líder de Comunidad y Médico",
-      quote: "Como profesional de la salud y mentora, sufría de un agotamiento silencioso. Creía erróneamente que estar exhausta era sinónimo de entrega fiel. Gracias al de autodiagnóstico y el libro 'Anclas del Alma', recuperé el descanso sagrado.",
-      stars: 5
-    },
-    {
-      name: "Andrés Delgado",
-      age: "51 años",
-      tagline: "Padre de dos adolescentes",
-      quote: "Guiar a mis hijos en la era digital me parecía una batalla perdida. Las directivas de 'Padres de Luz' nos ayudaron a establecer santuarios de paz en casa, recuperando la sobremesa interactiva con diálogos profundos.",
-      stars: 5
+  const [testimonios, setTestimonios] = useState(() => {
+    const saved = localStorage.getItem("testimonios_resplandece");
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {
+        // ignore
+      }
     }
-  ];
+    return [
+      {
+        id: "t-1",
+        name: "Carlos & Elena Mendoza",
+        tagline: "Matrimonio Restaurado",
+        quote: "Estábamos atrapados en un ciclo de reclamos y desconexión silenciosa. Los ejercicios de autodiagnóstico y la guía pastoral nos enseñaron a comunicarnos con una verdad de gracia. Encontrar luz en medio de la tormenta restauró nuestro hogar.",
+        stars: 5,
+        date: "Reciente"
+      },
+      {
+        id: "t-2",
+        name: "Dra. Sofía Rivas",
+        tagline: "Líder de Comunidad y Médico",
+        quote: "Como profesional de la salud y mentora, sufría de un agotamiento silencioso. Creía erróneamente que estar exhausta era sinónimo de entrega fiel. Gracias al test y el libro 'Anclas del Alma', recuperé el descanso sagrado.",
+        stars: 5,
+        date: "Reciente"
+      }
+    ];
+  });
+
+  const [newNombre, setNewNombre] = useState("");
+  const [newTagline, setNewTagline] = useState("Restauración Personal");
+  const [newQuote, setNewQuote] = useState("");
+  const [newStars, setNewStars] = useState(5);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  const handleSubmitTestimonio = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newNombre.trim() || !newQuote.trim()) return;
+
+    const nuevoTestimonio = {
+      id: "t-" + Date.now(),
+      name: newNombre,
+      tagline: newTagline,
+      quote: newQuote,
+      stars: newStars,
+      date: "Publicado por el usuario"
+    };
+
+    const updated = [nuevoTestimonio, ...testimonios];
+    setTestimonios(updated);
+    localStorage.setItem("testimonios_resplandece", JSON.stringify(updated));
+
+    setNewNombre("");
+    setNewQuote("");
+    setNewStars(5);
+    setSubmitSuccess(true);
+    setTimeout(() => setSubmitSuccess(false), 5000);
+  };
 
   const handleRecommendBook = (bookId: string) => {
     setRecommendedBookId(bookId);
@@ -364,38 +398,199 @@ export default function App() {
             </p>
           </div>
 
-          {/* Quotes Testimonials Slider */}
-          <div className="bg-brand-card border border-brand-border p-6 rounded-2xl space-y-4 relative overflow-hidden">
-            <div className="flex justify-between items-center border-b border-brand-border/40 pb-3">
-              <span className="font-space text-[10px] text-brand-accent font-bold uppercase tracking-wider">Testimonios de Restauración</span>
-              <div className="flex items-center gap-0.5">
-                {[...Array(testimonials[activeTestimonial].stars)].map((_, i) => (
-                  <Star key={i} className="w-3.5 h-3.5 fill-[#E8C96A] text-[#E8C96A]" />
-                ))}
+          {/* SECCIÓN COMPARTE TU TESTIMONIO */}
+          <div className="pt-10 border-t border-brand-border/40 space-y-12">
+            <div className="text-center space-y-2">
+              <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">VOCES DE GRACIA</span>
+              <h3 className="text-2xl font-serif font-light text-brand-text">
+                Comparte tu <span className="text-brand-accent italic font-normal">historia</span> de restauración
+              </h3>
+              <p className="text-brand-muted text-xs max-w-lg mx-auto leading-relaxed">
+                ¿Has experimentado un nuevo comienzo a través de los recursos, mentoría o autodiagnósticos? Tu testimonio puede ser la luz que alguien más necesita hoy.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* Formulario */}
+              <div className="lg:col-span-6 bg-brand-card border border-brand-border/40 p-6 rounded-2xl space-y-5 text-left shadow-sm">
+                <h4 className="font-serif text-base font-bold text-brand-text border-b border-brand-border/40 pb-2.5">
+                  Diseña tu Reseña
+                </h4>
+
+                <form onSubmit={handleSubmitTestimonio} className="space-y-4">
+                  <div className="space-y-1">
+                    <label className="block text-[10px] font-space uppercase tracking-wider text-brand-muted">
+                      Tu Nombre / Pareja / Familia
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Ej. Carlos & Elena o Familia Ruiz"
+                      value={newNombre}
+                      onChange={(e) => setNewNombre(e.target.value)}
+                      className="w-full bg-brand-bg border border-brand-border/50 focus:border-brand-accent/50 rounded-xl px-4 py-2 text-xs text-brand-text focus:outline-none transition-all placeholder:text-brand-muted/50"
+                    />
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="block text-[10px] font-space uppercase tracking-wider text-brand-muted">
+                      Área de Restauración
+                    </label>
+                    <select
+                      value={newTagline}
+                      onChange={(e) => setNewTagline(e.target.value)}
+                      className="w-full bg-brand-bg border border-brand-border/50 focus:border-brand-accent/50 rounded-xl px-4 py-2 text-xs text-brand-text focus:outline-none transition-all cursor-pointer"
+                    >
+                      <option value="Restauración Personal">Restauración Personal</option>
+                      <option value="Matrimonio Restaurado">Matrimonio Restaurado</option>
+                      <option value="Liderazgo e Integridad">Liderazgo e Integridad</option>
+                      <option value="Paz sobre la Ansiedad">Paz sobre la Ansiedad</option>
+                      <option value="Familia y Adolescentes">Familia y Adolescentes</option>
+                    </select>
+                  </div>
+
+                  <div className="space-y-1">
+                    <div className="flex justify-between items-center">
+                      <label className="block text-[10px] font-space uppercase tracking-wider text-brand-muted">
+                        Puntuación / Estrellas
+                      </label>
+                      <span className="text-[10px] text-brand-accent font-semibold font-space">{newStars} de 5</span>
+                    </div>
+                    <div className="flex gap-1.5 items-center">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          key={star}
+                          type="button"
+                          onClick={() => setNewStars(star)}
+                          className="p-0.5 cursor-pointer hover:scale-110 transition-transform focus:outline-none"
+                          title={`Calificar con ${star} estrellas`}
+                        >
+                          <Star 
+                            className={`w-5 h-5 transition-colors ${
+                              star <= newStars 
+                                ? "fill-[#E8C96A] text-[#E8C96A]" 
+                                : "text-brand-border hover:text-brand-muted"
+                            }`} 
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <label className="block text-[10px] font-space uppercase tracking-wider text-brand-muted">
+                      Tu Testimonio o Mensaje de Gracia
+                    </label>
+                    <textarea
+                      required
+                      rows={3}
+                      placeholder="Escribe brevemente cómo Dios restauró tu vida, tu paz o tu hogar..."
+                      value={newQuote}
+                      onChange={(e) => setNewQuote(e.target.value)}
+                      className="w-full bg-brand-bg border border-brand-border/50 focus:border-brand-accent/50 rounded-xl px-4 py-2.5 text-xs text-brand-text focus:outline-none transition-all resize-none placeholder:text-brand-muted/50"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-brand-accent text-white hover:bg-brand-hover text-xs font-space font-bold py-2.5 px-4 rounded-xl transition-all shadow-md shadow-brand-accent/10 cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    Publicar Testimonio
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+
+                  <AnimatePresence>
+                    {submitSuccess && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0 }}
+                        className="p-2.5 bg-green-500/10 border border-green-500/20 rounded-xl text-center"
+                      >
+                        <p className="text-[10.5px] font-space font-medium text-green-400">
+                          ¡Testimonio publicado con éxito en la galería de abajo! Gracias por bendecir a otros.
+                        </p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </form>
+              </div>
+
+              {/* Vista previa en vivo */}
+              <div className="lg:col-span-6 space-y-4">
+                <span className="block text-[10px] font-space tracking-widest text-brand-accent uppercase text-left font-bold pl-1">
+                  Vista Previa en Vivo
+                </span>
+                
+                <div className="bg-gradient-to-b from-brand-card to-brand-bg border border-brand-accent/20 p-6 rounded-2xl space-y-4 relative overflow-hidden text-left shadow-sm min-h-[220px] flex flex-col justify-between">
+                  <div className="absolute top-[-20px] right-[-20px] w-32 h-32 bg-brand-accent/5 rounded-full blur-2xl pointer-events-none" />
+                  
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center border-b border-brand-border/30 pb-3">
+                      <span className="font-space text-[10px] text-brand-accent font-bold uppercase tracking-wider">
+                        {newTagline || "Restauración"}
+                      </span>
+                      <div className="flex items-center gap-0.5">
+                        {[...Array(newStars)].map((_, i) => (
+                          <Star key={i} className="w-3.5 h-3.5 fill-[#E8C96A] text-[#E8C96A]" />
+                        ))}
+                      </div>
+                    </div>
+
+                    <p className="text-brand-text font-serif italic text-sm leading-relaxed min-h-[60px]">
+                      {newQuote ? `“${newQuote}”` : "“Aquí se mostrará tu hermoso testimonio en tiempo real mientras lo redactas en el formulario de la izquierda...”"}
+                    </p>
+                  </div>
+
+                  <div className="pt-2 border-t border-brand-border/20 flex justify-between items-center">
+                    <div>
+                      <span className="block font-space text-[10px] text-brand-text font-bold uppercase">
+                        {newNombre || "Tu Nombre"}
+                      </span>
+                      <span className="block text-[9px] text-brand-muted font-sans font-medium">
+                        Tu Reseña • Borrador en vivo
+                      </span>
+                    </div>
+                    <span className="bg-brand-accent/10 text-brand-accent border border-brand-accent/20 text-[8px] font-bold px-2 py-0.5 rounded-full font-space uppercase">
+                      Borrador
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <p className="text-brand-text font-serif italic text-sm leading-relaxed">
-              &ldquo;{testimonials[activeTestimonial].quote}&rdquo;
-            </p>
+            {/* Galería de testimonios publicados */}
+            <div className="space-y-4 pt-6 text-left">
+              <h4 className="font-serif text-lg font-light text-brand-text border-b border-brand-border/30 pb-2">
+                Galería de Historias de <span className="text-brand-accent italic">Gracia</span>
+              </h4>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {testimonios.map((t: any) => (
+                  <div key={t.id} className="bg-brand-card/60 border border-brand-border/30 p-5 rounded-2xl space-y-3 relative overflow-hidden flex flex-col justify-between hover:border-brand-accent/15 transition-all">
+                    <div className="space-y-2.5">
+                      <div className="flex justify-between items-center border-b border-brand-border/20 pb-2">
+                        <span className="font-space text-[9px] text-brand-accent font-bold uppercase tracking-wider">
+                          {t.tagline}
+                        </span>
+                        <div className="flex items-center gap-0.5">
+                          {[...Array(t.stars)].map((_, i) => (
+                            <Star key={i} className="w-3 h-3 fill-[#E8C96A] text-[#E8C96A]" />
+                          ))}
+                        </div>
+                      </div>
+                      <p className="text-brand-text/90 font-serif italic text-xs leading-relaxed">
+                        &ldquo;{t.quote}&rdquo;
+                      </p>
+                    </div>
 
-            <div className="flex justify-between items-center pt-1">
-              <div>
-                <span className="block font-space text-[10px] text-brand-text font-bold uppercase">{testimonials[activeTestimonial].name}</span>
-                <span className="block text-[9px] text-brand-muted font-sans font-medium">{testimonials[activeTestimonial].tagline} • {testimonials[activeTestimonial].age}</span>
-              </div>
-
-              {/* Carousel Page dots */}
-              <div className="flex gap-2">
-                {testimonials.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveTestimonial(idx)}
-                    className={`w-2.5 h-2.5 rounded-full cursor-pointer transition-colors ${
-                      activeTestimonial === idx ? "bg-brand-accent" : "bg-brand-border hover:bg-brand-muted"
-                    }`}
-                    title={`Ir al testimonio ${idx + 1}`}
-                  />
+                    <div className="pt-2 border-t border-brand-border/20 flex justify-between items-center">
+                      <div>
+                        <span className="block font-space text-[9px] text-brand-text font-bold uppercase">{t.name}</span>
+                        <span className="block text-[8px] text-brand-muted font-sans">{t.date}</span>
+                      </div>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
