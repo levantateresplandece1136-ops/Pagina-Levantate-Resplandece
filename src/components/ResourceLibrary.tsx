@@ -339,10 +339,10 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                     )}
                     
                     {/* Minimalist interactive overlay */}
-                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/30 transition-colors duration-300 flex items-center justify-center">
-                      <span className="bg-brand-bg/90 backdrop-blur-sm border border-brand-border text-brand-text text-[10px] uppercase font-space tracking-wider px-3.5 py-1.5 rounded-full shadow-md opacity-90 group-hover:opacity-100 transition-all duration-300 flex items-center gap-1.5">
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors duration-300">
+                      <span className="absolute bottom-3.5 right-3.5 bg-brand-bg/95 backdrop-blur-sm border border-brand-border text-brand-text text-[10px] uppercase font-space tracking-wider px-3 py-1.5 rounded-full shadow-md opacity-90 group-hover:opacity-100 transition-all duration-300 flex items-center gap-1.5">
                         <Eye className="w-3.5 h-3.5 text-brand-accent" />
-                        {isExpanded ? "Ocultar recursos" : "Presiona la imagen para explorar"}
+                        {isExpanded ? "Ocultar" : "Explorar"}
                       </span>
                     </div>
                   </div>
@@ -442,15 +442,26 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                               </div>
                             )}
                             {section.id === "esperanza-batalla" && (
-                              <a 
-                                href="https://vence-la-ansiedad.vercel.app/" 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="inline-flex w-full items-center justify-between gap-2 bg-brand-accent text-white hover:bg-brand-hover text-xs font-space font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm cursor-pointer"
-                              >
-                                <span>Realizar Test "Vence la Ansiedad"</span>
-                                <ChevronRight className="w-4 h-4" />
-                              </a>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full">
+                                <a 
+                                  href="https://vence-la-ansiedad.vercel.app/" 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center justify-between gap-2 bg-brand-accent text-white hover:bg-brand-hover text-xs font-space font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm cursor-pointer text-left"
+                                >
+                                  <span className="truncate">Realizar Test "Vence la Ansiedad"</span>
+                                  <ChevronRight className="w-4 h-4 shrink-0" />
+                                </a>
+                                <a 
+                                  href="https://cuando-todo-se-derrumba.vercel.app/" 
+                                  target="_blank" 
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center justify-between gap-2 bg-brand-accent text-white hover:bg-brand-hover text-xs font-space font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm cursor-pointer text-left"
+                                >
+                                  <span className="truncate">Experiencia "Cuando Todo se Derrumba"</span>
+                                  <ChevronRight className="w-4 h-4 shrink-0" />
+                                </a>
+                              </div>
                             )}
                           </div>
                         </div>
