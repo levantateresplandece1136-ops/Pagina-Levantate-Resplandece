@@ -37,6 +37,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [activeBook, setActiveBook] = useState<EBook | null>(null);
   const [expandedSectionId, setExpandedSectionId] = useState<string | null>(null);
+  const [activeDetailSectionId, setActiveDetailSectionId] = useState<string | null>(null);
   
   // Subscription Form states for download
   const [subscriberName, setSubscriberName] = useState<string>("");
@@ -60,28 +61,80 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
       tabName: "Renueva tu mente",
       title: "1. Renueva tu mente. Transforma tu vida.",
       subtitle: "Descubre las creencias que están dirigiendo tu vida y reemplázalas por la verdad de Cristo para experimentar una transformación duradera.",
-      categoryName: "Renueva tu mente. Transforma tu vida."
+      categoryName: "Renueva tu mente. Transforma tu vida.",
+      image: renuevaMenteImage,
+      tag: "Verdad & Identidad",
+      quote: "“La verdad tiene el poder de cambiar la historia que te cuentas a ti mismo.”",
+      longDesc: "Descubre las mentiras y falsas creencias que han moldeado tus decisiones, y permite que la luz y verdad de Cristo reescriba tu propósito y renueve tu vida.",
+      diagnostics: [
+        {
+          title: 'Realizar Test "¿Qué Me Detiene?"',
+          url: 'https://qu-me-detiene.vercel.app/'
+        }
+      ]
     },
     {
       id: "mas-conexion",
       tabName: "Más conexión",
       title: "2. Más conexión, menos conflicto.",
       subtitle: "Aprende a comprender, conectar y disfrutar tus relaciones personales desde una perspectiva bíblica y llena de esperanza.",
-      categoryName: "Más conexión, menos conflicto."
+      categoryName: "Más conexión, menos conflicto.",
+      image: conexionFamiliasImage,
+      tag: "Comprensión & Vínculo Especial",
+      quote: "“Comprender y conectar es el puente para apagar las llamas del conflicto continuo.”",
+      longDesc: "Aprende a reconciliar diferencias y cultivar un perdón auténtico que profundice el amor paternal, familiar y conyugal desde un enfoque redentor y lleno de esperanza.",
+      diagnostics: [
+        {
+          title: 'Realizar Diagnóstico Matrimonial',
+          url: 'https://test-matrimonios.vercel.app/'
+        },
+        {
+          title: 'Experiencia "El Pacificador"',
+          url: 'https://pacificador.vercel.app/'
+        }
+      ]
     },
     {
       id: "lidera-integridad",
       tabName: "Lidera con integridad",
       title: "3. Lidera con integridad y propósito.",
       subtitle: "Ordena tus prioridades, fortalece tu carácter y lidera con sabiduría bíblica.",
-      categoryName: "Lidera con integridad y propósito."
+      categoryName: "Lidera con integridad y propósito.",
+      image: lideraIntegridadImage,
+      tag: "Fortaleza & Carácter",
+      quote: "“Cuando un hombre encuentra su propósito en Dios, lidera con integridad y sabiduría.”",
+      longDesc: "Ordena tus prioridades, fortalece tu carácter masculino o ministerial bajo principios inquebrantables, y asume la responsabilidad de guiar con amor y firmeza.",
+      diagnostics: [
+        {
+          title: 'Test "Rompiendo Creencias"',
+          url: 'https://renovados-rompiendo-las-creencias-l.vercel.app/'
+        },
+        {
+          title: 'Test "Redimidos"',
+          url: 'https://redimidos-tau.vercel.app/'
+        }
+      ]
     },
     {
       id: "esperanza-batalla",
       tabName: "Batalla interior",
       title: "4. Esperanza para la batalla interior.",
       subtitle: "Descubre cómo salir de la ansiedad y depresion, enfrentar el pecado persistente y crecer en una relación más profunda con Cristo.",
-      categoryName: "Esperanza para la batalla interior."
+      categoryName: "Esperanza para la batalla interior.",
+      image: batallaVictoriaImage,
+      tag: "Victoria & Paz Interior",
+      quote: "“Levántate y resplandece, porque ha venido tu luz, y la gloria de Jehová ha nacido sobre ti.”",
+      longDesc: "Encuentra herramientas bíblicas y fortaleza espiritual para triunfar sobre la ansiedad, la depresión, romper ciclos destructivos y caminar en plena libertad.",
+      diagnostics: [
+        {
+          title: 'Realizar Test "Vence la Ansiedad"',
+          url: 'https://vence-la-ansiedad.vercel.app/'
+        },
+        {
+          title: 'Experiencia "Cuando Todo se Derrumba"',
+          url: 'https://cuando-todo-se-derrumba.vercel.app/'
+        }
+      ]
     }
   ];
 
@@ -251,6 +304,11 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
     );
   };
 
+  const activeDetailSection = librarySections.find(s => s.id === activeDetailSectionId);
+  const activeDetailSectionBooks = activeDetailSection
+    ? ebooksData.filter(book => book.category === activeDetailSection.categoryName)
+    : [];
+
   return (
     <div id="recursos-seccion" className="py-20 bg-brand-bg scroll-mt-20">
       <div className="max-w-6xl mx-auto px-6">
@@ -270,13 +328,10 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
         {/* Ebooks Content Block - 2x2 Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
           {librarySections.map((section) => {
-            const isExpanded = expandedSectionId === section.id;
-            const sectionBooks = ebooksData.filter(book => book.category === section.categoryName);
-            
             return (
               <div 
                 key={section.id} 
-                className={`bg-brand-card border ${isExpanded ? 'border-brand-accent/30' : 'border-brand-border/40'} rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-sm hover:border-brand-accent/20 transition-all duration-300 group`}
+                className="bg-brand-card border border-brand-border/40 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-sm hover:border-brand-accent/20 transition-all duration-300 group"
               >
                 <div className="space-y-5">
                   {/* Title / Header */}
@@ -284,250 +339,217 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                     <h3 className="font-serif font-semibold text-brand-text text-lg md:text-xl leading-snug group-hover:text-brand-accent transition-colors">
                       {section.title}
                     </h3>
-                    <button 
-                      onClick={() => setExpandedSectionId(isExpanded ? null : section.id)}
-                      className="text-brand-muted hover:text-brand-accent p-1.5 rounded-full hover:bg-brand-bg transition-colors cursor-pointer"
-                      title={isExpanded ? "Colapsar sección" : "Expandir sección"}
-                    >
-                      {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-                    </button>
                   </div>
 
-                  {/* Subtitle / Short description when not expanded */}
-                  {!isExpanded && (
-                    <p className="text-brand-muted text-xs text-left font-sans leading-relaxed">
-                      {section.subtitle}
-                    </p>
-                  )}
+                  {/* Subtitle / Short description */}
+                  <p className="text-brand-muted text-xs text-left font-sans leading-relaxed">
+                    {section.subtitle}
+                  </p>
 
                   {/* Image container suitable for the 2x2 column size */}
                   <div 
-                    onClick={() => setExpandedSectionId(isExpanded ? null : section.id)}
+                    onClick={() => setActiveDetailSectionId(section.id)}
                     className="w-full h-52 md:h-60 rounded-2xl overflow-hidden border border-brand-border/40 shadow-sm relative group-hover:border-brand-accent/20 transition-all duration-300 cursor-pointer"
                   >
-                    {section.id === "renueva-mente" && (
-                      <img
-                        src={renuevaMenteImage}
-                        alt="Renueva tu mente camino de restauración"
-                        className="w-full h-full object-cover select-none group-hover:scale-[1.02] transition-transform duration-500"
-                        referrerPolicy="no-referrer"
-                      />
-                    )}
-                    {section.id === "mas-conexion" && (
-                      <img
-                        src={conexionFamiliasImage}
-                        alt="Más conexión, menos conflicto con familias y adolescentes"
-                        className="w-full h-full object-cover select-none group-hover:scale-[1.02] transition-transform duration-500"
-                        referrerPolicy="no-referrer"
-                      />
-                    )}
-                    {section.id === "lidera-integridad" && (
-                      <img
-                        src={lideraIntegridadImage}
-                        alt="Lidera con integridad, fortaleza y responsabilidad"
-                        className="w-full h-full object-cover select-none group-hover:scale-[1.02] transition-transform duration-500"
-                        referrerPolicy="no-referrer"
-                      />
-                    )}
-                    {section.id === "esperanza-batalla" && (
-                      <img
-                        src={batallaVictoriaImage}
-                        alt="Esperanza para la batalla interior"
-                        className="w-full h-full object-cover select-none group-hover:scale-[1.02] transition-transform duration-500"
-                        referrerPolicy="no-referrer"
-                      />
-                    )}
+                    <img
+                      src={section.image}
+                      alt={section.title}
+                      className="w-full h-full object-cover select-none group-hover:scale-[1.02] transition-transform duration-500"
+                      referrerPolicy="no-referrer"
+                    />
                     
                     {/* Minimalist interactive overlay */}
                     <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors duration-300">
-                      <span className="absolute bottom-3.5 right-3.5 bg-brand-bg/95 backdrop-blur-sm border border-brand-border text-brand-text text-[10px] uppercase font-space tracking-wider px-3 py-1.5 rounded-full shadow-md opacity-90 group-hover:opacity-100 transition-all duration-300 flex items-center gap-1.5">
+                      <span className="absolute bottom-3.5 right-3.5 bg-brand-bg/95 backdrop-blur-sm border border-brand-border text-brand-text text-[10px] uppercase font-space tracking-wider px-3.5 py-2 rounded-full shadow-md opacity-90 group-hover:opacity-100 transition-all duration-300 flex items-center gap-1.5">
                         <Eye className="w-3.5 h-3.5 text-brand-accent" />
-                        {isExpanded ? "Ocultar" : "Explorar"}
+                        <span>Explorar</span>
                       </span>
                     </div>
                   </div>
-
-                  {/* Description & Badge block - only visible when expanded */}
-                  {isExpanded && (
-                    <div className="space-y-4 text-left">
-                      <div className="inline-flex items-center gap-2 bg-brand-accent/10 border border-brand-accent/20 px-3 py-1 rounded-full">
-                        <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse" />
-                        <span className="font-space text-[9px] uppercase tracking-widest text-brand-accent font-bold">
-                          {section.id === "renueva-mente" && "Verdad & Identidad"}
-                          {section.id === "mas-conexion" && "Comprensión & Vínculo Especial"}
-                          {section.id === "lidera-integridad" && "Fortaleza & Carácter"}
-                          {section.id === "esperanza-batalla" && "Victoria & Paz Interior"}
-                        </span>
-                      </div>
-
-                      <blockquote className="border-l-2 border-brand-accent/30 pl-3 py-0.5">
-                        <p className="text-xs md:text-sm font-serif text-brand-text leading-relaxed font-semibold italic">
-                          {section.id === "renueva-mente" && "“La verdad tiene el poder de cambiar la historia que te cuentas a ti mismo.”"}
-                          {section.id === "mas-conexion" && "“Comprender y conectar es el puente para apagar las llamas del conflicto continuo.”"}
-                          {section.id === "lidera-integridad" && "“Cuando un hombre encuentra su propósito en Dios, lidera con integridad y sabiduría.”"}
-                          {section.id === "esperanza-batalla" && "“Levántate y resplandece, porque ha venido tu luz, y la gloria de Jehová ha nacido sobre ti.”"}
-                        </p>
-                      </blockquote>
-
-                      <p className="text-brand-muted text-xs font-sans leading-relaxed">
-                        {section.id === "renueva-mente" && "Descubre las mentiras y falsas creencias que han moldeado tus decisiones, y permite que la luz y verdad de Cristo reescriba tu propósito y renueve tu vida."}
-                        {section.id === "mas-conexion" && "Aprende a reconciliar diferencias y cultivar un perdón auténtico que profundice el amor paternal, familiar y conyugal desde un enfoque redentor y lleno de esperanza."}
-                        {section.id === "lidera-integridad" && "Ordena tus prioridades, fortalece tu carácter masculino o ministerial bajo principios inquebrantables, y asume la responsabilidad de guiar con amor y firmeza."}
-                        {section.id === "esperanza-batalla" && "Encuentra herramientas bíblicas y fortaleza espiritual para triunfar sobre la ansiedad, la depresión, romper ciclos destructivos y caminar en plena libertad."}
-                      </p>
-                    </div>
-                  )}
                 </div>
 
-                {/* Expanded content under the image */}
-                <AnimatePresence>
-                  {isExpanded && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
-                      exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.3 }}
-                      className="overflow-hidden"
-                    >
-                      <div className="mt-6 pt-5 border-t border-brand-border/40 text-left space-y-5">
-                        {/* Test Button */}
-                        <div className="space-y-2.5">
-                          <span className="font-space text-[10px] text-brand-accent tracking-wider uppercase font-bold flex items-center gap-1.5">
-                            <Sparkles className="w-3.5 h-3.5" /> Pruebas de Autodiagnóstico
-                          </span>
-                          
-                          <div className="flex flex-col gap-2">
-                            {section.id === "renueva-mente" && (
-                              <a 
-                                href="https://qu-me-detiene.vercel.app/" 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="inline-flex w-full items-center justify-between gap-2 bg-brand-accent text-white hover:bg-brand-hover text-xs font-space font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm cursor-pointer"
-                              >
-                                <span>Realizar Test "¿Qué Me Detiene?"</span>
-                                <ChevronRight className="w-4 h-4" />
-                              </a>
-                            )}
-                            {section.id === "mas-conexion" && (
-                              <a 
-                                href="https://test-matrimonios.vercel.app/" 
-                                target="_blank" 
-                                rel="noopener noreferrer"
-                                className="inline-flex w-full items-center justify-between gap-2 bg-brand-accent text-white hover:bg-brand-hover text-xs font-space font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm cursor-pointer"
-                              >
-                                <span>Realizar Diagnóstico Matrimonial</span>
-                                <ChevronRight className="w-4 h-4" />
-                              </a>
-                            )}
-                            {section.id === "lidera-integridad" && (
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full">
-                                <a 
-                                  href="https://renovados-rompiendo-las-creencias-l.vercel.app/" 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center justify-between gap-2 bg-brand-accent text-white hover:bg-brand-hover text-xs font-space font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm cursor-pointer text-left"
-                                >
-                                  <span className="truncate">Test "Rompiendo Creencias"</span>
-                                  <ChevronRight className="w-4 h-4 shrink-0" />
-                                </a>
-                                <a 
-                                  href="https://redimidos-tau.vercel.app/" 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center justify-between gap-2 bg-brand-accent text-white hover:bg-brand-hover text-xs font-space font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm cursor-pointer text-left"
-                                >
-                                  <span className="truncate">Test "Redimidos"</span>
-                                  <ChevronRight className="w-4 h-4 shrink-0" />
-                                </a>
-                              </div>
-                            )}
-                            {section.id === "esperanza-batalla" && (
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-2 w-full">
-                                <a 
-                                  href="https://vence-la-ansiedad.vercel.app/" 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center justify-between gap-2 bg-brand-accent text-white hover:bg-brand-hover text-xs font-space font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm cursor-pointer text-left"
-                                >
-                                  <span className="truncate">Realizar Test "Vence la Ansiedad"</span>
-                                  <ChevronRight className="w-4 h-4 shrink-0" />
-                                </a>
-                                <a 
-                                  href="https://cuando-todo-se-derrumba.vercel.app/" 
-                                  target="_blank" 
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center justify-between gap-2 bg-brand-accent text-white hover:bg-brand-hover text-xs font-space font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm cursor-pointer text-left"
-                                >
-                                  <span className="truncate">Experiencia "Cuando Todo se Derrumba"</span>
-                                  <ChevronRight className="w-4 h-4 shrink-0" />
-                                </a>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Resources Section */}
-                        <div className="space-y-3 pt-1">
-                          <span className="font-space text-[10px] text-brand-accent tracking-wider uppercase font-bold flex items-center gap-1.5">
-                            <BookOpen className="w-3.5 h-3.5" /> Recursos de Estudio & Guías
-                          </span>
-
-                          {sectionBooks.length > 0 ? (
-                            <div className="space-y-3">
-                              {sectionBooks.map(book => {
-                                return (
-                                  <div 
-                                    key={book.id} 
-                                    className="bg-brand-bg/60 border border-brand-border/45 rounded-2xl p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-brand-accent/20 transition-colors"
-                                  >
-                                    <div className="space-y-1.5 text-left flex-1 min-w-0">
-                                      <div className="flex items-center gap-2">
-                                        <h4 className="font-serif font-semibold text-brand-text text-sm sm:text-base leading-tight truncate">
-                                          {book.title}
-                                        </h4>
-                                        {book.isPopular && (
-                                          <span className="bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-1.5 py-0.5 rounded-full text-[8px] font-bold shrink-0 uppercase tracking-wider font-space">
-                                            Destacado
-                                          </span>
-                                        )}
-                                      </div>
-                                      <p className="text-[11px] text-brand-muted line-clamp-1">
-                                        {book.subtitle}
-                                      </p>
-                                      <div className="flex gap-3 text-[9px] font-space text-brand-accent/80">
-                                        <span>{book.pages} páginas</span>
-                                        <span>•</span>
-                                        <span>{book.readTime} de lectura</span>
-                                      </div>
-                                    </div>
-                                    
-                                    <button
-                                      onClick={() => handleOpenBook(book)}
-                                      className="w-full sm:w-auto shrink-0 flex items-center justify-center gap-1.5 bg-brand-card hover:bg-brand-accent hover:text-brand-bg text-brand-text border border-brand-border hover:border-brand-accent font-space text-[10px] uppercase font-bold py-2 px-3.5 rounded-lg transition-all cursor-pointer"
-                                    >
-                                      <span>Estudiar Recurso</span>
-                                      <ArrowRight className="w-3 h-3" />
-                                    </button>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          ) : (
-                            <p className="text-[11px] text-brand-muted italic font-sans pl-1">
-                              Próximamente se añadirán más recursos para este pilar.
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
+                <div className="pt-6 mt-6 border-t border-brand-border/30 flex items-center justify-between">
+                  <span className="text-[10px] font-space text-brand-muted uppercase tracking-wider">
+                    {section.tag}
+                  </span>
+                  <button
+                    onClick={() => setActiveDetailSectionId(section.id)}
+                    className="inline-flex items-center gap-1.5 bg-brand-accent text-white hover:bg-brand-hover font-space text-[10px] uppercase font-bold py-2.5 px-4.5 rounded-xl transition-all shadow-sm cursor-pointer"
+                  >
+                    <span>Explorar Pilar</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
               </div>
             );
           })}
         </div>
 
       </div>
+
+      {/* Immersive Sub-Page View for selected Pilar */}
+      <AnimatePresence>
+        {activeDetailSection && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 30 }}
+            transition={{ type: "spring", damping: 25, stiffness: 120 }}
+            className="fixed inset-0 z-40 overflow-y-auto bg-brand-bg flex flex-col"
+          >
+            {/* Background image covered with beautiful frosted-glass overlay */}
+            <div className="absolute inset-0 z-0">
+              <img 
+                src={activeDetailSection.image} 
+                alt={activeDetailSection.title}
+                className="w-full h-full object-cover opacity-10"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-brand-bg/90 via-brand-bg/95 to-brand-bg" />
+            </div>
+
+            {/* Inner Content */}
+            <div className="relative z-10 flex-1 flex flex-col max-w-5xl mx-auto w-full px-6 py-12 md:py-16">
+              
+              {/* Back Navigation Bar */}
+              <div className="flex justify-between items-center mb-10 border-b border-brand-border pb-4">
+                <button
+                  onClick={() => setActiveDetailSectionId(null)}
+                  className="inline-flex items-center gap-2 text-xs font-space font-bold uppercase tracking-wider text-brand-muted hover:text-brand-accent transition-colors bg-brand-card hover:bg-brand-bg px-4 py-2 rounded-xl border border-brand-border cursor-pointer"
+                >
+                  <ArrowRight className="w-4 h-4 rotate-180" />
+                  <span>Volver a los Pilares</span>
+                </button>
+                <div className="inline-flex items-center gap-1.5 bg-brand-accent/10 border border-brand-accent/20 px-3 py-1 rounded-full">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse" />
+                  <span className="font-space text-[9px] uppercase tracking-widest text-brand-accent font-bold">
+                    {activeDetailSection.tag}
+                  </span>
+                </div>
+              </div>
+
+              {/* Page Title & Quote */}
+              <div className="text-left space-y-4 max-w-3xl mb-12">
+                <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">Pilar de Restauración</span>
+                <h2 className="text-3xl md:text-5xl font-serif font-light text-brand-text leading-tight">
+                  {activeDetailSection.title}
+                </h2>
+                
+                <blockquote className="border-l-4 border-brand-accent pl-4 py-1">
+                  <p className="text-sm md:text-base font-serif text-brand-text leading-relaxed font-semibold italic">
+                    {activeDetailSection.quote}
+                  </p>
+                </blockquote>
+                
+                <p className="text-brand-muted text-sm md:text-base leading-relaxed">
+                  {activeDetailSection.longDesc}
+                </p>
+              </div>
+
+              {/* Two-Column Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                
+                {/* Left Column: Diagnostics (tests) */}
+                <div className="lg:col-span-5 space-y-6">
+                  <div className="space-y-2">
+                    <h3 className="font-space text-xs font-bold text-brand-accent tracking-wider uppercase flex items-center gap-2">
+                      <Sparkles className="w-4 h-4" /> Pruebas de Autodiagnóstico
+                    </h3>
+                    <p className="text-xs text-brand-muted leading-relaxed">
+                      Herramientas de evaluación personalizadas para medir el estado actual de tu alma y tus relaciones.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-3">
+                    {activeDetailSection.diagnostics.map((diag, index) => (
+                      <a
+                        key={index}
+                        href={diag.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-between gap-3 bg-brand-accent text-white hover:bg-brand-hover text-sm font-space font-bold py-3.5 px-5 rounded-2xl transition-all shadow-md hover:shadow-lg shadow-brand-accent/10 cursor-pointer text-left"
+                      >
+                        <span className="font-medium">{diag.title}</span>
+                        <ChevronRight className="w-5 h-5 shrink-0" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Right Column: Ebooks and guides */}
+                <div className="lg:col-span-7 space-y-6">
+                  <div className="space-y-2">
+                    <h3 className="font-space text-xs font-bold text-brand-accent tracking-wider uppercase flex items-center gap-2">
+                      <BookOpen className="w-4 h-4" /> Recursos de Estudio & Guías
+                    </h3>
+                    <p className="text-xs text-brand-muted leading-relaxed">
+                      Descarga o lee guías teológicas y prácticas preparadas por el pastor Josué Cortés para guiar tu proceso paso a paso.
+                    </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    {activeDetailSectionBooks.length > 0 ? (
+                      activeDetailSectionBooks.map(book => {
+                        return (
+                          <div
+                            key={book.id}
+                            className="bg-brand-card/80 border border-brand-border rounded-2xl p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 hover:border-brand-accent/30 hover:bg-brand-card transition-all"
+                          >
+                            <div className="space-y-2 text-left flex-1 min-w-0">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <h4 className="font-serif font-semibold text-brand-text text-base sm:text-lg leading-tight">
+                                  {book.title}
+                                </h4>
+                                {book.isPopular && (
+                                  <span className="bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider font-space">
+                                    Destacado
+                                  </span>
+                                )}
+                              </div>
+                              <p className="text-xs text-brand-muted line-clamp-2 leading-relaxed">
+                                {book.description}
+                              </p>
+                              <div className="flex gap-4 text-[10px] font-space text-brand-accent/80 font-medium">
+                                <span>{book.pages} páginas</span>
+                                <span>•</span>
+                                <span>{book.readTime} de lectura</span>
+                              </div>
+                            </div>
+                            
+                            <button
+                              onClick={() => handleOpenBook(book)}
+                              className="w-full sm:w-auto shrink-0 flex items-center justify-center gap-2 bg-brand-accent text-white hover:bg-brand-hover font-space text-xs uppercase font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm cursor-pointer"
+                            >
+                              <span>Estudiar Recurso</span>
+                              <ArrowRight className="w-4 h-4" />
+                            </button>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div className="bg-brand-card border border-brand-border p-8 rounded-2xl text-center">
+                        <p className="text-xs text-brand-muted italic font-sans">
+                          Próximamente se añadirán más recursos descargables y guías escritas para este pilar de crecimiento.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+              </div>
+              
+              {/* Soft reminder footer */}
+              <div className="mt-16 pt-8 border-t border-brand-border/40 text-center">
+                <p className="text-xs text-brand-muted italic max-w-md mx-auto leading-relaxed">
+                  Todos estos recursos son totalmente gratuitos y están diseñados con base en el acompañamiento pastoral.
+                </p>
+              </div>
+
+            </div>
+
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Book Detail Drawer Modal Overlay */}
       <AnimatePresence>

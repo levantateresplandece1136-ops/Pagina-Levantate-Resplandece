@@ -23,10 +23,12 @@ import { ebooksData } from "./data";
 import ResourceLibrary from "./components/ResourceLibrary";
 import PastoralContact from "./components/PastoralContact";
 import SocialCommunity from "./components/SocialCommunity";
+import Devocional365 from "./components/Devocional365";
 import appLogo from "./assets/images/app_logo_1781233600045.jpg";
 import heroClimbing from "./assets/images/levantate_resplandece_hero_climbing_1781676720148.jpg";
 
 export default function App() {
+  const [currentView, setCurrentView] = useState<"home" | "devocional365">("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [recommendedBookId, setRecommendedBookId] = useState<string | null>(null);
 
@@ -89,21 +91,52 @@ export default function App() {
     setTimeout(() => setSubmitSuccess(false), 5000);
   };
 
+  const animateScroll = (targetY: number, duration: number = 800) => {
+    const startY = window.scrollY || window.pageYOffset;
+    const difference = targetY - startY;
+    const startTime = performance.now();
+
+    // Cubic bezier-like easing function: easeInOutCubic
+    const easeInOutCubic = (t: number) => {
+      return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+    };
+
+    const step = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeInOutCubic(progress);
+
+      window.scrollTo(0, startY + difference * easedProgress);
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  const animateScrollToId = (id: string, offset: number = 80) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const elementPosition = element.getBoundingClientRect().top + (window.scrollY || window.pageYOffset);
+      const offsetPosition = elementPosition - offset;
+      animateScroll(offsetPosition, 850);
+    }
+  };
+
   const handleRecommendBook = (bookId: string) => {
     setRecommendedBookId(bookId);
     // Scroll smooth to resources section
-    const element = document.getElementById("recursos-seccion");
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    animateScrollToId("recursos-seccion");
   };
 
   const scrollToAnchor = (id: string) => {
     setMobileMenuOpen(false);
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    setCurrentView("home");
+    setTimeout(() => {
+      animateScrollToId(id);
+    }, 120);
   };
 
   return (
@@ -115,7 +148,10 @@ export default function App() {
           
           {/* Logo Name */}
           <button 
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            onClick={() => {
+              setCurrentView("home");
+              animateScroll(0, 850);
+            }}
             className="flex items-center gap-3 group text-left cursor-pointer"
           >
             <div className="w-10 h-10 rounded-full overflow-hidden border border-brand-accent/40 shadow-md shadow-brand-accent/5 bg-white flex items-center justify-center">
@@ -139,20 +175,33 @@ export default function App() {
           {/* Desktop Nav Items */}
           <nav className="hidden md:flex items-center gap-8 text-xs font-space uppercase tracking-wider">
             <button 
+              onClick={() => {
+                setCurrentView("devocional365");
+                animateScroll(0, 850);
+              }}
+              className={`transition-colors cursor-pointer font-bold ${
+                currentView === "devocional365" 
+                  ? "text-brand-accent underline underline-offset-4 decoration-2" 
+                  : "text-brand-muted hover:text-brand-accent"
+              }`}
+            >
+              365 Días con Dios
+            </button>
+            <button 
               onClick={() => scrollToAnchor("recursos-seccion")}
-              className="text-brand-muted hover:text-brand-accent transition-colors"
+              className="text-brand-muted hover:text-brand-accent transition-colors cursor-pointer"
             >
               Biblioteca
             </button>
             <button 
               onClick={() => scrollToAnchor("sobre-seccion")}
-              className="text-brand-muted hover:text-brand-accent transition-colors"
+              className="text-brand-muted hover:text-brand-accent transition-colors cursor-pointer"
             >
               Sobre Josue
             </button>
             <button 
               onClick={() => scrollToAnchor("contacto-seccion")}
-              className="text-brand-muted hover:text-brand-accent transition-colors"
+              className="text-brand-muted hover:text-brand-accent transition-colors cursor-pointer"
             >
               Contacto
             </button>
@@ -190,14 +239,26 @@ export default function App() {
           >
             <div className="px-6 py-8 flex flex-col gap-6 text-center font-space text-sm uppercase tracking-wider">
               <button 
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setCurrentView("devocional365");
+                  animateScroll(0, 850);
+                }}
+                className={`py-2 transition-colors cursor-pointer ${
+                  currentView === "devocional365" ? "text-brand-accent font-bold" : "text-brand-muted hover:text-brand-accent"
+                }`}
+              >
+                365 Días con Dios
+              </button>
+              <button 
                 onClick={() => scrollToAnchor("recursos-seccion")}
-                className="text-brand-muted hover:text-brand-accent py-2"
+                className="text-brand-muted hover:text-brand-accent py-2 cursor-pointer"
               >
                 Biblioteca de Recursos
               </button>
               <button 
                 onClick={() => scrollToAnchor("sobre-seccion")}
-                className="text-brand-muted hover:text-brand-accent py-2"
+                className="text-brand-muted hover:text-brand-accent py-2 cursor-pointer"
               >
                 Sobre Josue
               </button>
@@ -206,7 +267,7 @@ export default function App() {
                   setMobileMenuOpen(false);
                   scrollToAnchor("contacto-seccion");
                 }}
-                className="text-brand-muted hover:text-brand-accent py-2"
+                className="text-brand-muted hover:text-brand-accent py-2 cursor-pointer"
               >
                 Contacto
               </button>
@@ -225,7 +286,9 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* EPIC HERO MOUNTAIN COVER BANNER */}
+      {currentView === "home" ? (
+        <>
+          {/* EPIC HERO MOUNTAIN COVER BANNER */}
       <section className="relative w-full h-[60vh] md:h-[75vh] lg:h-[82vh] bg-brand-alt overflow-hidden flex flex-col justify-end">
         {/* Background Image of climbing mountain hand help */}
         <div className="absolute inset-0">
@@ -326,11 +389,12 @@ export default function App() {
 
           {/* Devotional App Banner/Button */}
           <div className="mt-12 flex justify-center px-4">
-            <a
-              href="https://levantateresplandece.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full max-w-lg bg-gradient-to-r from-brand-card via-brand-alt to-brand-card hover:from-white hover:to-white border-2 border-brand-accent/40 hover:border-brand-accent/80 rounded-2xl p-5 hover:translate-y-[-1px] transition-all duration-300 shadow-xl shadow-brand-accent/[0.03] flex flex-col sm:flex-row items-center justify-between gap-4 group cursor-pointer text-center sm:text-left"
+            <button
+              onClick={() => {
+                setCurrentView("devocional365");
+                animateScroll(0, 850);
+              }}
+              className="w-full max-w-lg bg-gradient-to-r from-brand-card via-brand-alt to-brand-card hover:from-white hover:to-white border-2 border-brand-accent/40 hover:border-brand-accent/80 rounded-2xl p-5 hover:translate-y-[-1px] transition-all duration-300 shadow-xl shadow-brand-accent/[0.03] flex flex-col sm:flex-row items-center justify-between gap-4 group cursor-pointer text-center sm:text-left text-left"
             >
               <div className="space-y-1">
                 <div className="flex items-center justify-center sm:justify-start gap-2">
@@ -347,11 +411,11 @@ export default function App() {
                 </p>
               </div>
               
-              <div className="bg-brand-accent/10 group-hover:bg-brand-accent/20 border border-brand-accent/20 text-brand-accent px-4 py-2.5 rounded-xl font-space text-[11px] uppercase font-bold tracking-wider transition-colors flex items-center gap-1.5 whitespace-nowrap">
-                Acceder a la App
+              <div className="bg-brand-accent/10 group-hover:bg-brand-accent/20 border border-brand-accent/20 text-brand-accent px-4 py-2.5 rounded-xl font-space text-[11px] uppercase font-bold tracking-wider transition-colors flex items-center gap-1.5 whitespace-nowrap self-center">
+                Ver Página de la App
                 <span className="text-xs transition-transform group-hover:translate-x-1">→</span>
               </div>
-            </a>
+            </button>
           </div>
 
         </div>
@@ -604,6 +668,13 @@ export default function App() {
 
       {/* PASTORAL CONTACT & DIAGNOSTICS FAQS */}
       <PastoralContact />
+        </>
+      ) : (
+        <Devocional365 onBackToHome={() => {
+          setCurrentView("home");
+          animateScroll(0, 850);
+        }} />
+      )}
 
       {/* FOOTER */}
       <footer className="bg-brand-bg border-t border-brand-border/50 py-12">
