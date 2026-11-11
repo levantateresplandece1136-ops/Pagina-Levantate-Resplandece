@@ -3,21 +3,14 @@ import { motion, AnimatePresence } from "motion/react";
 import { 
   BookOpen, 
   Download, 
-  Search, 
   FileText, 
   Clock, 
-  Layers, 
-  Share2, 
   X, 
   CheckCircle, 
   Bookmark, 
   ChevronRight,
-  ChevronDown,
-  ChevronUp,
-  TrendingUp,
   Inbox,
   Sparkles,
-  Eye,
   ArrowRight
 } from "lucide-react";
 import { ebooksData } from "../data";
@@ -29,11 +22,9 @@ interface ResourceLibraryProps {
 }
 
 export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }: ResourceLibraryProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string>("Todos");
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  // Pestaña activa de Recursos: por defecto, el primer pilar
+  const [activeTabId, setActiveTabId] = useState<string>("renueva-mente");
   const [activeBook, setActiveBook] = useState<EBook | null>(null);
-  const [expandedSectionId, setExpandedSectionId] = useState<string | null>(null);
-  const [activeDetailSectionId, setActiveDetailSectionId] = useState<string | null>(null);
   
   // Subscription Form states for download
   const [subscriberName, setSubscriberName] = useState<string>("");
@@ -41,15 +32,6 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
   const [optInNews, setOptInNews] = useState<boolean>(true);
   const [downloadSuccess, setDownloadSuccess] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
-  // Categories extracted dynamically plus 'Todos'
-  const categories = [
-    "Todos", 
-    "Renueva tu mente", 
-    "Más conexión", 
-    "Lidera con integridad", 
-    "Batalla interior"
-  ];
 
   const librarySections = [
     {
@@ -145,18 +127,9 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
     }
   }, [selectedBookId, onClearSelectedBook]);
 
-  const activeSection = selectedCategory === "Todos" 
-    ? null 
-    : librarySections.find(s => s.tabName === selectedCategory);
-
-  // Filtered eBooks
-  const filteredBooks = ebooksData.filter(book => {
-    const matchesCategory = selectedCategory === "Todos" || (activeSection && book.category === activeSection.categoryName);
-    const matchesSearch = book.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                          book.subtitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          book.description.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // Pilar activo según la pestaña seleccionada
+  const activeSection = librarySections.find(s => s.id === activeTabId) ?? librarySections[0];
+  const activeSectionBooks = ebooksData.filter(book => book.category === activeSection.categoryName);
 
   const handleOpenBook = (book: EBook) => {
     setActiveBook(book);
@@ -247,64 +220,6 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
     );
   };
 
-  const renderBookItem = (book: EBook) => {
-    const hasLocalDownload = localStorage.getItem(`dl_${book.id}`);
-    return (
-      <motion.div
-        key={book.id}
-        layout
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="bg-brand-card border border-brand-border p-5 rounded-2xl flex flex-col justify-between group transition-all duration-300 hover:border-brand-accent/30 text-left"
-      >
-        <div className="space-y-5">
-          
-          {/* Book cover visual block */}
-          {renderBookCover(book, "card")}
-
-          {/* Metadata and texts */}
-          <div className="space-y-2">
-            <div className="flex justify-between items-center text-[10px] font-space text-brand-accent">
-              <span className="truncate max-w-[150px]">{book.category}</span>
-              {book.isPopular && (
-                <span className="flex items-center gap-1 bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-2 py-0.5 rounded-full text-[9px] font-bold shrink-0">
-                  <TrendingUp className="w-2.5 h-2.5" /> {book.badge}
-                </span>
-              )}
-            </div>
-            <h3 className="text-lg font-serif font-semibold text-brand-text leading-snug group-hover:text-brand-accent transition-colors">
-              {book.title}
-            </h3>
-            <p className="text-brand-muted text-xs line-clamp-3 leading-relaxed">
-              {book.description}
-            </p>
-          </div>
-        </div>
-
-        {/* Card footer activation */}
-        <div className="pt-5 mt-4 border-t border-brand-border flex items-center justify-between gap-3">
-          <span className="text-[10px] font-space text-brand-muted">
-            {book.downloadCount + (hasLocalDownload ? 1 : 0)} descargas
-          </span>
-          
-          <button
-            onClick={() => handleOpenBook(book)}
-            className="flex items-center gap-2 bg-brand-accent/10 hover:bg-brand-accent hover:text-brand-bg text-brand-accent border border-brand-accent/20 hover:border-brand-accent font-space text-[10px] uppercase font-bold py-2 px-4 rounded-lg transition-all"
-          >
-            Estudiar <ChevronRight className="w-3.5 h-3.5" />
-          </button>
-        </div>
-
-      </motion.div>
-    );
-  };
-
-  const activeDetailSection = librarySections.find(s => s.id === activeDetailSectionId);
-  const activeDetailSectionBooks = activeDetailSection
-    ? ebooksData.filter(book => book.category === activeDetailSection.categoryName)
-    : [];
-
   return (
     <div id="recursos-seccion" className="py-20 bg-brand-bg scroll-mt-20">
       <div className="max-w-6xl mx-auto px-6">
@@ -321,222 +236,172 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
           </p>
         </div>
 
-        {/* Ebooks Content Block - 2x2 Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
+        {/* Pestañas de pilares: un clic abre el pilar, sin botones "Explorar" duplicados */}
+        <div
+          role="tablist"
+          aria-label="Pilares de crecimiento y restauración"
+          className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 md:flex-wrap md:overflow-visible"
+        >
           {librarySections.map((section) => {
+            const isActive = section.id === activeTabId;
             return (
-              <div 
-                key={section.id} 
-                className="bg-brand-card border border-brand-border/40 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-sm hover:border-brand-accent/20 transition-all duration-300 group"
+              <button
+                key={section.id}
+                type="button"
+                role="tab"
+                id={`tab-${section.id}`}
+                aria-selected={isActive}
+                aria-controls={`panel-${section.id}`}
+                onClick={() => setActiveTabId(section.id)}
+                className={`shrink-0 whitespace-nowrap font-space text-xs md:text-sm font-bold uppercase tracking-wider px-4 md:px-5 py-3 rounded-xl border transition-all cursor-pointer ${
+                  isActive
+                    ? "bg-brand-accent text-white border-brand-accent shadow-md shadow-brand-accent/20"
+                    : "bg-brand-card text-brand-text border-brand-border hover:border-brand-accent/50 hover:text-brand-accent"
+                }`}
               >
-                <div className="space-y-5">
-                  {/* Title / Header */}
-                  <div className="border-l-4 border-brand-accent pl-3 py-0.5 text-left flex justify-between items-center">
-                    <h3 className="font-serif font-semibold text-brand-text text-lg md:text-xl leading-snug group-hover:text-brand-accent transition-colors">
-                      {section.title}
-                    </h3>
-                  </div>
-
-                  {/* Subtitle / Short description */}
-                  <p className="text-brand-muted text-xs text-left font-sans leading-relaxed">
-                    {section.subtitle}
-                  </p>
-
-                  {/* Bloque de color con la cita del pilar, sin imagen */}
-                  <div
-                    onClick={() => setActiveDetailSectionId(section.id)}
-                    className="w-full rounded-2xl overflow-hidden border border-brand-border/40 shadow-sm relative group-hover:border-brand-accent/20 transition-all duration-300 cursor-pointer bg-brand-dark p-6 md:p-8"
-                  >
-                    <span className="block font-space text-[10px] text-[#E8C96A] uppercase tracking-[0.25em] mb-3">
-                      {section.tag}
-                    </span>
-                    <p className="font-serif italic text-[#FAF7F0] text-base md:text-lg leading-relaxed">
-                      {section.quote}
-                    </p>
-                    <span className="mt-4 inline-flex items-center gap-1.5 bg-white/10 border border-white/20 text-[#FAF7F0] text-[10px] uppercase font-space tracking-wider px-3.5 py-2 rounded-full">
-                      <Eye className="w-3.5 h-3.5 text-[#E8C96A]" />
-                      <span>Explorar</span>
-                    </span>
-                  </div>
-                </div>
-
-                <div className="pt-6 mt-6 border-t border-brand-border/30 flex items-center justify-between">
-                  <span className="text-[10px] font-space text-brand-muted uppercase tracking-wider">
-                    {section.tag}
-                  </span>
-                  <button
-                    onClick={() => setActiveDetailSectionId(section.id)}
-                    className="inline-flex items-center gap-1.5 bg-brand-accent text-white hover:bg-brand-hover font-space text-[10px] uppercase font-bold py-2.5 px-4.5 rounded-xl transition-all shadow-sm cursor-pointer"
-                  >
-                    <span>Explorar Pilar</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
+                {section.tabName}
+              </button>
             );
           })}
         </div>
 
-      </div>
-
-      {/* Immersive Sub-Page View for selected Pilar */}
-      <AnimatePresence>
-        {activeDetailSection && (
+        {/* Contenido del pilar activo */}
+        <AnimatePresence mode="wait">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            key={activeSection.id}
+            role="tabpanel"
+            id={`panel-${activeSection.id}`}
+            aria-labelledby={`tab-${activeSection.id}`}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 30 }}
-            transition={{ type: "spring", damping: 25, stiffness: 120 }}
-            className="fixed inset-0 z-40 overflow-y-auto bg-brand-bg flex flex-col"
+            exit={{ opacity: 0, y: 12 }}
+            transition={{ duration: 0.25 }}
+            className="mt-8"
           >
-            {/* Fondo de color verde bosque tenue, sin imagen */}
-            <div className="absolute inset-0 z-0 bg-brand-dark/10">
-              <div className="absolute inset-0 bg-gradient-to-b from-brand-bg/90 via-brand-bg/95 to-brand-bg" />
+            {/* Título, cita y descripción del pilar */}
+            <div className="text-left space-y-4 max-w-3xl mb-10">
+              <span className="inline-flex items-center gap-1.5 bg-brand-accent/10 border border-brand-accent/20 px-3 py-1 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse" />
+                <span className="font-space text-[9px] uppercase tracking-widest text-brand-accent font-bold">
+                  {activeSection.tag}
+                </span>
+              </span>
+              <h3 className="text-3xl md:text-4xl font-serif font-light text-brand-text leading-tight">
+                {activeSection.title}
+              </h3>
+              <p className="text-brand-muted text-sm md:text-base leading-relaxed">
+                {activeSection.subtitle}
+              </p>
+              <blockquote className="border-l-4 border-brand-accent pl-4 py-1">
+                <p className="text-sm md:text-base font-serif text-brand-text leading-relaxed font-semibold italic">
+                  {activeSection.quote}
+                </p>
+              </blockquote>
+              <p className="text-brand-muted text-sm md:text-base leading-relaxed">
+                {activeSection.longDesc}
+              </p>
             </div>
 
-            {/* Inner Content */}
-            <div className="relative z-10 flex-1 flex flex-col max-w-5xl mx-auto w-full px-6 py-12 md:py-16">
-              
-              {/* Back Navigation Bar */}
-              <div className="flex justify-between items-center mb-10 border-b border-brand-border pb-4">
-                <button
-                  onClick={() => setActiveDetailSectionId(null)}
-                  className="inline-flex items-center gap-2 text-xs font-space font-bold uppercase tracking-wider text-brand-muted hover:text-brand-accent transition-colors bg-brand-card hover:bg-brand-bg px-4 py-2 rounded-xl border border-brand-border cursor-pointer"
-                >
-                  <ArrowRight className="w-4 h-4 rotate-180" />
-                  <span>Volver a los Pilares</span>
-                </button>
-                <div className="inline-flex items-center gap-1.5 bg-brand-accent/10 border border-brand-accent/20 px-3 py-1 rounded-full">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse" />
-                  <span className="font-space text-[9px] uppercase tracking-widest text-brand-accent font-bold">
-                    {activeDetailSection.tag}
-                  </span>
-                </div>
-              </div>
-
-              {/* Page Title & Quote */}
-              <div className="text-left space-y-4 max-w-3xl mb-12">
-                <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">Pilar de Restauración</span>
-                <h2 className="text-3xl md:text-5xl font-serif font-light text-brand-text leading-tight">
-                  {activeDetailSection.title}
-                </h2>
-                
-                <blockquote className="border-l-4 border-brand-accent pl-4 py-1">
-                  <p className="text-sm md:text-base font-serif text-brand-text leading-relaxed font-semibold italic">
-                    {activeDetailSection.quote}
+            {/* Dos columnas: diagnósticos y ebooks del pilar */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+              {/* Columna izquierda: diagnósticos (tests) */}
+              <div className="lg:col-span-5 space-y-6">
+                <div className="space-y-2">
+                  <h4 className="font-space text-xs font-bold text-brand-accent tracking-wider uppercase flex items-center gap-2">
+                    <Sparkles className="w-4 h-4" /> Pruebas de Autodiagnóstico
+                  </h4>
+                  <p className="text-xs text-brand-muted leading-relaxed">
+                    Herramientas de evaluación personalizadas para medir el estado actual de tu alma y tus relaciones.
                   </p>
-                </blockquote>
-                
-                <p className="text-brand-muted text-sm md:text-base leading-relaxed">
-                  {activeDetailSection.longDesc}
-                </p>
-              </div>
-
-              {/* Two-Column Layout */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-                
-                {/* Left Column: Diagnostics (tests) */}
-                <div className="lg:col-span-5 space-y-6">
-                  <div className="space-y-2">
-                    <h3 className="font-space text-xs font-bold text-brand-accent tracking-wider uppercase flex items-center gap-2">
-                      <Sparkles className="w-4 h-4" /> Pruebas de Autodiagnóstico
-                    </h3>
-                    <p className="text-xs text-brand-muted leading-relaxed">
-                      Herramientas de evaluación personalizadas para medir el estado actual de tu alma y tus relaciones.
-                    </p>
-                  </div>
-
-                  <div className="flex flex-col gap-3">
-                    {activeDetailSection.diagnostics.map((diag, index) => (
-                      <a
-                        key={index}
-                        href={diag.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-between gap-3 bg-brand-accent text-white hover:bg-brand-hover text-sm font-space font-bold py-3.5 px-5 rounded-2xl transition-all shadow-md hover:shadow-lg shadow-brand-accent/10 cursor-pointer text-left"
-                      >
-                        <span className="font-medium">{diag.title}</span>
-                        <ChevronRight className="w-5 h-5 shrink-0" />
-                      </a>
-                    ))}
-                  </div>
                 </div>
 
-                {/* Right Column: Ebooks and guides */}
-                <div className="lg:col-span-7 space-y-6">
-                  <div className="space-y-2">
-                    <h3 className="font-space text-xs font-bold text-brand-accent tracking-wider uppercase flex items-center gap-2">
-                      <BookOpen className="w-4 h-4" /> Recursos de Estudio & Guías
-                    </h3>
-                    <p className="text-xs text-brand-muted leading-relaxed">
-                      Descarga o lee guías teológicas y prácticas preparadas por el pastor Josué Cortés para guiar tu proceso paso a paso.
-                    </p>
-                  </div>
+                <div className="flex flex-col gap-3">
+                  {activeSection.diagnostics.map((diag, index) => (
+                    <a
+                      key={index}
+                      href={diag.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-between gap-3 bg-brand-accent text-white hover:bg-brand-hover text-sm font-space font-bold py-3.5 px-5 rounded-2xl transition-all shadow-md hover:shadow-lg shadow-brand-accent/10 cursor-pointer text-left"
+                    >
+                      <span className="font-medium">{diag.title}</span>
+                      <ChevronRight className="w-5 h-5 shrink-0" />
+                    </a>
+                  ))}
+                </div>
+              </div>
 
-                  <div className="space-y-4">
-                    {activeDetailSectionBooks.length > 0 ? (
-                      activeDetailSectionBooks.map(book => {
-                        return (
-                          <div
-                            key={book.id}
-                            className="bg-brand-card/80 border border-brand-border rounded-2xl p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 hover:border-brand-accent/30 hover:bg-brand-card transition-all"
-                          >
-                            <div className="space-y-2 text-left flex-1 min-w-0">
-                              <div className="flex items-center gap-2 flex-wrap">
-                                <h4 className="font-serif font-semibold text-brand-text text-base sm:text-lg leading-tight">
-                                  {book.title}
-                                </h4>
-                                {book.isPopular && (
-                                  <span className="bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider font-space">
-                                    Destacado
-                                  </span>
-                                )}
-                              </div>
-                              <p className="text-xs text-brand-muted line-clamp-2 leading-relaxed">
-                                {book.description}
-                              </p>
-                              <div className="flex gap-4 text-[10px] font-space text-brand-accent/80 font-medium">
-                                <span>{book.pages} páginas</span>
-                                <span>•</span>
-                                <span>{book.readTime} de lectura</span>
-                              </div>
+              {/* Columna derecha: ebooks y guías */}
+              <div className="lg:col-span-7 space-y-6">
+                <div className="space-y-2">
+                  <h4 className="font-space text-xs font-bold text-brand-accent tracking-wider uppercase flex items-center gap-2">
+                    <BookOpen className="w-4 h-4" /> Recursos de Estudio &amp; Guías
+                  </h4>
+                  <p className="text-xs text-brand-muted leading-relaxed">
+                    Descarga o lee guías teológicas y prácticas preparadas por el pastor Josué Cortés para guiar tu proceso paso a paso.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  {activeSectionBooks.length > 0 ? (
+                    activeSectionBooks.map(book => {
+                      return (
+                        <div
+                          key={book.id}
+                          className="bg-brand-card/80 border border-brand-border rounded-2xl p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 hover:border-brand-accent/30 hover:bg-brand-card transition-all"
+                        >
+                          <div className="space-y-2 text-left flex-1 min-w-0">
+                            <div className="flex items-center gap-2 flex-wrap">
+                              <h5 className="font-serif font-semibold text-brand-text text-base sm:text-lg leading-tight">
+                                {book.title}
+                              </h5>
+                              {book.isPopular && (
+                                <span className="bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider font-space">
+                                  Destacado
+                                </span>
+                              )}
                             </div>
-                            
-                            <button
-                              onClick={() => handleOpenBook(book)}
-                              className="w-full sm:w-auto shrink-0 flex items-center justify-center gap-2 bg-brand-accent text-white hover:bg-brand-hover font-space text-xs uppercase font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm cursor-pointer"
-                            >
-                              <span>Estudiar Recurso</span>
-                              <ArrowRight className="w-4 h-4" />
-                            </button>
+                            <p className="text-xs text-brand-muted line-clamp-2 leading-relaxed">
+                              {book.description}
+                            </p>
+                            <div className="flex gap-4 text-[10px] font-space text-brand-accent/80 font-medium">
+                              <span>{book.pages} páginas</span>
+                              <span>•</span>
+                              <span>{book.readTime} de lectura</span>
+                            </div>
                           </div>
-                        );
-                      })
-                    ) : (
-                      <div className="bg-brand-card border border-brand-border p-8 rounded-2xl text-center">
-                        <p className="text-xs text-brand-muted italic font-sans">
-                          Próximamente se añadirán más recursos descargables y guías escritas para este pilar de crecimiento.
-                        </p>
-                      </div>
-                    )}
-                  </div>
+
+                          <button
+                            onClick={() => handleOpenBook(book)}
+                            className="w-full sm:w-auto shrink-0 flex items-center justify-center gap-2 bg-brand-accent text-white hover:bg-brand-hover font-space text-xs uppercase font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm cursor-pointer"
+                          >
+                            <span>Estudiar Recurso</span>
+                            <ArrowRight className="w-4 h-4" />
+                          </button>
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <div className="bg-brand-card border border-brand-border p-8 rounded-2xl text-center">
+                      <p className="text-xs text-brand-muted italic font-sans">
+                        Próximamente se añadirán más recursos descargables y guías escritas para este pilar de crecimiento.
+                      </p>
+                    </div>
+                  )}
                 </div>
-
               </div>
-              
-              {/* Soft reminder footer */}
-              <div className="mt-16 pt-8 border-t border-brand-border/40 text-center">
-                <p className="text-xs text-brand-muted italic max-w-md mx-auto leading-relaxed">
-                  Todos estos recursos son totalmente gratuitos y están diseñados con base en el acompañamiento pastoral.
-                </p>
-              </div>
-
             </div>
 
+            {/* Recordatorio */}
+            <div className="mt-12 pt-8 border-t border-brand-border/40 text-center">
+              <p className="text-xs text-brand-muted italic max-w-md mx-auto leading-relaxed">
+                Todos estos recursos son totalmente gratuitos y están diseñados con base en el acompañamiento pastoral.
+              </p>
+            </div>
           </motion.div>
-        )}
-      </AnimatePresence>
+        </AnimatePresence>
 
+      </div>
       {/* Book Detail Drawer Modal Overlay */}
       <AnimatePresence>
         {activeBook && (
