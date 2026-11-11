@@ -1,36 +1,26 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { 
-  Sparkles, 
-  BookOpen, 
-  Compass, 
-  HelpCircle, 
-  MessageSquare, 
-  ChevronRight, 
-  Heart, 
-  ShieldCheck, 
-  Menu, 
+import {
+  ChevronRight,
+  Menu,
   X,
-  UserCheck,
   Star,
-  ArrowRight,
-  Bookmark,
-  Calendar,
-  Layers,
-  Award
+  ArrowRight
 } from "lucide-react";
 import { ebooksData } from "./data";
 import ResourceLibrary from "./components/ResourceLibrary";
 import PastoralContact from "./components/PastoralContact";
 import SocialCommunity from "./components/SocialCommunity";
 import Devocional365 from "./components/Devocional365";
-import appLogo from "./assets/images/app_logo_1781233600045.jpg";
-import heroClimbing from "./assets/images/levantate_resplandece_hero_climbing_1781676720148.jpg";
+import FeaturedDevocional from "./components/FeaturedDevocional";
+import RecentDevotionals from "./components/RecentDevotionals";
+import TestimonioJosue from "./components/TestimonioJosue";
 
 export default function App() {
   const [currentView, setCurrentView] = useState<"home" | "devocional365">("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [recommendedBookId, setRecommendedBookId] = useState<string | null>(null);
+  const [showFullStory, setShowFullStory] = useState(false);
 
   const [testimonios, setTestimonios] = useState(() => {
     const saved = localStorage.getItem("testimonios_resplandece");
@@ -154,13 +144,8 @@ export default function App() {
             }}
             className="flex items-center gap-3 group text-left cursor-pointer"
           >
-            <div className="w-10 h-10 rounded-full overflow-hidden border border-brand-accent/40 shadow-md shadow-brand-accent/5 bg-white flex items-center justify-center">
-              <img 
-                src={appLogo} 
-                alt="Logo Levántate Resplandece" 
-                className="w-full h-full object-cover scale-105"
-                referrerPolicy="no-referrer"
-              />
+            <div className="w-10 h-10 rounded-full border border-brand-accent/40 shadow-md shadow-brand-accent/5 bg-brand-dark flex items-center justify-center">
+              <span className="font-serif font-semibold text-sm text-[#FAF7F0]">LR</span>
             </div>
             <div>
               <span className="block font-serif font-semibold text-base tracking-wide text-brand-text group-hover:text-brand-accent transition-colors">
@@ -173,33 +158,23 @@ export default function App() {
           </button>
 
           {/* Desktop Nav Items */}
-          <nav className="hidden md:flex items-center gap-8 text-xs font-space uppercase tracking-wider">
-            <button 
+          <nav className="hidden md:flex items-center gap-6 text-[11px] font-space uppercase tracking-wider">
+            <button
               onClick={() => {
-                setCurrentView("devocional365");
+                setCurrentView("home");
                 animateScroll(0, 850);
               }}
-              className={`transition-colors cursor-pointer font-bold ${
-                currentView === "devocional365" 
-                  ? "text-brand-accent underline underline-offset-4 decoration-2" 
-                  : "text-brand-muted hover:text-brand-accent"
-              }`}
+              className="text-brand-muted hover:text-brand-accent transition-colors cursor-pointer"
             >
-              365 Días con Dios
+              Inicio
             </button>
-            <button 
+            <button
               onClick={() => scrollToAnchor("recursos-seccion")}
               className="text-brand-muted hover:text-brand-accent transition-colors cursor-pointer"
             >
-              Biblioteca
+              Recursos
             </button>
-            <button 
-              onClick={() => scrollToAnchor("sobre-seccion")}
-              className="text-brand-muted hover:text-brand-accent transition-colors cursor-pointer"
-            >
-              Sobre Josue
-            </button>
-            <button 
+            <button
               onClick={() => scrollToAnchor("contacto-seccion")}
               className="text-brand-muted hover:text-brand-accent transition-colors cursor-pointer"
             >
@@ -211,7 +186,7 @@ export default function App() {
           <div className="hidden md:block">
             <button
               onClick={() => scrollToAnchor("contacto-seccion")}
-              className="inline-block bg-gradient-to-r from-brand-card to-brand-border hover:from-brand-accent hover:to-brand-hover text-brand-accent hover:text-brand-bg px-5 py-2.5 rounded-lg border border-brand-accent/30 hover:border-brand-hover font-space text-[10px] uppercase font-bold tracking-wider transition-all duration-300 shadow-md shadow-brand-accent/5 cursor-pointer text-center"
+              className="inline-block bg-brand-accent hover:bg-brand-hover text-white px-5 py-2.5 rounded-lg font-space text-[10px] uppercase font-bold tracking-wider transition-all duration-300 shadow-md shadow-brand-accent/20 cursor-pointer text-center"
             >
               Contáctame
             </button>
@@ -238,38 +213,36 @@ export default function App() {
             className="md:hidden fixed top-20 left-0 w-full bg-brand-bg/95 backdrop-blur-lg border-b border-brand-border/80 z-30 overflow-hidden"
           >
             <div className="px-6 py-8 flex flex-col gap-6 text-center font-space text-sm uppercase tracking-wider">
-              <button 
+              <button
                 onClick={() => {
                   setMobileMenuOpen(false);
-                  setCurrentView("devocional365");
+                  setCurrentView("home");
                   animateScroll(0, 850);
                 }}
-                className={`py-2 transition-colors cursor-pointer ${
-                  currentView === "devocional365" ? "text-brand-accent font-bold" : "text-brand-muted hover:text-brand-accent"
-                }`}
+                className="text-brand-muted hover:text-brand-accent py-2 cursor-pointer"
               >
-                365 Días con Dios
+                Inicio
               </button>
-              <button 
+              <button
                 onClick={() => scrollToAnchor("recursos-seccion")}
                 className="text-brand-muted hover:text-brand-accent py-2 cursor-pointer"
               >
-                Biblioteca de Recursos
+                Recursos
               </button>
-              <button 
-                onClick={() => scrollToAnchor("sobre-seccion")}
-                className="text-brand-muted hover:text-brand-accent py-2 cursor-pointer"
-              >
-                Sobre Josue
-              </button>
-              <button 
-                onClick={() => {
-                  setMobileMenuOpen(false);
-                  scrollToAnchor("contacto-seccion");
-                }}
+              <button
+                onClick={() => scrollToAnchor("contacto-seccion")}
                 className="text-brand-muted hover:text-brand-accent py-2 cursor-pointer"
               >
                 Contacto
+              </button>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  scrollToAnchor("sobre-seccion");
+                }}
+                className="text-brand-muted hover:text-brand-accent py-2 cursor-pointer"
+              >
+                Sobre Josué
               </button>
               
               <button
@@ -288,143 +261,70 @@ export default function App() {
 
       {currentView === "home" ? (
         <>
-          {/* EPIC HERO MOUNTAIN COVER BANNER */}
-      <section className="relative w-full h-[60vh] md:h-[75vh] lg:h-[82vh] bg-brand-alt overflow-hidden flex flex-col justify-end">
-        {/* Background Image of climbing mountain hand help */}
-        <div className="absolute inset-0">
-          <img
-            src={heroClimbing}
-            alt="Levántate Resplandece - Un llamado para volver a Dios"
-            className="w-full h-full object-cover object-[center_35%]"
-            referrerPolicy="no-referrer"
-          />
-          {/* Subtle gradient to darken top a tiny bit so navbar feels premium */}
-          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/25 to-transparent pointer-events-none" />
-        </div>
-
-        {/* Translucent overlay container on bottom half like the user's reference screenshot */}
-        <div className="relative w-full z-10 bg-[#1e1e1e]/60 backdrop-blur-[1.5px] border-t border-white/15 py-10 md:py-14 text-center text-white px-6">
-          <div className="max-w-4xl mx-auto space-y-2 md:space-y-3">
-            <motion.h1
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-sans tracking-tight text-white font-normal leading-none"
-              style={{ fontFamily: '"Inter", system-ui, -apple-system, sans-serif' }}
-            >
-              Levántate Resplandece
-            </motion.h1>
-            
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-base sm:text-lg md:text-xl lg:text-2xl font-light text-white/90 tracking-wide font-sans mt-1"
-            >
-              Un llamado para volver a Dios
-            </motion.p>
-          </div>
-        </div>
-      </section>
-
-      {/* REVELATORY SCRIPTURE & WELCOME HUB */}
-      <section className="relative py-16 md:py-24 overflow-hidden bg-brand-bg border-b border-brand-border/60">
-        {/* Decorative Vector Radial Glows */}
-        <div className="absolute top-[10%] right-[-10%] w-[500px] h-[500px] bg-brand-radial rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-[5%] left-[-10%] w-[450px] h-[450px] bg-brand-accent/5 rounded-full blur-[120px] pointer-events-none" />
-
-        <div className="max-w-6xl mx-auto px-6 relative z-10 text-center">
-          
-          {/* Scripture Passage Quote */}
-          <div className="mb-10 inline-flex flex-col items-center">
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              className="px-4 py-1.5 rounded-full bg-brand-accent/10 border border-brand-accent/30 text-brand-accent font-space text-[10px] tracking-[0.25em] uppercase mb-4"
-            >
+          {/* SECCIÓN 1 · PORTADA OSCURA */}
+      <section id="inicio-seccion" className="relative w-full bg-brand-dark text-[#FAF7F0] overflow-hidden scroll-mt-20">
+        <div className="max-w-4xl mx-auto px-6 py-20 md:py-28 text-center space-y-8">
+          <div>
+            <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#FAF7F0]/90 font-space text-[10px] tracking-[0.25em] uppercase mb-6">
               Isaías 60:1
-            </motion.div>
-            
-            <p className="font-serif italic font-light text-xl md:text-2xl text-brand-text/90 max-w-2xl px-4 leading-relaxed">
-              &ldquo;Levántate, resplandece; porque ha venido tu luz, y la gloria del Señor ha nacido sobre ti.&rdquo;
+            </span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-light tracking-tight leading-none">
+              Levántate <span className="text-[#E8C96A] italic">Resplandece</span>
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl font-light text-white/85 tracking-wide mt-4">
+              Un llamado para volver a Dios
             </p>
-            <div className="w-16 h-px bg-brand-accent/30 mt-4" />
           </div>
 
-          {/* Main Hero Hook */}
-          <div className="max-w-3xl mx-auto space-y-6 mt-6">
-            <p className="text-brand-accent font-serif font-light text-xl md:text-2xl leading-relaxed italic text-center">
-              &ldquo;Si algo he aprendido, es que la vida puede cambiar de un momento a otro.&rdquo;
-            </p>
-            
-            <div className="space-y-4 text-brand-muted text-xs sm:text-sm md:text-base leading-relaxed font-sans max-w-2xl mx-auto text-center mt-6">
-              <p>
-                He visto sueños romperse, ministerios detenerse, matrimonios tambalearse y cuentas bancarias vaciarse. También sé lo que significa sentir que debes empezar de nuevo sin saber por dónde comenzar.
-              </p>
-              
-              <p className="text-brand-text font-serif text-lg md:text-xl font-light italic my-6 text-brand-accent">
-                Pero también he visto algo más grande: la fidelidad de Dios.
-              </p>
-              
-              <p>
-                Por eso hago lo que hago. Porque alguien caminó conmigo cuando más lo necesité, y ahora quiero caminar junto a otros. Quiero recordarte que tu historia no terminó en tu peor capítulo. Que el fracaso no define tu identidad. Que aún hay esperanza, dirección y propósito.
-              </p>
-              
-              <p className="text-brand-text font-serif font-light text-base md:text-lg italic pt-4 leading-relaxed max-w-xl mx-auto">
-                Mi deseo es acompañarte a volver a Dios, ordenar tu vida y descubrir que, incluso después de las ruinas, Él sigue haciendo nuevas todas las cosas.
-              </p>
-            </div>
-          </div>
+          <p className="font-serif italic font-light text-xl md:text-2xl text-[#FAF7F0]/90 max-w-2xl mx-auto leading-relaxed">
+            &ldquo;Levántate, resplandece; porque ha venido tu luz, y la gloria del Señor ha nacido sobre ti.&rdquo;
+          </p>
 
-          {/* CTA Action Splitters */}
-          <div className="flex flex-col sm:flex-row justify-center items-center gap-4.5 mt-10">
+          <div className="max-w-2xl mx-auto space-y-4">
+            <p className="text-white/80 text-sm sm:text-base md:text-lg leading-relaxed">
+              Acompañamiento bíblico para padres, líderes y hombres en crisis que
+              necesitan levantarse de nuevo y volver a Dios.
+            </p>
+            <p className="text-white/70 text-sm leading-relaxed">
+              Hubo una temporada en mi vida que puedo describir con dos palabras: oscuridad y silencio.
+              Fueron entre tres y cinco años de sequía espiritual, emocional y ministerial.
+              En Isaías 49 encontré mi respuesta, y ahí entendí la necesidad de la consejería bíblica.
+            </p>
             <button
-              onClick={() => scrollToAnchor("recursos-seccion")}
-              className="w-full sm:w-auto bg-brand-accent hover:bg-brand-hover text-brand-bg font-space text-xs font-bold uppercase tracking-wider py-4 px-10 rounded-xl transition-all shadow-xl shadow-brand-accent/5 cursor-pointer text-center font-medium"
+              onClick={() => scrollToAnchor("sobre-seccion")}
+              className="inline-flex items-center gap-2 text-[#E8C96A] font-space text-[11px] font-bold uppercase tracking-wider hover:gap-3 transition-all cursor-pointer"
             >
-              Explorar Biblioteca Gratuita
+              Lee mi historia completa
+              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
 
-          {/* Devotional App Banner/Button */}
-          <div className="mt-12 flex justify-center px-4">
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-3 pt-2">
             <button
               onClick={() => {
                 setCurrentView("devocional365");
                 animateScroll(0, 850);
               }}
-              className="w-full max-w-lg bg-gradient-to-r from-brand-card via-brand-alt to-brand-card hover:from-white hover:to-white border-2 border-brand-accent/40 hover:border-brand-accent/80 rounded-2xl p-5 hover:translate-y-[-1px] transition-all duration-300 shadow-xl shadow-brand-accent/[0.03] flex flex-col sm:flex-row items-center justify-between gap-4 group cursor-pointer text-center sm:text-left text-left"
+              className="w-full sm:w-auto bg-brand-accent hover:bg-brand-hover text-white font-space text-xs font-bold uppercase tracking-wider py-4 px-8 rounded-xl transition-all shadow-xl shadow-black/30 cursor-pointer text-center"
             >
-              <div className="space-y-1">
-                <div className="flex items-center justify-center sm:justify-start gap-2">
-                  <span className="inline-block w-2 h-2 rounded-full bg-brand-accent animate-pulse" />
-                  <span className="font-space text-[10px] uppercase tracking-widest text-brand-accent font-bold">
-                    Aplicación Devocional Exclusiva
-                  </span>
-                </div>
-                <h3 className="font-serif text-xl font-bold text-brand-text group-hover:text-brand-accent transition-colors">
-                  365 Días con Dios
-                </h3>
-                <p className="text-[11px] text-brand-muted font-sans font-normal max-w-sm leading-relaxed">
-                  Descubre diariamente un atributo de Dios y profundiza en tu verdadera identidad en Él.
-                </p>
-              </div>
-              
-              <div className="bg-brand-accent/10 group-hover:bg-brand-accent/20 border border-brand-accent/20 text-brand-accent px-4 py-2.5 rounded-xl font-space text-[11px] uppercase font-bold tracking-wider transition-colors flex items-center gap-1.5 whitespace-nowrap self-center">
-                Ver Página de la App
-                <span className="text-xs transition-transform group-hover:translate-x-1">→</span>
-              </div>
+              Lee el devocional de hoy
+            </button>
+            <button
+              onClick={() => scrollToAnchor("contacto-seccion")}
+              className="w-full sm:w-auto bg-brand-terra hover:bg-brand-terra-hover text-white font-space text-xs font-bold uppercase tracking-wider py-4 px-8 rounded-xl transition-all shadow-xl shadow-black/30 cursor-pointer text-center"
+            >
+              Agenda consejería
             </button>
           </div>
-
         </div>
       </section>
 
-      {/* DYNAMIC RESOURCE LIBRARY SECTION */}
-      <ResourceLibrary 
-        selectedBookId={recommendedBookId} 
-        onClearSelectedBook={() => setRecommendedBookId(null)} 
+      {/* RECURSO DESTACADO: DEVOCIONAL 365 */}
+      <FeaturedDevocional
+        onOpenDevocional={() => {
+          setCurrentView("devocional365");
+          animateScroll(0, 850);
+        }}
       />
 
       {/* BIOGRAPHY / ABOUT THE AUTOR JOSUE */}
@@ -440,34 +340,57 @@ export default function App() {
           
           <div className="space-y-4 text-xs md:text-sm text-brand-muted leading-relaxed font-sans">
             <p>
-              Mi nombre es Josué Cortés. Durante más de veinte años he servido en el ministerio, tanto de tiempo completo como de manera voluntaria, acompañando, enseñando y formando a otros en su caminar con Dios.
+              Hubo una temporada en mi vida que puedo describir con dos palabras: oscuridad y silencio. No fue una semana ni un mal mes. Fueron entre tres y cinco años de sequía espiritual, emocional y ministerial.
             </p>
             <p>
-              Sin embargo, mi historia no está marcada únicamente por los años de experiencia, sino por la gracia de Dios en medio del fracaso. Hubo una temporada en la que atravesé una de las crisis más profundas de mi vida. Mi ministerio se detuvo, mi matrimonio estuvo cerca de quebrantarse, enfrenté dificultades familiares y económicas, perdí fuentes de ingreso y tuve que comenzar nuevamente desde cero.
+              Yo era pastor. Sí, de esos que oran, predican, aconsejan, visitan, ayunan, dan hasta lo poco que tienen y esperan con esperanza que algo suceda&hellip; pero nada pasaba. La iglesia no crecía. No había fruto, no había respuestas, no había nada.
             </p>
             <p>
-              En medio de ese proceso busqué ayuda. Yo mismo pasé por consejería y descubrí algo que transformó mi perspectiva: muchas personas están sufriendo en silencio, intentando salir adelante solas, buscando respuestas en internet sin saber distinguir entre aquello que edifica y aquello que confunde. Comprendí entonces la enorme necesidad de hombres y mujeres que acompañen con verdad, gracia y fidelidad a las Escrituras.
-            </p>
-            <p>
-              Hoy sirvo desde ese lugar de humildad. No hablo desde la perfección, sino desde las cicatrices. He fallado lo suficiente para entender cómo se cae una persona, pero también he visto la fidelidad de Dios para restaurar, sostener y dar nuevos comienzos.
-            </p>
-            <p>
-              Mi pasión es preparar a otros para vivir para la gloria de Dios. A través de la consejería bíblica, la mentoría, la capacitación y la creación de recursos digitales, acompaño especialmente a líderes, pastores, padres, hombres y mujeres que necesitan levantarse nuevamente y descubrir que aún hay esperanza.
-            </p>
-            <p>
-              Creo firmemente que la Biblia es suficiente, que las personas son profundamente valiosas y que la verdadera plenitud depende del concepto que tenemos acerca de quién es Dios y quiénes somos delante de Él.
-            </p>
-            <p>
-              Junto a mi esposa y mi hijas, quienes han sido parte esencial de esta historia de restauración, sigo construyendo una comunidad donde nadie tenga que caminar solo. Mi anhelo es ayudar a muchos a volver a Dios, levantarse de nuevo y vivir con propósito.
+              En Isaías 49 encontré mi respuesta: &ldquo;Tú eres mi siervo, Israel, en quien mostraré mi gloria.&rdquo; Y luego: &ldquo;mi causa está delante del Señor, y mi recompensa con mi Dios.&rdquo; Ahí entendí la necesidad de la consejería bíblica: aplicar la Palabra de Dios a las heridas reales de la vida.
             </p>
           </div>
 
-          {/* SECCIÓN COMPARTE TU TESTIMONIO */}
+          <div className="text-center">
+            <button
+              onClick={() => setShowFullStory(!showFullStory)}
+              className="inline-flex items-center gap-2 text-brand-accent font-space text-[11px] font-bold uppercase tracking-wider hover:gap-3 transition-all cursor-pointer"
+            >
+              {showFullStory ? "Ocultar historia completa" : "Conoce su historia completa"}
+              <ChevronRight className={`w-4 h-4 transition-transform ${showFullStory ? "-rotate-90" : ""}`} />
+            </button>
+          </div>
+
+          {showFullStory && (
+            <TestimonioJosue />
+          )}
+
+          
+        </div>
+      </section>
+
+      {/* DEVOCIONALES RECIENTES */}
+      <RecentDevotionals />
+
+      {/* DYNAMIC RESOURCE LIBRARY SECTION */}
+      <ResourceLibrary 
+        selectedBookId={recommendedBookId} 
+        onClearSelectedBook={() => setRecommendedBookId(null)} 
+      />
+
+      {/* PASTORAL CONTACT & DIAGNOSTICS FAQS */}
+      <PastoralContact />
+      {/* SOCIAL MEDIA & PODCAST COMMUNITY */}
+      <SocialCommunity />
+
+      {/* SECCIÓN 3 · PON TU RESEÑA O TESTIMONIO */}
+      <section id="resenas-seccion" className="py-20 bg-brand-bg border-t border-brand-border scroll-mt-20">
+        <div className="max-w-3xl mx-auto px-6">
+{/* SECCIÓN COMPARTE TU TESTIMONIO */}
           <div className="pt-10 border-t border-brand-border/40 space-y-12">
             <div className="text-center space-y-2">
               <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">VOCES DE GRACIA</span>
               <h3 className="text-2xl font-serif font-light text-brand-text">
-                Comparte tu <span className="text-brand-accent italic font-normal">historia</span> de restauración
+                Pon tu <span className="text-brand-accent italic font-normal">reseña</span> o testimonio
               </h3>
               <p className="text-brand-muted text-xs max-w-lg mx-auto leading-relaxed">
                 ¿Has experimentado un nuevo comienzo a través de los recursos, mentoría o autodiagnósticos? Tu testimonio puede ser la luz que alguien más necesita hoy.
@@ -663,11 +586,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* SOCIAL MEDIA & PODCAST COMMUNITY */}
-      <SocialCommunity />
-
-      {/* PASTORAL CONTACT & DIAGNOSTICS FAQS */}
-      <PastoralContact />
         </>
       ) : (
         <Devocional365 onBackToHome={() => {
@@ -682,13 +600,8 @@ export default function App() {
           
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center justify-center md:justify-start gap-2.5">
-              <div className="w-8 h-8 rounded-full overflow-hidden border border-brand-accent/30 bg-white flex items-center justify-center">
-                <img 
-                  src={appLogo} 
-                  alt="Logo Levántate Resplandece" 
-                  className="w-full h-full object-cover scale-105"
-                  referrerPolicy="no-referrer"
-                />
+              <div className="w-8 h-8 rounded-full border border-brand-accent/30 bg-brand-dark flex items-center justify-center">
+                <span className="font-serif font-semibold text-xs text-[#FAF7F0]">LR</span>
               </div>
               <span className="font-serif font-medium text-base text-brand-text">Levántate Resplandece</span>
             </div>
@@ -703,18 +616,29 @@ export default function App() {
             <span className="block font-space text-[10px] text-brand-accent uppercase tracking-widest font-bold">Enlaces Directos</span>
             <ul className="text-xs text-brand-muted space-y-2">
               <li>
+                <button
+                  onClick={() => {
+                    setCurrentView("devocional365");
+                    animateScroll(0, 850);
+                  }}
+                  className="hover:text-brand-accent transition-colors"
+                >
+                  Devocional 365
+                </button>
+              </li>
+              <li>
                 <button onClick={() => scrollToAnchor("recursos-seccion")} className="hover:text-brand-accent transition-colors">
-                  Biblioteca de Ebooks
+                  Recursos
                 </button>
               </li>
               <li>
                 <button onClick={() => scrollToAnchor("sobre-seccion")} className="hover:text-brand-accent transition-colors">
-                  Sobre Josue Cortés
+                  Sobre Josué
                 </button>
               </li>
               <li>
                 <button onClick={() => scrollToAnchor("contacto-seccion")} className="hover:text-brand-accent transition-colors">
-                  Contacto Directo
+                  Contacto
                 </button>
               </li>
             </ul>

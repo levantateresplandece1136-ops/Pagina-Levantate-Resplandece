@@ -22,10 +22,6 @@ import {
 } from "lucide-react";
 import { ebooksData } from "../data";
 import { EBook } from "../types";
-import renuevaMenteImage from "../assets/images/path_renueva_mente_1782268544984.jpg";
-import conexionFamiliasImage from "../assets/images/family_connection_1782268558173.jpg";
-import lideraIntegridadImage from "../assets/images/leader_integrity_1782268570798.jpg";
-import batallaVictoriaImage from "../assets/images/inner_peace_victory_1782268582551.jpg";
 
 interface ResourceLibraryProps {
   selectedBookId: string | null;
@@ -62,7 +58,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
       title: "1. Renueva tu mente. Transforma tu vida.",
       subtitle: "Descubre las creencias que están dirigiendo tu vida y reemplázalas por la verdad de Cristo para experimentar una transformación duradera.",
       categoryName: "Renueva tu mente. Transforma tu vida.",
-      image: renuevaMenteImage,
+      image: "",
       tag: "Verdad & Identidad",
       quote: "“La verdad tiene el poder de cambiar la historia que te cuentas a ti mismo.”",
       longDesc: "Descubre las mentiras y falsas creencias que han moldeado tus decisiones, y permite que la luz y verdad de Cristo reescriba tu propósito y renueve tu vida.",
@@ -79,7 +75,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
       title: "2. Más conexión, menos conflicto.",
       subtitle: "Aprende a comprender, conectar y disfrutar tus relaciones personales desde una perspectiva bíblica y llena de esperanza.",
       categoryName: "Más conexión, menos conflicto.",
-      image: conexionFamiliasImage,
+      image: "",
       tag: "Comprensión & Vínculo Especial",
       quote: "“Comprender y conectar es el puente para apagar las llamas del conflicto continuo.”",
       longDesc: "Aprende a reconciliar diferencias y cultivar un perdón auténtico que profundice el amor paternal, familiar y conyugal desde un enfoque redentor y lleno de esperanza.",
@@ -100,7 +96,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
       title: "3. Lidera con integridad y propósito.",
       subtitle: "Ordena tus prioridades, fortalece tu carácter y lidera con sabiduría bíblica.",
       categoryName: "Lidera con integridad y propósito.",
-      image: lideraIntegridadImage,
+      image: "",
       tag: "Fortaleza & Carácter",
       quote: "“Cuando un hombre encuentra su propósito en Dios, lidera con integridad y sabiduría.”",
       longDesc: "Ordena tus prioridades, fortalece tu carácter masculino o ministerial bajo principios inquebrantables, y asume la responsabilidad de guiar con amor y firmeza.",
@@ -121,7 +117,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
       title: "4. Esperanza para la batalla interior.",
       subtitle: "Descubre cómo salir de la ansiedad y depresion, enfrentar el pecado persistente y crecer en una relación más profunda con Cristo.",
       categoryName: "Esperanza para la batalla interior.",
-      image: batallaVictoriaImage,
+      image: "",
       tag: "Victoria & Paz Interior",
       quote: "“Levántate y resplandece, porque ha venido tu luz, y la gloria de Jehová ha nacido sobre ti.”",
       longDesc: "Encuentra herramientas bíblicas y fortaleza espiritual para triunfar sobre la ansiedad, la depresión, romper ciclos destructivos y caminar en plena libertad.",
@@ -188,17 +184,17 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
     const isModal = scale === "modal";
     
     // Choose cover background design to fit premium vibe based on ID
-    let coverStyle = "from-[#0F172A] to-[#1E293B]";
+    let coverStyle = "from-brand-dark to-brand-dark-2";
     let trimStyle = "border-amber-500/20";
     
     if (book.id === "anclas-del-alma") {
-      coverStyle = "from-[#111827] via-[#1F2937] to-[#0D1527]";
+      coverStyle = "from-brand-dark via-[#22402C] to-brand-dark";
     } else if (book.id === "limites-redentores") {
-      coverStyle = "from-[#0A0F1E] via-[#111C38] to-[#0D1525]";
+      coverStyle = "from-[#3A1F12] via-brand-terra to-[#5C2E15]";
     } else if (book.id === "mesa-de-la-escucha") {
-      coverStyle = "from-[#1E1B4B] via-[#311147] to-[#0F172A]";
+      coverStyle = "from-brand-dark via-brand-accent to-[#2C4A08]";
     } else if (book.id === "padres-de-luz") {
-      coverStyle = "from-[#1E1B4B] via-[#10304D] to-[#090F16]";
+      coverStyle = "from-[#22402C] via-brand-dark to-brand-dark-2";
     }
 
     return (
@@ -224,11 +220,11 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
 
         {/* Title central */}
         <div className="my-auto space-y-2 relative z-10 px-3">
-          <h4 className="font-serif font-semibold text-brand-text text-xl md:text-[22px] leading-tight text-center tracking-normal">
+          <h4 className="font-serif font-semibold text-[#FAF7F0] text-xl md:text-[22px] leading-tight text-center tracking-normal">
             {book.title}
           </h4>
           <div className="w-10 h-0.5 bg-brand-accent mx-auto" />
-          <p className="text-[10px] text-brand-muted uppercase tracking-wider text-center font-space leading-snug">
+          <p className="text-[10px] text-white/70 uppercase tracking-wider text-center font-space leading-snug">
             {book.category}
           </p>
         </div>
@@ -346,25 +342,21 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                     {section.subtitle}
                   </p>
 
-                  {/* Image container suitable for the 2x2 column size */}
-                  <div 
+                  {/* Bloque de color con la cita del pilar, sin imagen */}
+                  <div
                     onClick={() => setActiveDetailSectionId(section.id)}
-                    className="w-full h-52 md:h-60 rounded-2xl overflow-hidden border border-brand-border/40 shadow-sm relative group-hover:border-brand-accent/20 transition-all duration-300 cursor-pointer"
+                    className="w-full rounded-2xl overflow-hidden border border-brand-border/40 shadow-sm relative group-hover:border-brand-accent/20 transition-all duration-300 cursor-pointer bg-brand-dark p-6 md:p-8"
                   >
-                    <img
-                      src={section.image}
-                      alt={section.title}
-                      className="w-full h-full object-cover select-none group-hover:scale-[1.02] transition-transform duration-500"
-                      referrerPolicy="no-referrer"
-                    />
-                    
-                    {/* Minimalist interactive overlay */}
-                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors duration-300">
-                      <span className="absolute bottom-3.5 right-3.5 bg-brand-bg/95 backdrop-blur-sm border border-brand-border text-brand-text text-[10px] uppercase font-space tracking-wider px-3.5 py-2 rounded-full shadow-md opacity-90 group-hover:opacity-100 transition-all duration-300 flex items-center gap-1.5">
-                        <Eye className="w-3.5 h-3.5 text-brand-accent" />
-                        <span>Explorar</span>
-                      </span>
-                    </div>
+                    <span className="block font-space text-[10px] text-[#E8C96A] uppercase tracking-[0.25em] mb-3">
+                      {section.tag}
+                    </span>
+                    <p className="font-serif italic text-[#FAF7F0] text-base md:text-lg leading-relaxed">
+                      {section.quote}
+                    </p>
+                    <span className="mt-4 inline-flex items-center gap-1.5 bg-white/10 border border-white/20 text-[#FAF7F0] text-[10px] uppercase font-space tracking-wider px-3.5 py-2 rounded-full">
+                      <Eye className="w-3.5 h-3.5 text-[#E8C96A]" />
+                      <span>Explorar</span>
+                    </span>
                   </div>
                 </div>
 
@@ -397,14 +389,8 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
             transition={{ type: "spring", damping: 25, stiffness: 120 }}
             className="fixed inset-0 z-40 overflow-y-auto bg-brand-bg flex flex-col"
           >
-            {/* Background image covered with beautiful frosted-glass overlay */}
-            <div className="absolute inset-0 z-0">
-              <img 
-                src={activeDetailSection.image} 
-                alt={activeDetailSection.title}
-                className="w-full h-full object-cover opacity-10"
-                referrerPolicy="no-referrer"
-              />
+            {/* Fondo de color verde bosque tenue, sin imagen */}
+            <div className="absolute inset-0 z-0 bg-brand-dark/10">
               <div className="absolute inset-0 bg-gradient-to-b from-brand-bg/90 via-brand-bg/95 to-brand-bg" />
             </div>
 

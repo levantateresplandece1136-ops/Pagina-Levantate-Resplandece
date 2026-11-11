@@ -90,12 +90,12 @@ export default function PastoralContact() {
         
         {/* Intro */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">CONTACTO DIRECTO</span>
+          <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">CONTACTO · CONSEJERÍA</span>
           <h2 className="text-4xl md:text-5xl font-serif font-light text-brand-text mt-3">
-            Ponte en <span className="text-brand-accent italic font-normal">Contacto</span>
+            Pide una <span className="text-brand-accent italic font-normal">consejería</span>
           </h2>
           <p className="text-brand-muted text-sm mt-4">
-            Si deseas hacernos llegar una consulta pastoral, sugerencia, o agendar un tiempo de acompañamiento personalizado, escríbeme con total libertad.
+            Si deseas una consulta pastoral o agendar un tiempo de acompañamiento personalizado, escríbeme con total libertad.
           </p>
         </div>
 
