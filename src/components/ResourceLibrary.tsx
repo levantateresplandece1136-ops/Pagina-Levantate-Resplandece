@@ -23,6 +23,7 @@ interface ResourceLibraryProps {
 
 interface DiagnosticLink {
   title: string;
+  name: string;
   url: string;
   description?: string;
   buttonLabel?: string;
@@ -65,6 +66,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
       diagnostics: [
         {
           title: 'Test "¿Qué Me Detiene?"',
+          name: '¿Qué Me Detiene?',
           url: 'https://qu-me-detiene.vercel.app/',
           description: 'Diagnóstico profundo para consejería. Descubre qué creencias están dirigiendo tus decisiones y llévate un mapa pastoral para trabajarlo con tu consejero.',
           buttonLabel: 'Realizar diagnóstico profundo'
@@ -84,10 +86,12 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
       diagnostics: [
         {
           title: 'Realizar Diagnóstico Matrimonial',
+          name: 'Diagnóstico Matrimonial',
           url: 'https://test-matrimonios.vercel.app/'
         },
         {
           title: 'Experiencia "El Pacificador"',
+          name: 'El Pacificador',
           url: 'https://pacificador.vercel.app/'
         }
       ]
@@ -105,12 +109,14 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
       diagnostics: [
         {
           title: 'Test "Rompiendo Creencias"',
+          name: 'Rompiendo Creencias',
           url: 'https://renovados-rompiendo-las-creencias-l.vercel.app/',
           description: 'Programa personal de 4 semanas. Descubre tu creencia dominante y renuévala día a día con misiones, versículos y un plan personal.',
           buttonLabel: 'Empezar mi renovación'
         },
         {
           title: 'Test "Redimidos"',
+          name: 'Redimidos',
           url: 'https://redimidos-tau.vercel.app/'
         }
       ]
@@ -128,10 +134,12 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
       diagnostics: [
         {
           title: 'Realizar Test "Vence la Ansiedad"',
+          name: 'Vence la Ansiedad',
           url: 'https://vence-la-ansiedad.vercel.app/'
         },
         {
           title: 'Experiencia "Cuando Todo se Derrumba"',
+          name: 'Cuando Todo se Derrumba',
           url: 'https://cuando-todo-se-derrumba.vercel.app/'
         }
       ]
@@ -347,6 +355,9 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                 <div className="flex flex-col gap-4">
                   {activeSection.diagnostics.map((diag, index) => (
                     <div key={index} className="space-y-2">
+                      <h5 className="text-lg font-serif font-semibold text-brand-text leading-snug">
+                        {diag.name}
+                      </h5>
                       {diag.description && (
                         <p className="text-xs text-brand-muted leading-relaxed">
                           {diag.description}
