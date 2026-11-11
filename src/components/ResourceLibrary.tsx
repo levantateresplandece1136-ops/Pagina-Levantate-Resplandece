@@ -21,6 +21,13 @@ interface ResourceLibraryProps {
   onClearSelectedBook: () => void;
 }
 
+interface DiagnosticLink {
+  title: string;
+  url: string;
+  description?: string;
+  buttonLabel?: string;
+}
+
 export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }: ResourceLibraryProps) {
   // Pestaña activa de Recursos: por defecto, el primer pilar
   const [activeTabId, setActiveTabId] = useState<string>("renueva-mente");
@@ -33,7 +40,18 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
   const [downloadSuccess, setDownloadSuccess] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const librarySections = [
+  const librarySections: {
+    id: string;
+    tabName: string;
+    title: string;
+    subtitle: string;
+    categoryName: string;
+    image: string;
+    tag: string;
+    quote: string;
+    longDesc: string;
+    diagnostics: DiagnosticLink[];
+  }[] = [
     {
       id: "renueva-mente",
       tabName: "Renueva tu mente",
@@ -46,8 +64,10 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
       longDesc: "Descubre las mentiras y falsas creencias que han moldeado tus decisiones, y permite que la luz y verdad de Cristo reescriba tu propósito y renueve tu vida.",
       diagnostics: [
         {
-          title: 'Realizar Test "¿Qué Me Detiene?"',
-          url: 'https://qu-me-detiene.vercel.app/'
+          title: 'Test "¿Qué Me Detiene?"',
+          url: 'https://qu-me-detiene.vercel.app/',
+          description: 'Diagnóstico profundo para consejería. Descubre qué creencias están dirigiendo tus decisiones y llévate un mapa pastoral para trabajarlo con tu consejero.',
+          buttonLabel: 'Realizar diagnóstico profundo'
         }
       ]
     },
@@ -85,7 +105,9 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
       diagnostics: [
         {
           title: 'Test "Rompiendo Creencias"',
-          url: 'https://renovados-rompiendo-las-creencias-l.vercel.app/'
+          url: 'https://renovados-rompiendo-las-creencias-l.vercel.app/',
+          description: 'Programa personal de 4 semanas. Descubre tu creencia dominante y renuévala día a día con misiones, versículos y un plan personal.',
+          buttonLabel: 'Empezar mi renovación'
         },
         {
           title: 'Test "Redimidos"',
@@ -234,6 +256,13 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
             Estructuras fundamentales y recursos pastorales diseñados para desatar nudos relacionales, 
             renovar el entendimiento y guiarte a una vida de profunda paz espiritual y comunión real.
           </p>
+          {/* Línea orientadora: ¿por cuál diagnóstico empiezo? */}
+          <div className="mt-6 bg-brand-card border-l-4 border-brand-terra rounded-r-2xl px-5 py-4 max-w-2xl shadow-sm">
+            <p className="text-sm text-brand-text leading-relaxed">
+              <span className="font-space font-bold text-brand-terra">¿Por cuál empiezo? </span>
+              Si quieres entender a fondo qué te detiene —ideal para llevarlo a consejería—, haz ¿Qué Me Detiene? Si quieres un plan diario para renovar tu mente, empieza Rompiendo Creencias.
+            </p>
+          </div>
         </div>
 
         {/* Pestañas de pilares: un clic abre el pilar, sin botones "Explorar" duplicados */}
@@ -315,18 +344,24 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                   </p>
                 </div>
 
-                <div className="flex flex-col gap-3">
+                <div className="flex flex-col gap-4">
                   {activeSection.diagnostics.map((diag, index) => (
-                    <a
-                      key={index}
-                      href={diag.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-between gap-3 bg-brand-accent text-white hover:bg-brand-hover text-sm font-space font-bold py-3.5 px-5 rounded-2xl transition-all shadow-md hover:shadow-lg shadow-brand-accent/10 cursor-pointer text-left"
-                    >
-                      <span className="font-medium">{diag.title}</span>
-                      <ChevronRight className="w-5 h-5 shrink-0" />
-                    </a>
+                    <div key={index} className="space-y-2">
+                      {diag.description && (
+                        <p className="text-xs text-brand-muted leading-relaxed">
+                          {diag.description}
+                        </p>
+                      )}
+                      <a
+                        href={diag.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex w-full items-center justify-between gap-3 bg-brand-accent text-white hover:bg-brand-hover text-sm font-space font-bold py-3.5 px-5 rounded-2xl transition-all shadow-md hover:shadow-lg shadow-brand-accent/10 cursor-pointer text-left"
+                      >
+                        <span className="font-medium">{diag.buttonLabel ?? diag.title}</span>
+                        <ChevronRight className="w-5 h-5 shrink-0" />
+                      </a>
+                    </div>
                   ))}
                 </div>
               </div>
