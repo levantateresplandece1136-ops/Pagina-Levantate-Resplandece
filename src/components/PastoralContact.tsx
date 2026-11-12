@@ -19,6 +19,7 @@ import { CounselingRequest } from "../types";
 export default function PastoralContact() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [activeFaq, setActiveFaq] = useState<number | null>(0);
   
   // Form State
@@ -48,39 +49,65 @@ export default function PastoralContact() {
     }
   ];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // El mensaje se envía de verdad por HTTP a FormSubmit, que lo reenvía
+  // por correo a levantateresplandecepagina@gmail.com. No depende del
+  // programa de correo del visitante: el éxito solo se muestra cuando el
+  // servicio confirma la recepción.
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!fullName || !email || !message) return;
 
     setIsSubmitting(true);
+    setSubmitError(null);
 
     const subject = `[Contacto Levántate Resplandece] ${counselingArea} - ${fullName}`;
-    const body = `Hola, Josue Cortés y equipo de Levántate Resplandece.\n\nHe enviado un mensaje de contacto a través del formulario de la página web:\n\n` +
-      `--------------------------------------\n` +
-      `👤 Nombre Completo: ${fullName}\n` +
-      `✉️ Correo de Contacto: ${email}\n` +
-      `📅 Rango de Edad: ${ageGroup}\n` +
-      `💡 Motivo de Contacto / Área: ${counselingArea}\n` +
-      `⚠️ Urgencia Sugerida: ${urgency}\n` +
-      `--------------------------------------\n\n` +
-      `📝 Mensaje / Descripción:\n${message}\n\n` +
-      `Quedo a la espera de sus comentarios. ¡Muchas gracias!`;
 
-    const mailtoUrl = `mailto:levantateresplandecepagina@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    try {
+      const response = await fetch(
+        "https://formsubmit.co/ajax/levantateresplandecepagina@gmail.com",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            name: fullName,
+            email: email,
+            _replyto: email,
+            _subject: subject,
+            _template: "table",
+            _captcha: "false",
+            "Nombre Completo": fullName,
+            "Correo de Contacto": email,
+            "Rango de Edad": ageGroup,
+            "Motivo de Contacto / Área": counselingArea,
+            "Urgencia Sugerida": urgency,
+            "Mensaje / Descripción": message,
+          }),
+        }
+      );
 
-    setTimeout(() => {
+      if (!response.ok) {
+        throw new Error(`FormSubmit respondió con estado ${response.status}`);
+      }
+
       setIsSubmitting(false);
       setFormSubmitted(true);
-      
-      // Trigger mailto redirection to open the native email client configured with the official email
-      window.location.href = mailtoUrl;
-    }, 1200);
+    } catch (error) {
+      console.error("No se pudo enviar el mensaje de contacto:", error);
+      setIsSubmitting(false);
+      setSubmitError(
+        "No se pudo enviar tu mensaje. Revisa tu conexión e inténtalo de nuevo, o escríbenos directamente a levantateresplandecepagina@gmail.com."
+      );
+    }
   };
 
   const handleResetForm = () => {
     setFullName("");
     setEmail("");
     setMessage("");
+    setSubmitError(null);
     setFormSubmitted(false);
   };
 
@@ -274,6 +301,12 @@ export default function PastoralContact() {
                     <Send className="w-3.5 h-3.5" />
                   </button>
                 </div>
+
+                {submitError && (
+                  <div className="p-3.5 bg-red-500/10 border border-red-400/40 rounded-xl text-xs text-red-200 leading-relaxed" role="alert">
+                    {submitError}
+                  </div>
+                )}
 
                 <div className="flex justify-center items-center gap-1 text-[10px] text-white/70 font-space mt-2">
                   <Calendar className="w-3.5 h-3.5 text-brand-gold" />
