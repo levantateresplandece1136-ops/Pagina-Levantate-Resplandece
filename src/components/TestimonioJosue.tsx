@@ -4,8 +4,8 @@
 
 export default function TestimonioJosue() {
   return (
-    <div className="space-y-4 text-xs md:text-sm text-brand-muted leading-relaxed font-sans text-left">
-      <h3 className="font-serif text-2xl md:text-3xl font-light text-brand-text leading-tight">
+    <div className="space-y-4 text-xs md:text-sm text-white/70 leading-relaxed font-sans text-left">
+      <h3 className="font-serif text-2xl md:text-3xl font-light text-[#FAF7F0] leading-tight">
         Una historia real de fe, enojo y gracia
       </h3>
       <p>Hubo una temporada en mi vida que puedo describir con dos palabras: oscuridad y silencio. No fue una semana ni un mal mes. Fueron entre tres y cinco años de sequía espiritual, emocional y ministerial. Y no cualquier sequía… fue ese tipo de desierto donde te preguntas si Dios olvidó que existes.</p>

@@ -328,17 +328,17 @@ export default function App() {
       />
 
       {/* BIOGRAPHY / ABOUT THE AUTOR JOSUE */}
-      <section id="sobre-seccion" className="py-24 bg-brand-bg border-t border-brand-border scroll-mt-20">
+      <section id="sobre-seccion" className="py-24 bg-brand-dark border-t border-white/10 scroll-mt-20">
         <div className="max-w-3xl mx-auto px-6 space-y-8">
           
           <div className="text-center space-y-3">
-            <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">CONOCE AL AUTOR</span>
-            <h2 className="text-4.5xl font-serif font-light text-brand-text leading-tight">
-              Un testimonio de <span className="text-brand-accent italic font-normal">gracia</span> y <span className="text-brand-accent italic font-normal">restauración</span>
+            <span className="font-space text-xs text-brand-gold tracking-[0.25em] uppercase">CONOCE AL AUTOR</span>
+            <h2 className="text-4.5xl font-serif font-light text-[#FAF7F0] leading-tight">
+              Un testimonio de <span className="text-brand-gold italic font-normal">gracia</span> y <span className="text-brand-gold italic font-normal">restauración</span>
             </h2>
           </div>
           
-          <div className="space-y-4 text-xs md:text-sm text-brand-muted leading-relaxed font-sans">
+          <div className="space-y-4 text-xs md:text-sm text-white/70 leading-relaxed font-sans">
             <p>
               Hubo una temporada en mi vida que puedo describir con dos palabras: oscuridad y silencio. No fue una semana ni un mal mes. Fueron entre tres y cinco años de sequía espiritual, emocional y ministerial.
             </p>
@@ -353,7 +353,7 @@ export default function App() {
           <div className="text-center">
             <button
               onClick={() => setShowFullStory(!showFullStory)}
-              className="inline-flex items-center gap-2 text-brand-accent font-space text-[11px] font-bold uppercase tracking-wider hover:gap-3 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 text-brand-gold font-space text-[11px] font-bold uppercase tracking-wider hover:gap-3 transition-all cursor-pointer"
             >
               {showFullStory ? "Ocultar historia completa" : "Conoce su historia completa"}
               <ChevronRight className={`w-4 h-4 transition-transform ${showFullStory ? "-rotate-90" : ""}`} />
@@ -383,30 +383,30 @@ export default function App() {
       <SocialCommunity />
 
       {/* SECCIÓN 3 · PON TU RESEÑA O TESTIMONIO */}
-      <section id="resenas-seccion" className="py-20 bg-brand-bg border-t border-brand-border scroll-mt-20">
+      <section id="resenas-seccion" className="py-20 bg-brand-dark border-t border-white/10 scroll-mt-20">
         <div className="max-w-3xl mx-auto px-6">
 {/* SECCIÓN COMPARTE TU TESTIMONIO */}
-          <div className="pt-10 border-t border-brand-border/40 space-y-12">
+          <div className="pt-10 border-t border-white/10 space-y-12">
             <div className="text-center space-y-2">
-              <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">VOCES DE GRACIA</span>
-              <h3 className="text-2xl font-serif font-light text-brand-text">
-                Pon tu <span className="text-brand-accent italic font-normal">reseña</span> o testimonio
+              <span className="font-space text-xs text-brand-gold tracking-[0.25em] uppercase">VOCES DE GRACIA</span>
+              <h3 className="text-2xl font-serif font-light text-[#FAF7F0]">
+                Pon tu <span className="text-brand-gold italic font-normal">reseña</span> o testimonio
               </h3>
-              <p className="text-brand-muted text-xs max-w-lg mx-auto leading-relaxed">
+              <p className="text-white/70 text-xs max-w-lg mx-auto leading-relaxed">
                 ¿Has experimentado un nuevo comienzo a través de los recursos, mentoría o autodiagnósticos? Tu testimonio puede ser la luz que alguien más necesita hoy.
               </p>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
               {/* Formulario */}
-              <div className="lg:col-span-6 bg-brand-card border border-brand-border/40 p-6 rounded-2xl space-y-5 text-left shadow-sm">
-                <h4 className="font-serif text-base font-bold text-brand-text border-b border-brand-border/40 pb-2.5">
+              <div className="lg:col-span-6 bg-brand-dark-2 border border-white/10 p-6 rounded-2xl space-y-5 text-left shadow-sm">
+                <h4 className="font-serif text-base font-bold text-[#FAF7F0] border-b border-white/10 pb-2.5">
                   Diseña tu Reseña
                 </h4>
 
                 <form onSubmit={handleSubmitTestimonio} className="space-y-4">
                   <div className="space-y-1">
-                    <label className="block text-[10px] font-space uppercase tracking-wider text-brand-muted">
+                    <label className="block text-[10px] font-space uppercase tracking-wider text-white/70">
                       Tu Nombre / Pareja / Familia
                     </label>
                     <input
@@ -415,18 +415,18 @@ export default function App() {
                       placeholder="Ej. Carlos & Elena o Familia Ruiz"
                       value={newNombre}
                       onChange={(e) => setNewNombre(e.target.value)}
-                      className="w-full bg-brand-bg border border-brand-border/50 focus:border-brand-accent/50 rounded-xl px-4 py-2 text-xs text-brand-text focus:outline-none transition-all placeholder:text-brand-muted/50"
+                      className="w-full bg-brand-dark border border-white/10 focus:border-brand-accent/50 rounded-xl px-4 py-2 text-xs text-[#FAF7F0] focus:outline-none transition-all placeholder:text-white/60"
                     />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="block text-[10px] font-space uppercase tracking-wider text-brand-muted">
+                    <label className="block text-[10px] font-space uppercase tracking-wider text-white/70">
                       Área de Restauración
                     </label>
                     <select
                       value={newTagline}
                       onChange={(e) => setNewTagline(e.target.value)}
-                      className="w-full bg-brand-bg border border-brand-border/50 focus:border-brand-accent/50 rounded-xl px-4 py-2 text-xs text-brand-text focus:outline-none transition-all cursor-pointer"
+                      className="w-full bg-brand-dark border border-white/10 focus:border-brand-accent/50 rounded-xl px-4 py-2 text-xs text-[#FAF7F0] focus:outline-none transition-all cursor-pointer"
                     >
                       <option value="Restauración Personal">Restauración Personal</option>
                       <option value="Matrimonio Restaurado">Matrimonio Restaurado</option>
@@ -438,10 +438,10 @@ export default function App() {
 
                   <div className="space-y-1">
                     <div className="flex justify-between items-center">
-                      <label className="block text-[10px] font-space uppercase tracking-wider text-brand-muted">
+                      <label className="block text-[10px] font-space uppercase tracking-wider text-white/70">
                         Puntuación / Estrellas
                       </label>
-                      <span className="text-[10px] text-brand-accent font-semibold font-space">{newStars} de 5</span>
+                      <span className="text-[10px] text-brand-gold font-semibold font-space">{newStars} de 5</span>
                     </div>
                     <div className="flex gap-1.5 items-center">
                       {[1, 2, 3, 4, 5].map((star) => (
@@ -456,7 +456,7 @@ export default function App() {
                             className={`w-5 h-5 transition-colors ${
                               star <= newStars 
                                 ? "fill-[#E8C96A] text-[#E8C96A]" 
-                                : "text-brand-border hover:text-brand-muted"
+                                : "text-white/20 hover:text-white/70"
                             }`} 
                           />
                         </button>
@@ -465,7 +465,7 @@ export default function App() {
                   </div>
 
                   <div className="space-y-1">
-                    <label className="block text-[10px] font-space uppercase tracking-wider text-brand-muted">
+                    <label className="block text-[10px] font-space uppercase tracking-wider text-white/70">
                       Tu Testimonio o Mensaje de Gracia
                     </label>
                     <textarea
@@ -474,7 +474,7 @@ export default function App() {
                       placeholder="Escribe brevemente cómo Dios restauró tu vida, tu paz o tu hogar..."
                       value={newQuote}
                       onChange={(e) => setNewQuote(e.target.value)}
-                      className="w-full bg-brand-bg border border-brand-border/50 focus:border-brand-accent/50 rounded-xl px-4 py-2.5 text-xs text-brand-text focus:outline-none transition-all resize-none placeholder:text-brand-muted/50"
+                      className="w-full bg-brand-dark border border-white/10 focus:border-brand-accent/50 rounded-xl px-4 py-2.5 text-xs text-[#FAF7F0] focus:outline-none transition-all resize-none placeholder:text-white/60"
                     />
                   </div>
 
@@ -505,15 +505,15 @@ export default function App() {
 
               {/* Vista previa en vivo */}
               <div className="lg:col-span-6 space-y-4">
-                <span className="block text-[10px] font-space tracking-widest text-brand-accent uppercase text-left font-bold pl-1">
+                <span className="block text-[10px] font-space tracking-widest text-brand-gold uppercase text-left font-bold pl-1">
                   Vista Previa en Vivo
                 </span>
                 
-                <div className="bg-gradient-to-b from-brand-card to-brand-bg border border-brand-accent/20 p-6 rounded-2xl space-y-4 relative overflow-hidden text-left shadow-sm min-h-[220px] flex flex-col justify-between">
+                <div className="bg-gradient-to-b from-brand-card to-brand-bg border border-brand-text/10 p-6 rounded-2xl space-y-4 relative overflow-hidden text-left shadow-sm min-h-[220px] flex flex-col justify-between">
                   <div className="absolute top-[-20px] right-[-20px] w-32 h-32 bg-brand-accent/5 rounded-full blur-2xl pointer-events-none" />
                   
                   <div className="space-y-3">
-                    <div className="flex justify-between items-center border-b border-brand-border/30 pb-3">
+                    <div className="flex justify-between items-center border-b border-brand-text/10 pb-3">
                       <span className="font-space text-[10px] text-brand-accent font-bold uppercase tracking-wider">
                         {newTagline || "Restauración"}
                       </span>
@@ -529,7 +529,7 @@ export default function App() {
                     </p>
                   </div>
 
-                  <div className="pt-2 border-t border-brand-border/20 flex justify-between items-center">
+                  <div className="pt-2 border-t border-brand-text/10 flex justify-between items-center">
                     <div>
                       <span className="block font-space text-[10px] text-brand-text font-bold uppercase">
                         {newNombre || "Tu Nombre"}
@@ -548,16 +548,16 @@ export default function App() {
 
             {/* Galería de testimonios publicados */}
             <div className="space-y-4 pt-6 text-left">
-              <h4 className="font-serif text-lg font-light text-brand-text border-b border-brand-border/30 pb-2">
-                Galería de Historias de <span className="text-brand-accent italic">Gracia</span>
+              <h4 className="font-serif text-lg font-light text-[#FAF7F0] border-b border-white/10 pb-2">
+                Galería de Historias de <span className="text-brand-gold italic">Gracia</span>
               </h4>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {testimonios.map((t: any) => (
-                  <div key={t.id} className="bg-brand-card/60 border border-brand-border/30 p-5 rounded-2xl space-y-3 relative overflow-hidden flex flex-col justify-between hover:border-brand-accent/15 transition-all">
+                  <div key={t.id} className="bg-brand-dark-2/60 border border-white/10 p-5 rounded-2xl space-y-3 relative overflow-hidden flex flex-col justify-between hover:border-white/25 transition-all">
                     <div className="space-y-2.5">
-                      <div className="flex justify-between items-center border-b border-brand-border/20 pb-2">
-                        <span className="font-space text-[9px] text-brand-accent font-bold uppercase tracking-wider">
+                      <div className="flex justify-between items-center border-b border-white/10/20 pb-2">
+                        <span className="font-space text-[9px] text-brand-gold font-bold uppercase tracking-wider">
                           {t.tagline}
                         </span>
                         <div className="flex items-center gap-0.5">
@@ -566,15 +566,15 @@ export default function App() {
                           ))}
                         </div>
                       </div>
-                      <p className="text-brand-text/90 font-serif italic text-xs leading-relaxed">
+                      <p className="text-[#FAF7F0]/90 font-serif italic text-xs leading-relaxed">
                         &ldquo;{t.quote}&rdquo;
                       </p>
                     </div>
 
-                    <div className="pt-2 border-t border-brand-border/20 flex justify-between items-center">
+                    <div className="pt-2 border-t border-white/10/20 flex justify-between items-center">
                       <div>
-                        <span className="block font-space text-[9px] text-brand-text font-bold uppercase">{t.name}</span>
-                        <span className="block text-[8px] text-brand-muted font-sans">{t.date}</span>
+                        <span className="block font-space text-[9px] text-[#FAF7F0] font-bold uppercase">{t.name}</span>
+                        <span className="block text-[8px] text-white/70 font-sans">{t.date}</span>
                       </div>
                     </div>
                   </div>

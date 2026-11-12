@@ -36,19 +36,19 @@ const socialLinks = [
 
 export default function SocialCommunity() {
   return (
-    <section id="comunidad-seccion" className="py-16 bg-brand-bg border-t border-brand-border/40 scroll-mt-20">
+    <section id="comunidad-seccion" className="py-16 bg-brand-dark border-t border-white/10 scroll-mt-20">
       <div className="max-w-6xl mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-3">
-          <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">
+          <span className="font-space text-xs text-brand-gold tracking-[0.25em] uppercase">
             Conecta &amp; Crece
           </span>
-          <h2 className="text-3xl md:text-4xl font-serif font-light text-brand-text leading-tight">
+          <h2 className="text-3xl md:text-4xl font-serif font-light text-[#FAF7F0] leading-tight">
             Sintoniza y sé parte de{" "}
-            <span className="text-brand-accent italic font-normal">nuestra comunidad</span>
+            <span className="text-brand-gold italic font-normal">nuestra comunidad</span>
           </h2>
         </div>
 
-        <ul className="max-w-3xl mx-auto divide-y divide-brand-border border-y border-brand-border">
+        <ul className="max-w-3xl mx-auto divide-y divide-white/10 border-y border-white/10">
           {socialLinks.map((link) => (
             <li key={link.name} className="py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 sm:gap-6">
               <div>
@@ -56,18 +56,18 @@ export default function SocialCommunity() {
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-serif text-lg font-semibold text-brand-text hover:text-brand-accent transition-colors"
+                  className="font-serif text-lg font-semibold text-[#FAF7F0] hover:text-brand-gold transition-colors"
                 >
-                  {link.name} <span className="text-brand-accent">→</span>
+                  {link.name} <span className="text-brand-gold">→</span>
                 </a>
-                <span className="block text-[11px] font-space text-brand-accent">{link.username}</span>
-                <p className="text-xs text-brand-muted leading-relaxed">{link.description}</p>
+                <span className="block text-[11px] font-space text-brand-gold">{link.username}</span>
+                <p className="text-xs text-white/70 leading-relaxed">{link.description}</p>
               </div>
               <a
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="shrink-0 font-space text-[11px] font-bold uppercase tracking-wider text-brand-accent hover:text-brand-hover transition-colors"
+                className="shrink-0 font-space text-[11px] font-bold uppercase tracking-wider text-brand-gold hover:text-white transition-colors"
               >
                 Seguir
               </a>
