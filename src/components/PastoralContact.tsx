@@ -85,16 +85,16 @@ export default function PastoralContact() {
   };
 
   return (
-    <div id="contacto-seccion" className="py-20 bg-brand-alt border-t border-brand-border scroll-mt-20">
+    <div id="contacto-seccion" className="py-20 bg-brand-dark border-t border-white/10 scroll-mt-20">
       <div className="max-w-6xl mx-auto px-6">
         
         {/* Intro */}
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">CONTACTO · CONSEJERÍA</span>
-          <h2 className="text-4xl md:text-5xl font-serif font-light text-brand-text mt-3">
-            Pide una <span className="text-brand-accent italic font-normal">consejería</span>
+          <span className="font-space text-xs text-brand-gold tracking-[0.25em] uppercase">CONTACTO · CONSEJERÍA</span>
+          <h2 className="text-4xl md:text-5xl font-serif font-light text-[#FAF7F0] mt-3">
+            Pide una <span className="text-brand-gold italic font-normal">consejería</span>
           </h2>
-          <p className="text-brand-muted text-sm mt-4">
+          <p className="text-white/70 text-sm mt-4">
             Si deseas una consulta pastoral o agendar un tiempo de acompañamiento personalizado, escríbeme con total libertad.
           </p>
         </div>
@@ -103,10 +103,10 @@ export default function PastoralContact() {
           
           {/* FAQ Column (Left Side) */}
           <div className="lg:col-span-6 space-y-6">
-            <div className="space-y-1.5 border-b border-brand-border pb-4">
-              <span className="font-space text-[10px] text-brand-accent uppercase tracking-widest block">CONOCIMIENTO COMPARTIDO</span>
-              <h3 className="font-serif text-2xl text-brand-text">Preguntas Frecuentes</h3>
-              <p className="text-xs text-brand-muted">Entiende nuestro enfoque de salud integral espiritual-emocional.</p>
+            <div className="space-y-1.5 border-b border-white/10 pb-4">
+              <span className="font-space text-[10px] text-brand-gold uppercase tracking-widest block">CONOCIMIENTO COMPARTIDO</span>
+              <h3 className="font-serif text-2xl text-[#FAF7F0]">Preguntas Frecuentes</h3>
+              <p className="text-xs text-white/70">Entiende nuestro enfoque de salud integral espiritual-emocional.</p>
             </div>
 
             <div className="space-y-3.5">
@@ -115,14 +115,14 @@ export default function PastoralContact() {
                 return (
                   <div 
                     key={idx}
-                    className="bg-brand-card border border-brand-border rounded-xl transition-all duration-300"
+                    className="bg-brand-dark-2 border border-white/10 rounded-xl transition-all duration-300"
                   >
                     <button
                       onClick={() => setActiveFaq(isOpen ? null : idx)}
-                      className="w-full flex items-center justify-between p-4.5 text-left text-sm font-serif text-brand-text hover:text-brand-accent transition-colors"
+                      className="w-full flex items-center justify-between p-4.5 text-left text-sm font-serif text-[#FAF7F0] hover:text-brand-gold transition-colors"
                     >
                       <span className="font-semibold pr-4 leading-relaxed">{faq.q}</span>
-                      <ChevronDown className={`w-4 h-4 text-brand-accent shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+                      <ChevronDown className={`w-4 h-4 text-brand-gold shrink-0 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
                     </button>
                     
                     <AnimatePresence>
@@ -134,7 +134,7 @@ export default function PastoralContact() {
                           transition={{ duration: 0.25 }}
                           className="overflow-hidden"
                         >
-                          <div className="p-4.5 pt-0 border-t border-brand-border/40 text-xs text-brand-muted font-sans leading-relaxed">
+                          <div className="p-4.5 pt-0 border-t border-white/10 text-xs text-white/70 font-sans leading-relaxed">
                             {faq.a}
                           </div>
                         </motion.div>
@@ -146,11 +146,11 @@ export default function PastoralContact() {
             </div>
 
             {/* Quality Certification */}
-            <div className="bg-brand-card/45 border border-brand-border p-5 rounded-2xl flex items-start gap-4">
-              <ShieldCheck className="w-5 h-5 text-brand-accent shrink-0 mt-0.5" />
+            <div className="bg-brand-dark-2/45 border border-white/10 p-5 rounded-2xl flex items-start gap-4">
+              <ShieldCheck className="w-5 h-5 text-brand-gold shrink-0 mt-0.5" />
               <div className="space-y-0.5">
-                <h4 className="font-space text-xs text-brand-text uppercase font-bold">Reserva Confesional Garantizada</h4>
-                <p className="text-[11px] text-brand-muted leading-relaxed">
+                <h4 className="font-space text-xs text-[#FAF7F0] uppercase font-bold">Reserva Confesional Garantizada</h4>
+                <p className="text-[11px] text-white/70 leading-relaxed">
                   Todo el intercambio de información y diarios de consejería están protegidos por el fuero interno de la teología reformada tradicional, respetando la total confidencialidad e intimidad relacional de cada consultante.
                 </p>
               </div>
@@ -158,7 +158,7 @@ export default function PastoralContact() {
           </div>
 
           {/* Contact Appointment Form (Right Side) */}
-          <div className="lg:col-span-6 bg-brand-card border border-brand-border rounded-3xl p-6 md:p-8 relative shadow-xl">
+          <div className="lg:col-span-6 bg-brand-dark-2 border border-white/10 rounded-3xl p-6 md:p-8 relative shadow-xl">
             
             {/* Visual Accent */}
             <div className="absolute top-0 right-10 w-24 h-1 bg-brand-accent rounded-b-full" />
@@ -167,15 +167,15 @@ export default function PastoralContact() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 
                 <div className="space-y-1">
-                  <h3 className="font-serif text-2xl text-brand-text">Enviar Mensaje</h3>
-                  <p className="text-xs text-brand-muted font-space">Ponte en contacto o solicita una consulta pastoral de acompañamiento.</p>
+                  <h3 className="font-serif text-2xl text-[#FAF7F0]">Enviar Mensaje</h3>
+                  <p className="text-xs text-white/70 font-space">Ponte en contacto o solicita una consulta pastoral de acompañamiento.</p>
                 </div>
 
                 <div className="space-y-4">
                   {/* Name field */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-space text-brand-accent uppercase block">Nombre Completo</label>
+                      <label className="text-[10px] font-space text-brand-gold uppercase block">Nombre Completo</label>
                       <div className="relative">
                         <input
                           type="text"
@@ -183,14 +183,14 @@ export default function PastoralContact() {
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
                           placeholder="Ej. Carlos Martínez"
-                          className="w-full bg-brand-bg text-brand-text pl-9 pr-3.5 py-2.5 rounded-xl border border-brand-border focus:border-brand-accent focus:outline-none text-xs text-brand-text transition-colors"
+                          className="w-full bg-brand-dark text-[#FAF7F0] pl-9 pr-3.5 py-2.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs text-[#FAF7F0] transition-colors"
                         />
-                        <User className="w-3.5 h-3.5 text-brand-muted absolute left-3 top-3.5" />
+                        <User className="w-3.5 h-3.5 text-white/70 absolute left-3 top-3.5" />
                       </div>
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-space text-brand-accent uppercase block">Correo Electrónico</label>
+                      <label className="text-[10px] font-space text-brand-gold uppercase block">Correo Electrónico</label>
                       <div className="relative">
                         <input
                           type="email"
@@ -198,9 +198,9 @@ export default function PastoralContact() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="ejemplo@correo.com"
-                          className="w-full bg-brand-bg text-brand-text pl-9 pr-3.5 py-2.5 rounded-xl border border-brand-border focus:border-brand-accent focus:outline-none text-xs text-brand-text transition-colors"
+                          className="w-full bg-brand-dark text-[#FAF7F0] pl-9 pr-3.5 py-2.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs text-[#FAF7F0] transition-colors"
                         />
-                        <Mail className="w-3.5 h-3.5 text-brand-muted absolute left-3 top-3.5" />
+                        <Mail className="w-3.5 h-3.5 text-white/70 absolute left-3 top-3.5" />
                       </div>
                     </div>
                   </div>
@@ -208,11 +208,11 @@ export default function PastoralContact() {
                   {/* Selector field */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-space text-brand-accent uppercase block">Rango de Edad</label>
+                      <label className="text-[10px] font-space text-brand-gold uppercase block">Rango de Edad</label>
                       <select
                         value={ageGroup}
                         onChange={(e) => setAgeGroup(e.target.value)}
-                        className="w-full bg-brand-bg text-brand-text px-3.5 py-3.5 rounded-xl border border-brand-border focus:border-brand-accent focus:outline-none text-xs transition-colors"
+                        className="w-full bg-brand-dark text-[#FAF7F0] px-3.5 py-3.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs transition-colors"
                       >
                         <option value="18-29">18 - 29 años</option>
                         <option value="30-45">30 - 45 años</option>
@@ -222,11 +222,11 @@ export default function PastoralContact() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-space text-brand-accent uppercase block">Motivo de Contacto</label>
+                      <label className="text-[10px] font-space text-brand-gold uppercase block">Motivo de Contacto</label>
                       <select
                         value={counselingArea}
                         onChange={(e) => setCounselingArea(e.target.value)}
-                        className="w-full bg-brand-bg text-brand-text px-3.5 py-3.5 rounded-xl border border-brand-border focus:border-brand-accent focus:outline-none text-xs transition-colors"
+                        className="w-full bg-brand-dark text-[#FAF7F0] px-3.5 py-3.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs transition-colors"
                       >
                         <option value="Personal">Consulta General</option>
                         <option value="Emocional">Estrés o Ansiedad</option>
@@ -237,11 +237,11 @@ export default function PastoralContact() {
                     </div>
 
                     <div className="space-y-1.5">
-                      <label className="text-[10px] font-space text-brand-accent uppercase block">Urgencia Sugerida</label>
+                      <label className="text-[10px] font-space text-brand-gold uppercase block">Urgencia Sugerida</label>
                       <select
                         value={urgency}
                         onChange={(e) => setUrgency(e.target.value)}
-                        className="w-full bg-brand-bg text-brand-text px-3.5 py-3.5 rounded-xl border border-brand-border focus:border-brand-accent focus:outline-none text-xs transition-colors"
+                        className="w-full bg-brand-dark text-[#FAF7F0] px-3.5 py-3.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs transition-colors"
                       >
                         <option value="Informativa">Solo Informativo</option>
                         <option value="Normal">Ritmo Normal</option>
@@ -252,14 +252,14 @@ export default function PastoralContact() {
 
                   {/* Context Textarea */}
                   <div className="space-y-1.5">
-                    <label className="text-[10px] font-space text-brand-accent uppercase block">Describe tu mensaje brevemente</label>
+                    <label className="text-[10px] font-space text-brand-gold uppercase block">Describe tu mensaje brevemente</label>
                     <textarea
                       required
                       rows={4}
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder="Comparte tu mensaje o consulta. Responderemos con absoluta reserva y confidencialidad."
-                      className="w-full bg-brand-bg text-brand-text px-3.5 py-2.5 rounded-xl border border-brand-border focus:border-brand-accent focus:outline-none text-xs text-brand-text transition-colors resize-none leading-relaxed"
+                      className="w-full bg-brand-dark text-[#FAF7F0] px-3.5 py-2.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs text-[#FAF7F0] transition-colors resize-none leading-relaxed"
                     />
                   </div>
                 </div>
@@ -275,8 +275,8 @@ export default function PastoralContact() {
                   </button>
                 </div>
 
-                <div className="flex justify-center items-center gap-1 text-[10px] text-brand-muted font-space mt-2">
-                  <Calendar className="w-3.5 h-3.5 text-brand-accent" />
+                <div className="flex justify-center items-center gap-1 text-[10px] text-white/70 font-space mt-2">
+                  <Calendar className="w-3.5 h-3.5 text-brand-gold" />
                   <span>Leemos y respondemos todos los mensajes con absoluta reserva.</span>
                 </div>
 
@@ -287,19 +287,19 @@ export default function PastoralContact() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="py-12 flex flex-col items-center justify-center text-center space-y-6"
               >
-                <div className="p-4 bg-brand-accent/15 border border-brand-accent/30 rounded-full text-brand-accent">
+                <div className="p-4 bg-brand-accent/15 border border-brand-accent/30 rounded-full text-brand-gold">
                   <BookmarkCheck className="w-12 h-12" />
                 </div>
                 
                 <div className="space-y-2">
-                  <h4 className="font-serif text-2xl text-brand-text">¡Mensaje Recibido!</h4>
-                  <p className="text-sm text-brand-muted pl-4 pr-4 leading-relaxed font-sans max-w-sm">
+                  <h4 className="font-serif text-2xl text-[#FAF7F0]">¡Mensaje Recibido!</h4>
+                  <p className="text-sm text-white/70 pl-4 pr-4 leading-relaxed font-sans max-w-sm">
                     Estimado/a <b>{fullName}</b>, tu mensaje de contacto respecto a <b>{counselingArea}</b> ha sido recibido con total reserva.
                   </p>
                 </div>
 
-                <div className="p-4 bg-brand-bg border border-brand-border rounded-xl text-[11px] text-brand-muted leading-relaxed max-w-xs text-left space-y-2 font-sans">
-                  <div className="flex items-center gap-1.5 font-space text-[10px] text-brand-accent uppercase font-bold">
+                <div className="p-4 bg-brand-dark border border-white/10 rounded-xl text-[11px] text-white/70 leading-relaxed max-w-xs text-left space-y-2 font-sans">
+                  <div className="flex items-center gap-1.5 font-space text-[10px] text-brand-gold uppercase font-bold">
                     <Info className="w-3.5 h-3.5" /> Próximo paso:
                   </div>
                   <p>
