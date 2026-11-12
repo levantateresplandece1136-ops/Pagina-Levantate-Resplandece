@@ -12,7 +12,8 @@ import {
   Inbox,
   Sparkles,
   ArrowRight,
-  Lock
+  ShoppingBag,
+  ExternalLink
 } from "lucide-react";
 import { ebooksData } from "../data";
 import { EBook } from "../types";
@@ -30,12 +31,45 @@ interface DiagnosticLink {
   buttonLabel?: string;
 }
 
+interface PaidProduct {
+  name: string;
+  url: string;
+  description: string;
+  priceLabel: string | null;
+  buttonLabel: string;
+  note?: string;
+}
+
+// Productos de paga en Nuestra Tienda (enlaces Hotmart dados por Josue).
+// Método C.O.N.E.C.T.A.: sin precio publicado en la página del producto,
+// así que no se inventa precio y la tarjeta dice "Ver precio en Hotmart".
+const paidProducts: PaidProduct[] = [
+  {
+    name: "Método C.O.N.E.C.T.A. — Reconecta con tu hijo adolescente",
+    url: "https://go.hotmart.com/A107154990F",
+    description:
+      "Ebook para padres que no se rinden: los 7 pilares — Comprender, Observar, Normalizar, Escuchar, Conducir hacia Cristo, Transformar y Acompañar — con workbook de 30 días, kit de conversaciones, guía de crisis y plan familiar. De Josué Ricardo Cortés Pérez.",
+    priceLabel: null,
+    buttonLabel: "Ver en Hotmart",
+    note: "Garantía de 7 días",
+  },
+  {
+    name: "Cuando todo se derrumba",
+    url: "https://go.hotmart.com/C107811930Y",
+    description:
+      "Experiencia guiada interactiva de acompañamiento devocional: plan de 30 días, 11 prácticas para calmar la emoción, diario \"Mi Ebenezer\" y registro diario.",
+    priceLabel: "$145 MXN",
+    buttonLabel: "Comprar en Hotmart",
+    note: "Pago único, sin suscripción",
+  },
+];
+
 export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }: ResourceLibraryProps) {
   // Pestaña activa de Recursos: por defecto, el primer pilar
   const [activeTabId, setActiveTabId] = useState<string>("renueva-mente");
-  // Grupo de recursos: gratis o de paga. Hoy todo lo publicado es gratis
-  // (los 4 ebooks dicen "Acceso Gratuito" y los 7 diagnósticos son apps
-  // externas sin pago), así que el grupo de paga empieza vacío.
+  // Grupo de recursos: gratis o de paga. Los 4 ebooks y los 7 diagnósticos
+  // son gratuitos (11 en total); los productos de paga viven en Nuestra
+  // Tienda (ver paidProducts).
   const [priceFilter, setPriceFilter] = useState<"gratis" | "paga">("gratis");
   const [activeBook, setActiveBook] = useState<EBook | null>(null);
   
@@ -267,8 +301,8 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
           </h2>
           <p className="text-brand-muted text-sm mt-3 max-w-2xl leading-relaxed">
             Guías, libros y pruebas de autodiagnóstico para renovar tu mente, restaurar
-            tus relaciones y crecer en Cristo. Explora lo gratuito y, cuando haya
-            recursos de paga, también los encontrarás aquí, en Nuestra Tienda.
+            tus relaciones y crecer en Cristo. Explora lo gratuito y, si quieres
+            profundizar, también encontrarás recursos de paga en Nuestra Tienda.
           </p>
         </div>
 
@@ -280,7 +314,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
         >
           {([
             { id: "gratis", label: "Recursos gratis", count: 11 },
-            { id: "paga", label: "Nuestra Tienda", count: 0 },
+            { id: "paga", label: "Nuestra Tienda", count: paidProducts.length },
           ] as const).map((group) => {
             const isActive = priceFilter === group.id;
             return (
@@ -495,7 +529,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
         </AnimatePresence>
         </>
         ) : (
-          /* Nuestra Tienda: recursos de paga (aún no hay ninguno publicado) */
+          /* Nuestra Tienda: recursos de paga (Hotmart) */
           <div className="space-y-6">
             <div className="text-left max-w-2xl space-y-2">
               <h3 className="text-3xl md:text-4xl font-serif font-light text-brand-text leading-tight">
@@ -506,17 +540,50 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                 lo que viene para ti.
               </p>
             </div>
-            <div className="bg-brand-card border border-brand-border rounded-3xl p-8 md:p-12 text-center space-y-4 max-w-2xl mx-auto">
-              <div className="w-12 h-12 mx-auto rounded-full bg-brand-terra/10 border border-brand-terra/20 flex items-center justify-center">
-                <Lock className="w-5 h-5 text-brand-terra" />
-              </div>
-              <h3 className="text-2xl font-serif font-light text-brand-text">
-                Aún no hay recursos de paga publicados
-              </h3>
-              <p className="text-sm text-brand-muted leading-relaxed max-w-md mx-auto">
-                Por ahora todo lo publicado es gratuito. Cuando haya un curso, libro o
-                recurso de paga, aparecerá aquí con su precio.
-              </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {paidProducts.map((product) => (
+                <div
+                  key={product.url}
+                  className="bg-brand-card border border-brand-border rounded-3xl p-6 md:p-7 flex flex-col gap-4 hover:border-brand-terra/40 transition-all"
+                >
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="w-9 h-9 rounded-full bg-brand-terra/10 border border-brand-terra/20 flex items-center justify-center shrink-0">
+                      <ShoppingBag className="w-4 h-4 text-brand-terra" />
+                    </span>
+                    {product.priceLabel ? (
+                      <span className="bg-brand-terra text-white px-3 py-1 rounded-full text-xs font-bold font-space">
+                        {product.priceLabel}
+                      </span>
+                    ) : (
+                      <span className="bg-brand-terra/10 border border-brand-terra/20 text-brand-terra px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider font-space">
+                        Ver precio en Hotmart
+                      </span>
+                    )}
+                  </div>
+                  <h4 className="text-xl font-serif font-semibold text-brand-text leading-snug">
+                    {product.name}
+                  </h4>
+                  <p className="text-sm text-brand-muted leading-relaxed flex-1">
+                    {product.description}
+                  </p>
+                  {product.note && (
+                    <p className="text-xs text-brand-accent font-space font-bold">
+                      {product.note}
+                    </p>
+                  )}
+                  <a
+                    href={product.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-full items-center justify-center gap-2 bg-brand-terra hover:bg-[#A84A20] text-white text-sm font-space font-bold py-3.5 px-5 rounded-2xl transition-all shadow-md hover:shadow-lg cursor-pointer"
+                  >
+                    <span>{product.buttonLabel}</span>
+                    <ExternalLink className="w-4 h-4 shrink-0" />
+                  </a>
+                </div>
+              ))}
+            </div>
+            <div className="text-center">
               <button
                 type="button"
                 onClick={() => setPriceFilter("gratis")}
