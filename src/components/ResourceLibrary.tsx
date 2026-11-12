@@ -268,7 +268,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
           <p className="text-brand-muted text-sm mt-3 max-w-2xl leading-relaxed">
             Guías, libros y pruebas de autodiagnóstico para renovar tu mente, restaurar
             tus relaciones y crecer en Cristo. Explora lo gratuito y, cuando haya
-            recursos de paga, también los encontrarás aquí.
+            recursos de paga, también los encontrarás aquí, en Nuestra Tienda.
           </p>
         </div>
 
@@ -280,7 +280,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
         >
           {([
             { id: "gratis", label: "Recursos gratis", count: 11 },
-            { id: "paga", label: "Recursos de paga", count: 0 },
+            { id: "paga", label: "Nuestra Tienda", count: 0 },
           ] as const).map((group) => {
             const isActive = priceFilter === group.id;
             return (
@@ -495,26 +495,37 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
         </AnimatePresence>
         </>
         ) : (
-          /* Recursos de paga: aún no hay ninguno publicado */
-          <div className="bg-brand-card border border-brand-border rounded-3xl p-8 md:p-12 text-center space-y-4 max-w-2xl mx-auto">
-            <div className="w-12 h-12 mx-auto rounded-full bg-brand-terra/10 border border-brand-terra/20 flex items-center justify-center">
-              <Lock className="w-5 h-5 text-brand-terra" />
+          /* Nuestra Tienda: recursos de paga (aún no hay ninguno publicado) */
+          <div className="space-y-6">
+            <div className="text-left max-w-2xl space-y-2">
+              <h3 className="text-3xl md:text-4xl font-serif font-light text-brand-text leading-tight">
+                Nuestra Tienda
+              </h3>
+              <p className="text-brand-muted text-sm md:text-base leading-relaxed">
+                Recursos de paga para profundizar tu crecimiento — entra y descubre
+                lo que viene para ti.
+              </p>
             </div>
-            <h3 className="text-2xl font-serif font-light text-brand-text">
-              Aún no hay recursos de paga publicados
-            </h3>
-            <p className="text-sm text-brand-muted leading-relaxed max-w-md mx-auto">
-              Por ahora todo lo publicado es gratuito. Cuando haya un curso, libro o
-              recurso de paga, aparecerá aquí con su precio.
-            </p>
-            <button
-              type="button"
-              onClick={() => setPriceFilter("gratis")}
-              className="inline-flex items-center gap-2 bg-brand-accent text-white hover:bg-brand-hover font-space text-xs uppercase font-bold py-3 px-5 rounded-xl transition-all shadow-sm cursor-pointer"
-            >
-              Ver los recursos gratis
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            <div className="bg-brand-card border border-brand-border rounded-3xl p-8 md:p-12 text-center space-y-4 max-w-2xl mx-auto">
+              <div className="w-12 h-12 mx-auto rounded-full bg-brand-terra/10 border border-brand-terra/20 flex items-center justify-center">
+                <Lock className="w-5 h-5 text-brand-terra" />
+              </div>
+              <h3 className="text-2xl font-serif font-light text-brand-text">
+                Aún no hay recursos de paga publicados
+              </h3>
+              <p className="text-sm text-brand-muted leading-relaxed max-w-md mx-auto">
+                Por ahora todo lo publicado es gratuito. Cuando haya un curso, libro o
+                recurso de paga, aparecerá aquí con su precio.
+              </p>
+              <button
+                type="button"
+                onClick={() => setPriceFilter("gratis")}
+                className="inline-flex items-center gap-2 bg-brand-accent text-white hover:bg-brand-hover font-space text-xs uppercase font-bold py-3 px-5 rounded-xl transition-all shadow-sm cursor-pointer"
+              >
+                Ver los recursos gratis
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         )}
 
