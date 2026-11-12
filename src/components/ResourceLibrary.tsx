@@ -10,7 +10,6 @@ import {
   Bookmark, 
   ChevronRight,
   Inbox,
-  Sparkles,
   ArrowRight,
   ShoppingBag,
   ExternalLink
@@ -24,6 +23,7 @@ interface ResourceLibraryProps {
 }
 
 interface DiagnosticLink {
+  hook?: string;
   title: string;
   name: string;
   url: string;
@@ -65,8 +65,6 @@ const paidProducts: PaidProduct[] = [
 ];
 
 export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }: ResourceLibraryProps) {
-  // Pestaña activa de Recursos: por defecto, el primer pilar
-  const [activeTabId, setActiveTabId] = useState<string>("renueva-mente");
   // Grupo de recursos: gratis o de paga. Los 4 ebooks y los 7 diagnósticos
   // son gratuitos (11 en total); los productos de paga viven en Nuestra
   // Tienda (ver paidProducts).
@@ -80,109 +78,74 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
   const [downloadSuccess, setDownloadSuccess] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-  const librarySections: {
-    id: string;
-    tabName: string;
-    title: string;
-    subtitle: string;
-    categoryName: string;
-    image: string;
-    tag: string;
-    quote: string;
-    longDesc: string;
-    diagnostics: DiagnosticLink[];
-  }[] = [
+  // Recursos gratuitos en UNA SOLA LISTA, sin categorías ni pestañas.
+  // El gancho (hook) va primero: es la descripción corta antes del enlace,
+  // como la escribió Josue. ¿Qué Me Detiene? es el paso 1 (diagnóstico
+  // profundo) y Rompiendo Creencias el paso 2 (plan diario de 30 días).
+  const freeDiagnostics: DiagnosticLink[] = [
     {
-      id: "renueva-mente",
-      tabName: "Renueva tu mente",
-      title: "1. Renueva tu mente. Transforma tu vida.",
-      subtitle: "Descubre las creencias que están dirigiendo tu vida y reemplázalas por la verdad de Cristo para experimentar una transformación duradera.",
-      categoryName: "Renueva tu mente. Transforma tu vida.",
-      image: "",
-      tag: "Verdad & Identidad",
-      quote: "“La verdad tiene el poder de cambiar la historia que te cuentas a ti mismo.”",
-      longDesc: "Descubre las mentiras y falsas creencias que han moldeado tus decisiones, y permite que la luz y verdad de Cristo reescriba tu propósito y renueve tu vida.",
-      diagnostics: [
-        {
-          title: 'Test "¿Qué Me Detiene?"',
-          name: '¿Qué Me Detiene?',
-          url: 'https://qu-me-detiene.vercel.app/',
-          description: 'Diagnóstico profundo para consejería. Descubre qué creencias están dirigiendo tus decisiones y llévate un mapa pastoral para trabajarlo con tu consejero.',
-          buttonLabel: 'Realizar diagnóstico profundo'
-        }
-      ]
+      hook: "Encuentra tus creencias limitantes",
+      title: 'Test "¿Qué Me Detiene?"',
+      name: "¿Qué Me Detiene?",
+      url: "https://qu-me-detiene.vercel.app/",
+      description:
+        "Diagnóstico profundo para consejería: descubre qué creencias están dirigiendo tus decisiones y llévate un mapa pastoral para trabajarlo con tu consejero. Paso 1: entiende a fondo qué te detiene.",
+      buttonLabel: "Realizar diagnóstico profundo",
     },
     {
-      id: "mas-conexion",
-      tabName: "Más conexión",
-      title: "2. Más conexión, menos conflicto.",
-      subtitle: "Aprende a comprender, conectar y disfrutar tus relaciones personales desde una perspectiva bíblica y llena de esperanza.",
-      categoryName: "Más conexión, menos conflicto.",
-      image: "",
-      tag: "Comprensión & Vínculo Especial",
-      quote: "“Comprender y conectar es el puente para apagar las llamas del conflicto continuo.”",
-      longDesc: "Aprende a reconciliar diferencias y cultivar un perdón auténtico que profundice el amor paternal, familiar y conyugal desde un enfoque redentor y lleno de esperanza.",
-      diagnostics: [
-        {
-          title: 'Realizar Diagnóstico Matrimonial',
-          name: 'Diagnóstico Matrimonial',
-          url: 'https://test-matrimonios.vercel.app/'
-        },
-        {
-          title: 'Experiencia "El Pacificador"',
-          name: 'El Pacificador',
-          url: 'https://pacificador.vercel.app/'
-        }
-      ]
+      hook: "Matrimonios: ¿cómo está tu matrimonio?",
+      title: "Realizar Diagnóstico Matrimonial",
+      name: "Diagnóstico Matrimonial",
+      url: "https://test-matrimonios.vercel.app/",
+      description:
+        "Un diagnóstico para parejas: mide cómo está tu matrimonio hoy y descubre por dónde empezar a restaurarlo.",
+      buttonLabel: "Realizar diagnóstico matrimonial",
     },
     {
-      id: "lidera-integridad",
-      tabName: "Lidera con integridad",
-      title: "3. Lidera con integridad y propósito.",
-      subtitle: "Ordena tus prioridades, fortalece tu carácter y lidera con sabiduría bíblica.",
-      categoryName: "Lidera con integridad y propósito.",
-      image: "",
-      tag: "Fortaleza & Carácter",
-      quote: "“Cuando un hombre encuentra su propósito en Dios, lidera con integridad y sabiduría.”",
-      longDesc: "Ordena tus prioridades, fortalece tu carácter masculino o ministerial bajo principios inquebrantables, y asume la responsabilidad de guiar con amor y firmeza.",
-      diagnostics: [
-        {
-          title: 'Test "Rompiendo Creencias"',
-          name: 'Rompiendo Creencias',
-          url: 'https://renovados-rompiendo-las-creencias-l.vercel.app/',
-          description: 'Programa personal de 4 semanas. Descubre tu creencia dominante y renuévala día a día con misiones, versículos y un plan personal.',
-          buttonLabel: 'Empezar mi renovación'
-        },
-        {
-          title: 'Test "Redimidos"',
-          name: 'Redimidos',
-          url: 'https://redimidos-tau.vercel.app/'
-        }
-      ]
+      hook: "¿Quieres resolver un conflicto?",
+      title: 'Experiencia "El Pacificador"',
+      name: "El Pacificador",
+      url: "https://pacificador.vercel.app/",
+      description:
+        "Aprende a reconciliar diferencias y a cultivar un perdón auténtico que profundice el amor en tu familia y en tu matrimonio.",
+      buttonLabel: "Resolver un conflicto",
     },
     {
-      id: "esperanza-batalla",
-      tabName: "Batalla interior",
-      title: "4. Esperanza para la batalla interior.",
-      subtitle: "Descubre cómo salir de la ansiedad y depresion, enfrentar el pecado persistente y crecer en una relación más profunda con Cristo.",
-      categoryName: "Esperanza para la batalla interior.",
-      image: "",
-      tag: "Victoria & Paz Interior",
-      quote: "“Levántate y resplandece, porque ha venido tu luz, y la gloria de Jehová ha nacido sobre ti.”",
-      longDesc: "Encuentra herramientas bíblicas y fortaleza espiritual para triunfar sobre la ansiedad, la depresión, romper ciclos destructivos y caminar en plena libertad.",
-      diagnostics: [
-        {
-          title: 'Realizar Test "Vence la Ansiedad"',
-          name: 'Vence la Ansiedad',
-          url: 'https://vence-la-ansiedad.vercel.app/'
-        },
-        {
-          title: 'Experiencia "Cuando Todo se Derrumba"',
-          name: 'Cuando Todo se Derrumba',
-          url: 'https://cuando-todo-se-derrumba.vercel.app/'
-        }
-      ]
-    }
+      hook: "Renueva tu forma de pensar en 30 días",
+      title: 'Test "Rompiendo Creencias"',
+      name: "Rompiendo Creencias",
+      url: "https://renovados-rompiendo-las-creencias-l.vercel.app/",
+      description:
+        "Programa personal de 4 semanas: descubre tu creencia dominante y renuévala día a día con misiones, versículos y un plan personal. Paso 2: después de diagnosticar, renueva tu mente.",
+      buttonLabel: "Empezar mi renovación",
+    },
+    {
+      hook: "Vuelve a la cruz",
+      title: 'Test "Redimidos"',
+      name: "Redimidos",
+      url: "https://redimidos-tau.vercel.app/",
+      description:
+        "Una experiencia de redención: vuelve a la cruz y recuerda lo que Cristo ya hizo por ti. Tus respuestas son 100% privadas.",
+      buttonLabel: "Vivir la experiencia Redimidos",
+    },
+    {
+      hook: "Regula tus emociones",
+      title: 'Realizar Test "Vence la Ansiedad"',
+      name: "Vence la Ansiedad",
+      url: "https://vence-la-ansiedad.vercel.app/",
+      description:
+        "Herramientas bíblicas y prácticas para calmar la ansiedad, regular tus emociones y recuperar la paz interior.",
+      buttonLabel: 'Realizar test "Vence la Ansiedad"',
+    },
+    {
+      hook: "Encuentra ánimo cuando todo se viene abajo",
+      title: 'Experiencia "Cuando Todo se Derrumba"',
+      name: "Cuando Todo se Derrumba",
+      url: "https://cuando-todo-se-derrumba.vercel.app/",
+      description:
+        "Acompañamiento para los días en que todo se derrumba: detente, vacía tu mochila, recupera claridad y escucha al Pastor.",
+      buttonLabel: "Empezar la experiencia",
+    },
   ];
 
   // Handle outside activation from Diagnostic Center recommendations
@@ -195,10 +158,6 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
       }
     }
   }, [selectedBookId, onClearSelectedBook]);
-
-  // Pilar activo según la pestaña seleccionada
-  const activeSection = librarySections.find(s => s.id === activeTabId) ?? librarySections[0];
-  const activeSectionBooks = ebooksData.filter(book => book.category === activeSection.categoryName);
 
   const handleOpenBook = (book: EBook) => {
     setActiveBook(book);
@@ -293,27 +252,27 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
     <div id="recursos-seccion" className="py-20 bg-brand-bg scroll-mt-20">
       <div className="max-w-6xl mx-auto px-6">
 
-        {/* Section Header */}
-        <div className="text-left max-w-3xl mb-10">
-          <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">Ecosistema de Formación</span>
+        {/* Encabezado: solo el título, un texto que introduce a los 2 botones y los botones */}
+        <div className="text-left max-w-3xl mb-8">
           <h2 className="text-4xl md:text-5xl font-serif font-light text-brand-text mt-3">
             Recursos
           </h2>
           <p className="text-brand-muted text-sm mt-3 max-w-2xl leading-relaxed">
-            Guías, libros y pruebas de autodiagnóstico para renovar tu mente, restaurar
-            tus relaciones y crecer en Cristo. Explora lo gratuito y, si quieres
-            profundizar, también encontrarás recursos de paga en Nuestra Tienda.
+            Empieza hoy, sin pagar nada: diagnósticos y libros gratuitos para
+            renovar tu mente, restaurar tus relaciones y crecer en Cristo. Y si
+            quieres profundizar más, en Nuestra Tienda encontrarás recursos de
+            paga para tu crecimiento.
           </p>
         </div>
 
-        {/* Grupos: recursos gratis y recursos de paga */}
+        {/* Los 2 botones: recursos gratis y Nuestra Tienda */}
         <div
           role="tablist"
           aria-label="Recursos gratis o de paga"
           className="flex gap-2 mb-8"
         >
           {([
-            { id: "gratis", label: "Recursos gratis", count: 11 },
+            { id: "gratis", label: "Recursos gratis", count: freeDiagnostics.length },
             { id: "paga", label: "Nuestra Tienda", count: paidProducts.length },
           ] as const).map((group) => {
             const isActive = priceFilter === group.id;
@@ -337,197 +296,37 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
         </div>
 
         {priceFilter === "gratis" ? (
-        <>
-          {/* Línea orientadora: ¿por cuál diagnóstico empiezo? */}
-          <div className="mb-8 bg-brand-card border-l-4 border-brand-terra rounded-r-2xl px-5 py-4 max-w-2xl shadow-sm">
-            <p className="text-sm text-brand-text leading-relaxed">
-              <span className="font-space font-bold text-brand-terra">¿Por cuál empiezo? </span>
-              Si quieres entender a fondo qué te detiene —ideal para llevarlo a consejería—, haz ¿Qué Me Detiene? Si quieres un plan diario para renovar tu mente, empieza Rompiendo Creencias.
-            </p>
-          </div>
-
-        {/* Pestañas de pilares: un clic abre el pilar, sin botones "Explorar" duplicados */}
-        <div
-          role="tablist"
-          aria-label="Pilares de crecimiento y restauración"
-          className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1 md:flex-wrap md:overflow-visible"
-        >
-          {librarySections.map((section) => {
-            const isActive = section.id === activeTabId;
-            return (
-              <button
-                key={section.id}
-                type="button"
-                role="tab"
-                id={`tab-${section.id}`}
-                aria-selected={isActive}
-                aria-controls={`panel-${section.id}`}
-                onClick={() => setActiveTabId(section.id)}
-                className={`shrink-0 whitespace-nowrap font-space text-xs md:text-sm font-bold uppercase tracking-wider px-4 md:px-5 py-3 rounded-xl border transition-all cursor-pointer ${
-                  isActive
-                    ? "bg-brand-accent text-white border-brand-accent shadow-md shadow-brand-accent/20"
-                    : "bg-brand-card text-brand-text border-brand-border hover:border-brand-accent/50 hover:text-brand-accent"
-                }`}
-              >
-                {section.tabName}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Contenido del pilar activo */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeSection.id}
-            role="tabpanel"
-            id={`panel-${activeSection.id}`}
-            aria-labelledby={`tab-${activeSection.id}`}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 12 }}
-            transition={{ duration: 0.25 }}
-            className="mt-8"
-          >
-            {/* Título, cita y descripción del pilar */}
-            <div className="text-left space-y-4 max-w-3xl mb-10">
-              <span className="inline-flex items-center gap-1.5 bg-brand-accent/10 border border-brand-accent/20 px-3 py-1 rounded-full">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-accent animate-pulse" />
-                <span className="font-space text-[9px] uppercase tracking-widest text-brand-accent font-bold">
-                  {activeSection.tag}
-                </span>
-              </span>
-              <h3 className="text-3xl md:text-4xl font-serif font-light text-brand-text leading-tight">
-                {activeSection.title}
-              </h3>
-              <p className="text-brand-muted text-sm md:text-base leading-relaxed">
-                {activeSection.subtitle}
-              </p>
-              <blockquote className="border-l-4 border-brand-accent pl-4 py-1">
-                <p className="text-sm md:text-base font-serif text-brand-text leading-relaxed font-semibold italic">
-                  {activeSection.quote}
+          /* Recursos gratis: una sola lista con los 7 diagnósticos,
+             sin categorías ni pestañas. Los ebooks no van aquí. */
+          <ul className="divide-y divide-brand-border/60 border-y border-brand-border/60">
+            {freeDiagnostics.map((diag) => (
+              <li key={diag.url} className="py-6 first:pt-0">
+                <p className="font-space text-xs font-bold uppercase tracking-wider text-brand-terra">
+                  {diag.hook}
                 </p>
-              </blockquote>
-              <p className="text-brand-muted text-sm md:text-base leading-relaxed">
-                {activeSection.longDesc}
-              </p>
-            </div>
-
-            {/* Dos columnas: diagnósticos y ebooks del pilar */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-              {/* Columna izquierda: diagnósticos (tests) */}
-              <div className="lg:col-span-5 space-y-6">
-                <div className="space-y-2">
-                  <h4 className="font-space text-xs font-bold text-brand-accent tracking-wider uppercase flex items-center gap-2">
-                    <Sparkles className="w-4 h-4" /> Pruebas de Autodiagnóstico
-                  </h4>
-                  <p className="text-xs text-brand-muted leading-relaxed">
-                    Herramientas de evaluación personalizadas para medir el estado actual de tu alma y tus relaciones.
-                  </p>
+                <div className="flex items-center gap-2 flex-wrap mt-1.5">
+                  <h3 className="text-xl font-serif font-semibold text-brand-text leading-snug">
+                    {diag.name}
+                  </h3>
+                  <span className="bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider font-space">
+                    Gratis
+                  </span>
                 </div>
-
-                <div className="flex flex-col gap-4">
-                  {activeSection.diagnostics.map((diag, index) => (
-                    <div key={index} className="space-y-2">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <h5 className="text-lg font-serif font-semibold text-brand-text leading-snug">
-                          {diag.name}
-                        </h5>
-                        <span className="bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider font-space">
-                          Gratis
-                        </span>
-                      </div>
-                      {diag.description && (
-                        <p className="text-xs text-brand-muted leading-relaxed">
-                          {diag.description}
-                        </p>
-                      )}
-                      <a
-                        href={diag.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex w-full items-center justify-between gap-3 bg-brand-accent text-white hover:bg-brand-hover text-sm font-space font-bold py-3.5 px-5 rounded-2xl transition-all shadow-md hover:shadow-lg shadow-brand-accent/10 cursor-pointer text-left"
-                      >
-                        <span className="font-medium">{diag.buttonLabel ?? diag.title}</span>
-                        <ChevronRight className="w-5 h-5 shrink-0" />
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Columna derecha: ebooks y guías */}
-              <div className="lg:col-span-7 space-y-6">
-                <div className="space-y-2">
-                  <h4 className="font-space text-xs font-bold text-brand-accent tracking-wider uppercase flex items-center gap-2">
-                    <BookOpen className="w-4 h-4" /> Recursos de Estudio &amp; Guías
-                  </h4>
-                  <p className="text-xs text-brand-muted leading-relaxed">
-                    Descarga o lee guías teológicas y prácticas preparadas por el pastor Josué Cortés para guiar tu proceso paso a paso.
-                  </p>
-                </div>
-
-                <div className="space-y-4">
-                  {activeSectionBooks.length > 0 ? (
-                    activeSectionBooks.map(book => {
-                      return (
-                        <div
-                          key={book.id}
-                          className="bg-brand-card/80 border border-brand-border rounded-2xl p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 hover:border-brand-accent/30 hover:bg-brand-card transition-all"
-                        >
-                          <div className="space-y-2 text-left flex-1 min-w-0">
-                            <div className="flex items-center gap-2 flex-wrap">
-                              <h5 className="font-serif font-semibold text-brand-text text-base sm:text-lg leading-tight">
-                                {book.title}
-                              </h5>
-                              <span className="bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider font-space">
-                                Gratis
-                              </span>
-                              {book.isPopular && (
-                                <span className="bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider font-space">
-                                  Destacado
-                                </span>
-                              )}
-                            </div>
-                            <p className="text-xs text-brand-muted line-clamp-2 leading-relaxed">
-                              {book.description}
-                            </p>
-                            <div className="flex gap-4 text-[10px] font-space text-brand-accent/80 font-medium">
-                              <span>{book.pages} páginas</span>
-                              <span>•</span>
-                              <span>{book.readTime} de lectura</span>
-                            </div>
-                          </div>
-
-                          <button
-                            onClick={() => handleOpenBook(book)}
-                            className="w-full sm:w-auto shrink-0 flex items-center justify-center gap-2 bg-brand-accent text-white hover:bg-brand-hover font-space text-xs uppercase font-bold py-2.5 px-4 rounded-xl transition-all shadow-sm cursor-pointer"
-                          >
-                            <span>Estudiar Recurso</span>
-                            <ArrowRight className="w-4 h-4" />
-                          </button>
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <div className="bg-brand-card border border-brand-border p-8 rounded-2xl text-center">
-                      <p className="text-xs text-brand-muted italic font-sans">
-                        Próximamente se añadirán más recursos descargables y guías escritas para este pilar de crecimiento.
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Recordatorio */}
-            <div className="mt-12 pt-8 border-t border-brand-border/40 text-center">
-              <p className="text-xs text-brand-muted italic max-w-md mx-auto leading-relaxed">
-                Todos estos recursos son totalmente gratuitos y están diseñados con base en el acompañamiento pastoral.
-              </p>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-        </>
+                <p className="text-sm text-brand-muted leading-relaxed mt-1.5 max-w-2xl">
+                  {diag.description}
+                </p>
+                <a
+                  href={diag.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center gap-2 bg-brand-accent text-white hover:bg-brand-hover text-sm font-space font-bold py-3 px-5 rounded-2xl transition-all shadow-md hover:shadow-lg shadow-brand-accent/10 cursor-pointer"
+                >
+                  <span>{diag.buttonLabel ?? diag.title}</span>
+                  <ChevronRight className="w-5 h-5 shrink-0" />
+                </a>
+              </li>
+            ))}
+          </ul>
         ) : (
           /* Nuestra Tienda: recursos de paga (Hotmart) */
           <div className="space-y-6">
