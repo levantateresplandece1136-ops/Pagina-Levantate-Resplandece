@@ -183,7 +183,7 @@ export default function PastoralContact() {
                           value={fullName}
                           onChange={(e) => setFullName(e.target.value)}
                           placeholder="Ej. Carlos Martínez"
-                          className="w-full bg-brand-dark text-[#FAF7F0] pl-9 pr-3.5 py-2.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs text-[#FAF7F0] transition-colors"
+                          className="w-full bg-brand-dark text-[#FAF7F0] pl-9 pr-3.5 py-2.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs text-[#FAF7F0] placeholder:text-white/60 transition-colors"
                         />
                         <User className="w-3.5 h-3.5 text-white/70 absolute left-3 top-3.5" />
                       </div>
@@ -198,7 +198,7 @@ export default function PastoralContact() {
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           placeholder="ejemplo@correo.com"
-                          className="w-full bg-brand-dark text-[#FAF7F0] pl-9 pr-3.5 py-2.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs text-[#FAF7F0] transition-colors"
+                          className="w-full bg-brand-dark text-[#FAF7F0] pl-9 pr-3.5 py-2.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs text-[#FAF7F0] placeholder:text-white/60 transition-colors"
                         />
                         <Mail className="w-3.5 h-3.5 text-white/70 absolute left-3 top-3.5" />
                       </div>
@@ -206,13 +206,13 @@ export default function PastoralContact() {
                   </div>
 
                   {/* Selector field */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="space-y-1.5">
+                  <div className="grid grid-cols-1 md:grid-cols-[1fr_1.25fr_1fr] gap-4">
+                    <div className="space-y-1.5 min-w-0">
                       <label className="text-[10px] font-space text-brand-gold uppercase block">Rango de Edad</label>
                       <select
                         value={ageGroup}
                         onChange={(e) => setAgeGroup(e.target.value)}
-                        className="w-full bg-brand-dark text-[#FAF7F0] px-3.5 py-3.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs transition-colors"
+                        className="w-full bg-brand-dark text-[#FAF7F0] px-3 py-3.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs transition-colors"
                       >
                         <option value="18-29">18 - 29 años</option>
                         <option value="30-45">30 - 45 años</option>
@@ -221,12 +221,12 @@ export default function PastoralContact() {
                       </select>
                     </div>
 
-                    <div className="space-y-1.5">
+                    <div className="space-y-1.5 min-w-0">
                       <label className="text-[10px] font-space text-brand-gold uppercase block">Motivo de Contacto</label>
                       <select
                         value={counselingArea}
                         onChange={(e) => setCounselingArea(e.target.value)}
-                        className="w-full bg-brand-dark text-[#FAF7F0] px-3.5 py-3.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs transition-colors"
+                        className="w-full bg-brand-dark text-[#FAF7F0] px-3 py-3.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs transition-colors"
                       >
                         <option value="Personal">Consulta General</option>
                         <option value="Emocional">Estrés o Ansiedad</option>
@@ -236,12 +236,12 @@ export default function PastoralContact() {
                       </select>
                     </div>
 
-                    <div className="space-y-1.5">
+                    <div className="space-y-1.5 min-w-0">
                       <label className="text-[10px] font-space text-brand-gold uppercase block">Urgencia Sugerida</label>
                       <select
                         value={urgency}
                         onChange={(e) => setUrgency(e.target.value)}
-                        className="w-full bg-brand-dark text-[#FAF7F0] px-3.5 py-3.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs transition-colors"
+                        className="w-full bg-brand-dark text-[#FAF7F0] px-3 py-3.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs transition-colors"
                       >
                         <option value="Informativa">Solo Informativo</option>
                         <option value="Normal">Ritmo Normal</option>
@@ -259,7 +259,7 @@ export default function PastoralContact() {
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder="Comparte tu mensaje o consulta. Responderemos con absoluta reserva y confidencialidad."
-                      className="w-full bg-brand-dark text-[#FAF7F0] px-3.5 py-2.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs text-[#FAF7F0] transition-colors resize-none leading-relaxed"
+                      className="w-full bg-brand-dark text-[#FAF7F0] px-3.5 py-2.5 rounded-xl border border-white/10 focus:border-brand-accent focus:outline-none text-xs text-[#FAF7F0] placeholder:text-white/60 transition-colors resize-none leading-relaxed"
                     />
                   </div>
                 </div>

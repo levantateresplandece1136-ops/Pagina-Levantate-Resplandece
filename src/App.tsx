@@ -415,7 +415,7 @@ export default function App() {
                       placeholder="Ej. Carlos & Elena o Familia Ruiz"
                       value={newNombre}
                       onChange={(e) => setNewNombre(e.target.value)}
-                      className="w-full bg-brand-dark border border-white/10 focus:border-brand-accent/50 rounded-xl px-4 py-2 text-xs text-[#FAF7F0] focus:outline-none transition-all placeholder:text-white/40"
+                      className="w-full bg-brand-dark border border-white/10 focus:border-brand-accent/50 rounded-xl px-4 py-2 text-xs text-[#FAF7F0] focus:outline-none transition-all placeholder:text-white/60"
                     />
                   </div>
 
@@ -474,7 +474,7 @@ export default function App() {
                       placeholder="Escribe brevemente cómo Dios restauró tu vida, tu paz o tu hogar..."
                       value={newQuote}
                       onChange={(e) => setNewQuote(e.target.value)}
-                      className="w-full bg-brand-dark border border-white/10 focus:border-brand-accent/50 rounded-xl px-4 py-2.5 text-xs text-[#FAF7F0] focus:outline-none transition-all resize-none placeholder:text-white/40"
+                      className="w-full bg-brand-dark border border-white/10 focus:border-brand-accent/50 rounded-xl px-4 py-2.5 text-xs text-[#FAF7F0] focus:outline-none transition-all resize-none placeholder:text-white/60"
                     />
                   </div>
 
@@ -509,12 +509,12 @@ export default function App() {
                   Vista Previa en Vivo
                 </span>
                 
-                <div className="bg-gradient-to-b from-brand-card to-brand-bg border border-brand-accent/20 p-6 rounded-2xl space-y-4 relative overflow-hidden text-left shadow-sm min-h-[220px] flex flex-col justify-between">
+                <div className="bg-gradient-to-b from-brand-card to-brand-bg border border-brand-text/10 p-6 rounded-2xl space-y-4 relative overflow-hidden text-left shadow-sm min-h-[220px] flex flex-col justify-between">
                   <div className="absolute top-[-20px] right-[-20px] w-32 h-32 bg-brand-accent/5 rounded-full blur-2xl pointer-events-none" />
                   
                   <div className="space-y-3">
-                    <div className="flex justify-between items-center border-b border-white/10 pb-3">
-                      <span className="font-space text-[10px] text-brand-gold font-bold uppercase tracking-wider">
+                    <div className="flex justify-between items-center border-b border-brand-text/10 pb-3">
+                      <span className="font-space text-[10px] text-brand-accent font-bold uppercase tracking-wider">
                         {newTagline || "Restauración"}
                       </span>
                       <div className="flex items-center gap-0.5">
@@ -524,21 +524,21 @@ export default function App() {
                       </div>
                     </div>
 
-                    <p className="text-[#FAF7F0] font-serif italic text-sm leading-relaxed min-h-[60px]">
+                    <p className="text-brand-text font-serif italic text-sm leading-relaxed min-h-[60px]">
                       {newQuote ? `“${newQuote}”` : "“Aquí se mostrará tu hermoso testimonio en tiempo real mientras lo redactas en el formulario de la izquierda...”"}
                     </p>
                   </div>
 
-                  <div className="pt-2 border-t border-white/10/20 flex justify-between items-center">
+                  <div className="pt-2 border-t border-brand-text/10 flex justify-between items-center">
                     <div>
-                      <span className="block font-space text-[10px] text-[#FAF7F0] font-bold uppercase">
+                      <span className="block font-space text-[10px] text-brand-text font-bold uppercase">
                         {newNombre || "Tu Nombre"}
                       </span>
-                      <span className="block text-[9px] text-white/70 font-sans font-medium">
+                      <span className="block text-[9px] text-brand-muted font-sans font-medium">
                         Tu Reseña • Borrador en vivo
                       </span>
                     </div>
-                    <span className="bg-brand-accent/10 text-brand-gold border border-brand-accent/20 text-[8px] font-bold px-2 py-0.5 rounded-full font-space uppercase">
+                    <span className="bg-brand-accent/10 text-brand-accent border border-brand-accent/20 text-[8px] font-bold px-2 py-0.5 rounded-full font-space uppercase">
                       Borrador
                     </span>
                   </div>
