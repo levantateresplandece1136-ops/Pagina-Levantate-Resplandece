@@ -65,10 +65,9 @@ const paidProducts: PaidProduct[] = [
 ];
 
 export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }: ResourceLibraryProps) {
-  // Grupo de recursos: gratis o de paga. Los 4 ebooks y los 7 diagnósticos
-  // son gratuitos (11 en total); los productos de paga viven en Nuestra
-  // Tienda (ver paidProducts).
-  const [priceFilter, setPriceFilter] = useState<"gratis" | "paga">("gratis");
+  // Grupo de recursos: gratis o de paga. Ninguno abierto por defecto: el
+  // visitante elige un botón para ver su lista (clic de nuevo lo cierra).
+  const [priceFilter, setPriceFilter] = useState<"gratis" | "paga" | null>(null);
   const [activeBook, setActiveBook] = useState<EBook | null>(null);
   
   // Subscription Form states for download
@@ -258,7 +257,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
             Recursos
           </h2>
           <p className="text-brand-muted text-sm mt-3 max-w-2xl leading-relaxed">
-            Empieza hoy, sin pagar nada: diagnósticos y libros gratuitos para
+            Empieza hoy, sin pagar nada: diagnósticos gratuitos para
             renovar tu mente, restaurar tus relaciones y crecer en Cristo. Y si
             quieres profundizar más, en Nuestra Tienda encontrarás recursos de
             paga para tu crecimiento.
@@ -282,7 +281,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                 type="button"
                 role="tab"
                 aria-selected={isActive}
-                onClick={() => setPriceFilter(group.id)}
+                onClick={() => setPriceFilter(priceFilter === group.id ? null : group.id)}
                 className={`shrink-0 font-space text-xs md:text-sm font-bold uppercase tracking-wider px-4 md:px-5 py-3 rounded-xl border transition-all cursor-pointer ${
                   isActive
                     ? "bg-brand-accent text-white border-brand-accent shadow-md shadow-brand-accent/20"
@@ -327,7 +326,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
               </li>
             ))}
           </ul>
-        ) : (
+        ) : priceFilter === "paga" ? (
           /* Nuestra Tienda: recursos de paga (Hotmart) */
           <div className="space-y-6">
             <div className="text-left max-w-2xl space-y-2">
@@ -393,7 +392,7 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
               </button>
             </div>
           </div>
-        )}
+        ) : null}
 
       </div>
       {/* Book Detail Drawer Modal Overlay */}
