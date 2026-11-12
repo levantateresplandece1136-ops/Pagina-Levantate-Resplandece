@@ -11,7 +11,8 @@ import {
   ChevronRight,
   Inbox,
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  Lock
 } from "lucide-react";
 import { ebooksData } from "../data";
 import { EBook } from "../types";
@@ -32,6 +33,10 @@ interface DiagnosticLink {
 export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }: ResourceLibraryProps) {
   // Pestaña activa de Recursos: por defecto, el primer pilar
   const [activeTabId, setActiveTabId] = useState<string>("renueva-mente");
+  // Grupo de recursos: gratis o de paga. Hoy todo lo publicado es gratis
+  // (los 4 ebooks dicen "Acceso Gratuito" y los 7 diagnósticos son apps
+  // externas sin pago), así que el grupo de paga empieza vacío.
+  const [priceFilter, setPriceFilter] = useState<"gratis" | "paga">("gratis");
   const [activeBook, setActiveBook] = useState<EBook | null>(null);
   
   // Subscription Form states for download
@@ -255,23 +260,57 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Section Header */}
-        <div className="text-left max-w-3xl mb-16">
+        <div className="text-left max-w-3xl mb-10">
           <span className="font-space text-xs text-brand-accent tracking-[0.25em] uppercase">Ecosistema de Formación</span>
           <h2 className="text-4xl md:text-5xl font-serif font-light text-brand-text mt-3">
-            Los 4 Pilares de <span className="text-brand-accent italic font-normal">Crecimiento & Restauración</span>
+            Recursos
           </h2>
           <p className="text-brand-muted text-sm mt-3 max-w-2xl leading-relaxed">
-            Estructuras fundamentales y recursos pastorales diseñados para desatar nudos relacionales, 
-            renovar el entendimiento y guiarte a una vida de profunda paz espiritual y comunión real.
+            Guías, libros y pruebas de autodiagnóstico para renovar tu mente, restaurar
+            tus relaciones y crecer en Cristo. Explora lo gratuito y, cuando haya
+            recursos de paga, también los encontrarás aquí.
           </p>
+        </div>
+
+        {/* Grupos: recursos gratis y recursos de paga */}
+        <div
+          role="tablist"
+          aria-label="Recursos gratis o de paga"
+          className="flex gap-2 mb-8"
+        >
+          {([
+            { id: "gratis", label: "Recursos gratis", count: 11 },
+            { id: "paga", label: "Recursos de paga", count: 0 },
+          ] as const).map((group) => {
+            const isActive = priceFilter === group.id;
+            return (
+              <button
+                key={group.id}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setPriceFilter(group.id)}
+                className={`shrink-0 font-space text-xs md:text-sm font-bold uppercase tracking-wider px-4 md:px-5 py-3 rounded-xl border transition-all cursor-pointer ${
+                  isActive
+                    ? "bg-brand-accent text-white border-brand-accent shadow-md shadow-brand-accent/20"
+                    : "bg-brand-card text-brand-text border-brand-border hover:border-brand-accent/50 hover:text-brand-accent"
+                }`}
+              >
+                {group.label} ({group.count})
+              </button>
+            );
+          })}
+        </div>
+
+        {priceFilter === "gratis" ? (
+        <>
           {/* Línea orientadora: ¿por cuál diagnóstico empiezo? */}
-          <div className="mt-6 bg-brand-card border-l-4 border-brand-terra rounded-r-2xl px-5 py-4 max-w-2xl shadow-sm">
+          <div className="mb-8 bg-brand-card border-l-4 border-brand-terra rounded-r-2xl px-5 py-4 max-w-2xl shadow-sm">
             <p className="text-sm text-brand-text leading-relaxed">
               <span className="font-space font-bold text-brand-terra">¿Por cuál empiezo? </span>
               Si quieres entender a fondo qué te detiene —ideal para llevarlo a consejería—, haz ¿Qué Me Detiene? Si quieres un plan diario para renovar tu mente, empieza Rompiendo Creencias.
             </p>
           </div>
-        </div>
 
         {/* Pestañas de pilares: un clic abre el pilar, sin botones "Explorar" duplicados */}
         <div
@@ -355,9 +394,14 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                 <div className="flex flex-col gap-4">
                   {activeSection.diagnostics.map((diag, index) => (
                     <div key={index} className="space-y-2">
-                      <h5 className="text-lg font-serif font-semibold text-brand-text leading-snug">
-                        {diag.name}
-                      </h5>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <h5 className="text-lg font-serif font-semibold text-brand-text leading-snug">
+                          {diag.name}
+                        </h5>
+                        <span className="bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider font-space">
+                          Gratis
+                        </span>
+                      </div>
                       {diag.description && (
                         <p className="text-xs text-brand-muted leading-relaxed">
                           {diag.description}
@@ -401,6 +445,9 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
                               <h5 className="font-serif font-semibold text-brand-text text-base sm:text-lg leading-tight">
                                 {book.title}
                               </h5>
+                              <span className="bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider font-space">
+                                Gratis
+                              </span>
                               {book.isPopular && (
                                 <span className="bg-brand-accent/10 border border-brand-accent/20 text-brand-accent px-2 py-0.5 rounded-full text-[9px] font-bold uppercase tracking-wider font-space">
                                   Destacado
@@ -446,6 +493,30 @@ export default function ResourceLibrary({ selectedBookId, onClearSelectedBook }:
             </div>
           </motion.div>
         </AnimatePresence>
+        </>
+        ) : (
+          /* Recursos de paga: aún no hay ninguno publicado */
+          <div className="bg-brand-card border border-brand-border rounded-3xl p-8 md:p-12 text-center space-y-4 max-w-2xl mx-auto">
+            <div className="w-12 h-12 mx-auto rounded-full bg-brand-terra/10 border border-brand-terra/20 flex items-center justify-center">
+              <Lock className="w-5 h-5 text-brand-terra" />
+            </div>
+            <h3 className="text-2xl font-serif font-light text-brand-text">
+              Aún no hay recursos de paga publicados
+            </h3>
+            <p className="text-sm text-brand-muted leading-relaxed max-w-md mx-auto">
+              Por ahora todo lo publicado es gratuito. Cuando haya un curso, libro o
+              recurso de paga, aparecerá aquí con su precio.
+            </p>
+            <button
+              type="button"
+              onClick={() => setPriceFilter("gratis")}
+              className="inline-flex items-center gap-2 bg-brand-accent text-white hover:bg-brand-hover font-space text-xs uppercase font-bold py-3 px-5 rounded-xl transition-all shadow-sm cursor-pointer"
+            >
+              Ver los recursos gratis
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        )}
 
       </div>
       {/* Book Detail Drawer Modal Overlay */}
